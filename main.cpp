@@ -13,7 +13,7 @@ using namespace sf;
 
 int main(){
    RenderWindow window(VideoMode(1200, 800), "XeonWars");
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(60);
     Clock clock;
 
     MainSpaceShip ownSpaceShip;
@@ -36,12 +36,16 @@ int main(){
             }
         }
         Time time = clock.getElapsedTime();
-        window.clear();
 
+        window.clear();
         background.update(window, time.asMilliseconds());
         background.render(window);
+
         ownSpaceShip.update(window, time.asMilliseconds());
         ownSpaceShip.render(window);
+
+        clock.restart().asMilliseconds();
+
 
 
 
