@@ -7,6 +7,7 @@
 #include "List.h"
 #include "Game.h"
 
+
 #define RES nullptr
 
 using namespace sf;
@@ -18,6 +19,7 @@ int main(){
 
     Game application;
     application.run(window);
-    
+
+
     return 0;
 }
