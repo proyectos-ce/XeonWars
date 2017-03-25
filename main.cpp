@@ -4,10 +4,88 @@
 #include <list>
 #include <iostream>
 #include "Background.h"
+#include "BulletClass.h"
 
 #define RES nullptr
 
 using namespace sf;
+
+int main(){
+   RenderWindow window(VideoMode(1200, 800), "XeonWars");
+    Background background;
+    //CircleShape shape(100.f);
+    //shape.setFillColor(Color::Blue);
+
+    Texture TOwnSpaceShip;
+    TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
+    Sprite SOwnSpaceShip(TOwnSpaceShip);
+    SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+    SOwnSpaceShip.setPosition(550,720);
+
+    bool isFiring = false; // FLAG PARA DISPARO
+    std::vector<Bullet> bulletVec;
+
+    Music backgroundMusic;
+    backgroundMusic.openFromFile("Resources/BackgroundMusic.ogg");
+    backgroundMusic.setLoop(true);
+
+    backgroundMusic.play();
+
+    while (window.isOpen()) //______________________________________________MAIN LOOP
+    {
+        Event event;
+        while (window.pollEvent(event))//_______________________________________EVENT LOOP
+        {
+            if (event.type == Event::Closed)
+                window.close();
+            if(event.type == Event::KeyPressed && event.key.code == Keyboard::Escape){
+                window.close();
+            }
+
+        }
+        if(Keyboard::isKeyPressed(Keyboard::Left)){
+            SOwnSpaceShip.move(-1, 0);
+            SOwnSpaceShip.setTextureRect(IntRect(0,0,95,80));
+        }
+        if(Keyboard::isKeyPressed(Keyboard::Right)){
+            SOwnSpaceShip.move(1, 0);
+            SOwnSpaceShip.setTextureRect(IntRect(200,0,95, 80));
+        }
+        if(Keyboard::isKeyPressed(Keyboard::Up)){
+            SOwnSpaceShip.move(0, -1);
+        }
+        if(Keyboard::isKeyPressed(Keyboard::Down)){
+            SOwnSpaceShip.move(0, 1);
+        }
+        if(Keyboard::isKeyPressed(Keyboard::W)){
+            isFiring=true;
+        }
+        if(isFiring==true){
+            Bullet newBullet(sf::Vector2f(5,50));
+            newBullet.setPos(Vector2f(SOwnSpaceShip.getPosition().x,SOwnSpaceShip.getPosition().y));
+            //newBullet.setPos(Vector2f(10,10));
+            bulletVec.push_back(newBullet);
+            isFiring= false;
+        }
+        window.clear();
+        background.render(window);
+        background.update(window, 10);
+
+        for(int i=0; i < bulletVec.size();i++){
+            //Bullet bullt = bulletVec[i];
+            //window.draw(bullt);
+            bulletVec[i].draw(window);
+            bulletVec[i].fire(3);
+        }
+
+
+        window.draw(SOwnSpaceShip);
+        window.display();
+    }
+    return 0;
+}
+
+
 /*
 const int W = 1200;
 const int H = 800;
@@ -329,64 +407,3 @@ int main()
 
     return 0;
 }*/
-
-
-int main(){
-   RenderWindow window(VideoMode(1200, 800), "XeonWars");
-    Background background;
-    //CircleShape shape(100.f);
-    //shape.setFillColor(Color::Blue);
-
-    Texture TOwnSpaceShip;
-    TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
-    Sprite SOwnSpaceShip(TOwnSpaceShip);
-    SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
-    SOwnSpaceShip.setPosition(550,720);
-
-
-    Music backgroundMusic;
-    backgroundMusic.openFromFile("Resources/BackgroundMusic.ogg");
-    backgroundMusic.setLoop(true);
-
-    backgroundMusic.play();
-
-    while (window.isOpen())
-    {
-        Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == Event::Closed)
-                window.close();
-            if(event.type == Event::KeyPressed && event.key.code == Keyboard::Escape){
-                window.close();
-            }
-
-        }
-        if(Keyboard::isKeyPressed(Keyboard::Left)){
-            SOwnSpaceShip.move(-1, 0);
-            SOwnSpaceShip.setTextureRect(IntRect(0,0,95,80));
-        }
-        if(Keyboard::isKeyPressed(Keyboard::Right)){
-            SOwnSpaceShip.move(1, 0);
-            SOwnSpaceShip.setTextureRect(IntRect(200,0,95, 80));
-        }
-        if(Keyboard::isKeyPressed(Keyboard::Up)){
-            SOwnSpaceShip.move(0, -1);
-        }
-        if(Keyboard::isKeyPressed(Keyboard::Down)){
-            SOwnSpaceShip.move(0, 1);
-        }
-
-
-        background.render(window);
-        background.update(window, 10);
-        window.draw(SOwnSpaceShip);
-        window.display();
-
-    }
-
-
-
-
-    return 0;
-}
