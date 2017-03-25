@@ -23,7 +23,7 @@ private:
     int globalScore;
     int scoreForLifes;
 
-    const float speed = 3;
+    const float speed = 6;
     const float maxSpeed = speed*8;
     sf::Vector2f velocity;
 
