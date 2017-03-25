@@ -35,9 +35,12 @@ int main(){
                 window.close();
             }
         }
+
         Time time = clock.getElapsedTime();
 
         window.clear();
+
+
         background.update(window, time.asMilliseconds());
         background.render(window);
 
@@ -45,7 +48,6 @@ int main(){
         ownSpaceShip.render(window);
 
         clock.restart().asMilliseconds();
-
 
 
 
