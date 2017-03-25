@@ -9,9 +9,15 @@
 using namespace sf;
 
 class MainSpaceShip{
+public:
     MainSpaceShip();
-    update(RenderWindow &window);
-    render(RenderWindows &window);
+    void update(RenderWindow &window, float time);
+    void render(RenderWindow &window);
+    Sprite SOwnSpaceShip;
+
+
+    Texture TOwnSpaceShip;
+
 };
 
 #endif //AIRWAR_MAINSPACESHIP_H
