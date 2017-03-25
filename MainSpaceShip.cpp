@@ -74,7 +74,30 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
             velocity.y = -maxSpeed;
 
 
-    SOwnSpaceShip.move(velocity);
+    
+    // Limites de la pantalla
+
+    if(SOwnSpaceShip.getPosition().x < 0) {
+        velocity.x = 0;
+        SOwnSpaceShip.setPosition(0, SOwnSpaceShip.getPosition().y);
+    }
+
+    if(SOwnSpaceShip.getPosition().y < 0) {
+        velocity.y = 0;
+        SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, 0);
+    }
+
+    if (SOwnSpaceShip.getPosition().x > window.getSize().x - SOwnSpaceShip.getGlobalBounds().width) {
+        velocity.x = 0;
+        SOwnSpaceShip.setPosition(window.getSize().x - SOwnSpaceShip.getGlobalBounds().width,  SOwnSpaceShip.getPosition().y);
+    }
+
+    if (SOwnSpaceShip.getPosition().y > window.getSize().y - SOwnSpaceShip.getGlobalBounds().height) {
+        velocity.y = 0;
+        SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, window.getSize().y - SOwnSpaceShip.getGlobalBounds().height);
+    }
+
+    SOwnSpaceShip.move(velocity * (time/30));
 
 
 }
