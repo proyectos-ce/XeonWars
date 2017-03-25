@@ -1,1 +1,0 @@
-/usr/bin/c++   -g   CMakeFiles/AirWar___.dir/main.cpp.o CMakeFiles/AirWar___.dir/Background.cpp.o CMakeFiles/AirWar___.dir/MainSpaceShip.cpp.o  -o AirWar___ /usr/lib/x86_64-linux-gnu/libsfml-system.so /usr/lib/x86_64-linux-gnu/libsfml-window.so /usr/lib/x86_64-linux-gnu/libsfml-graphics.so /usr/lib/x86_64-linux-gnu/libsfml-network.so /usr/lib/x86_64-linux-gnu/libsfml-audio.so 

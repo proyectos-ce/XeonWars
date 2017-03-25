@@ -1,3 +1,0 @@
-/home/jimena/Documents/Proyectos/XeonWars/AirWar ++/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/jimena/Documents/Proyectos/XeonWars/AirWar ++/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/jimena/Documents/Proyectos/XeonWars/AirWar ++/cmake-build-debug/CMakeFiles/AirWar___.dir
