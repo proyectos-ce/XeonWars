@@ -6,6 +6,8 @@
 #define AIRWAR_MAINSPACESHIP_H
 
 #include <SFML/Graphics.hpp>
+#include "Queue.h"
+
 using namespace sf;
 
 class MainSpaceShip{
@@ -14,6 +16,8 @@ public:
     void update(RenderWindow &window, float time);
     void render(RenderWindow &window);
     bool gameOver();
+    bool shield();
+
 
 
 private:
@@ -22,6 +26,9 @@ private:
     int lifes;
     int globalScore;
     int scoreForLifes;
+    bool shieldActivated;
+    Queue<int> powerUpsQueue;
+
 
     const float speed = 6;
     const float maxSpeed = speed*8;

@@ -10,15 +10,15 @@ Queue<T>::Queue() {
 }
 
 template <typename T>
-void Queue<T>::dequeue() {
+T Queue<T>::dequeue() {
     Node<T>* temp = new Node<T>;
     if(head==NULL){
         cout<<"Empty Queue"<<endl;
     }else{
         temp = head;
         head = head->next;
-        delete temp;
         lenght--;
+        return temp->data;
     }
 }
 template <typename T>
