@@ -23,6 +23,10 @@ private:
     int globalScore;
     int scoreForLifes;
 
+    const float speed = 3;
+    const float maxSpeed = speed*8;
+    sf::Vector2f velocity;
+
 };
 
 #endif //AIRWAR_MAINSPACESHIP_H

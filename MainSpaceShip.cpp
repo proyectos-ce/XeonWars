@@ -18,30 +18,64 @@ MainSpaceShip::MainSpaceShip() {
 
 
 void MainSpaceShip::update(RenderWindow &window, float time) {
-    if(Keyboard::isKeyPressed(Keyboard::Left)) {
-        if(SOwnSpaceShip.getPosition().x >= 15) {
-            SOwnSpaceShip.move(-1*time, 0);
-            SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
-        }
-    }else{
+
+    bool anyKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+
+    // Si no hay ninguna tecla presionada la velocidad se pone en 0 si es muy pequeña
+    if (!anyKeyPressed) {
+        if (abs(velocity.y) <= speed/2)
+            velocity.y = 0;
+
+        if (abs(velocity.x) <= speed/2)
+            velocity.x = 0;
+    }
+
+    // Modifica el vector segun las teclas presionadas
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        velocity.y -= speed;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        velocity.y += speed;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        velocity.x -= speed;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        velocity.x += speed;
+
+
+    // Air friction
+    if (velocity.y > 0)
+        velocity.y -= speed/2;
+    else if (velocity.y < 0)
+        velocity.y += speed/2;
+
+    if (velocity.x > 0) {
+        SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
+        velocity.x -= speed/2;
+    } else if (velocity.x < 0) {
+        SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
+        velocity.x += speed/2;
+    } else {
         SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     }
-    if(Keyboard::isKeyPressed(Keyboard::Right)){
-        if(SOwnSpaceShip.getPosition().x <= 1085) {
-            SOwnSpaceShip.move(1*time, 0);
-            SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
-        }
-    }
-    if(Keyboard::isKeyPressed(Keyboard::Up)){
-        if(SOwnSpaceShip.getPosition().y >= 15) {
-            SOwnSpaceShip.move(0, -1*time);
-        }
-    }
-    if(Keyboard::isKeyPressed(Keyboard::Down)){
-        if(SOwnSpaceShip.getPosition().y <= 705) {
-            SOwnSpaceShip.move(0, 1*time);
-        }
-    }
+
+    // Maximum speed
+
+    if (abs(velocity.x) > maxSpeed)
+        if (velocity.x > 0)
+            velocity.x = maxSpeed;
+        else
+            velocity.x = -maxSpeed;
+    if (abs(velocity.y) > maxSpeed)
+        if (velocity.y > 0)
+            velocity.y = maxSpeed;
+        else
+            velocity.y = -maxSpeed;
+
+
+    SOwnSpaceShip.move(velocity);
+
 
 }
 
