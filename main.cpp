@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Background.h"
 
+#define RES nullptr
+
 using namespace sf;
 /*
 const int W = 1200;
@@ -187,13 +189,13 @@ int main()
     app.setFramerateLimit(60);
 
     Texture t1,t2,t3,t4,t5,t6,t7;
-    t1.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/images/spaceship.png");
-    t2.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/images/background.jpg");
-    t3.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/images/explosions/type_C.png");
-    t4.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/images/rock.png");
-    t5.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/images/fire_blue.png");
-    t6.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/images/rock_small.png");
-    t7.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/images/explosions/type_B.png");
+    t1.loadFromFile("images/spaceship.png");
+    t2.loadFromFile("images/background.jpg");
+    t3.loadFromFile("images/explosions/type_C.png");
+    t4.loadFromFile("images/rock.png");
+    t5.loadFromFile("images/fire_blue.png");
+    t6.loadFromFile("images/rock_small.png");
+    t7.loadFromFile("images/explosions/type_B.png");
 
     t1.setSmooth(true);
     t2.setSmooth(true);
@@ -330,20 +332,20 @@ int main()
 
 
 int main(){
-   RenderWindow window(VideoMode(1200, 800), "AirWars++");
+   RenderWindow window(VideoMode(1200, 800), "XeonWars");
     Background background;
     //CircleShape shape(100.f);
     //shape.setFillColor(Color::Blue);
 
     Texture TOwnSpaceShip;
-    TOwnSpaceShip.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/Resources/FramesNave.png");
+    TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
     Sprite SOwnSpaceShip(TOwnSpaceShip);
     SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     SOwnSpaceShip.setPosition(550,720);
 
 
     Music backgroundMusic;
-    backgroundMusic.openFromFile("/home/jimena/Documents/Proyectos/AirWar ++/Resources/BackgroundMusic.ogg");
+    backgroundMusic.openFromFile("Resources/BackgroundMusic.ogg");
     backgroundMusic.setLoop(true);
 
     backgroundMusic.play();

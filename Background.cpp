@@ -3,11 +3,13 @@
 //
 #include "Background.h"
 
+
+
 Background::Background()
 {
     bgSpeed = 0.2;
 
-    bg1Tex.loadFromFile("/home/jimena/Documents/Proyectos/AirWar ++/Resources/background.jpg");
+    bg1Tex.loadFromFile("Resources/background.jpg");
     bg1Tex.setSmooth(false);
     bg1Tex.setRepeated(true);
     bg1Sprite.setTexture(bg1Tex);
