@@ -14,6 +14,17 @@ MainSpaceShip::MainSpaceShip() {
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
     SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     SOwnSpaceShip.setPosition(550,720);
+
+    powerUp p1(missile);
+    powerUp p2(shieldd);
+    powerUp p3(laser);
+
+    powerUpsQueue.enqueue(p1);
+    powerUpsQueue.enqueue(p2);
+    powerUpsQueue.enqueue(p3);
+
+
+
 }
 
 
@@ -42,6 +53,7 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
         velocity.x -= speed;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         velocity.x += speed;
+
 
 
     // Air friction
@@ -104,6 +116,31 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
 void MainSpaceShip::render(RenderWindow &window) {
     window.draw(SOwnSpaceShip);
+}
+
+void MainSpaceShip::usePowerUp() {
+    if(!powerUpsQueue.isEmpty()) {
+        int powerToUse = powerUpsQueue.dequeue().getType();
+        if(powerToUse == 0){
+            cout <<"Misiles"<<endl;
+        }
+        else if(powerToUse == 1){
+            shield();
+            cout <<"Escudo"<<endl;
+        }
+        else if(powerToUse == 2){
+            cout <<"Laser"<<endl;
+        }
+    }else{
+        cout <<"No hay power ups"<<endl;
+    }
+}
+
+void MainSpaceShip::shield() {
+    if(shieldActivated == false){
+        shieldActivated = true;
+        cout<<"Escudo activado"<<endl;
+    }
 }
 
 bool MainSpaceShip::gameOver() {

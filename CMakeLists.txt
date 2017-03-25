@@ -4,7 +4,7 @@ project(XeonWars)
 set(CMAKE_CXX_STANDARD 14)
 
 
-set(SOURCE_FILES main.cpp Background.h Background.cpp MainSpaceShip.h MainSpaceShip.cpp List.h Node.h List.cpp Node.cpp Game.h Game.cpp Collision.cpp Collision.h Queue.cpp Queue.h)
+set(SOURCE_FILES main.cpp Background.h Background.cpp MainSpaceShip.h MainSpaceShip.cpp List.h Node.h List.cpp Node.cpp Game.h Game.cpp Collision.cpp Collision.h Queue.cpp Queue.h powerUp.h)
 
 set(EXECUTABLE_NAME "XeonWars")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")

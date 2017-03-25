@@ -18,6 +18,9 @@ void Game::run(RenderWindow &window) {
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
                 window.close();
             }
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space) {
+                ownSpaceShip.usePowerUp();
+            }
         }
 
         Time time = clock.getElapsedTime();

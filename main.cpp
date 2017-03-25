@@ -6,6 +6,7 @@
 #include "MainSpaceShip.h"
 #include "List.h"
 #include "Game.h"
+#include "powerUp.h"
 
 
 #define RES nullptr

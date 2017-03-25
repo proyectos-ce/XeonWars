@@ -2,6 +2,7 @@
 // Created by jimena on 3/25/17.
 //
 #include "Queue.h"
+#include "powerUp.h"
 
 template <typename T>
 Queue<T>::Queue() {
@@ -45,7 +46,7 @@ void Queue<T>::printQueue() {
     if(head != NULL) {
         Node<T> *temp = head;
         while(temp != NULL){
-            cout<<temp->data<<",";
+            cout<<temp->data.getType()<<",";
             temp = temp->next;
         }
     }else{
@@ -54,4 +55,14 @@ void Queue<T>::printQueue() {
     cout<<"]"<<endl;
 }
 
-template class Queue<int>;
+template <typename T>
+bool Queue<T>::isEmpty() {
+    bool result = false;
+    if(head ==NULL){
+        result = true;
+    }
+    return result;
+}
+
+
+template class Queue<powerUp>;

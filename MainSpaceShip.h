@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Queue.h"
+#include "powerUp.h"
 
 using namespace sf;
 
@@ -15,8 +16,9 @@ public:
     MainSpaceShip();
     void update(RenderWindow &window, float time);
     void render(RenderWindow &window);
+    void usePowerUp();
     bool gameOver();
-    bool shield();
+    void shield();
 
 
 
@@ -27,7 +29,7 @@ private:
     int globalScore;
     int scoreForLifes;
     bool shieldActivated;
-    Queue<int> powerUpsQueue;
+    Queue<powerUp> powerUpsQueue;
 
 
     const float speed = 6;

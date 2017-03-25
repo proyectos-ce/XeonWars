@@ -17,6 +17,7 @@ public:
     T dequeue();
     void enqueue(T data);
     void printQueue();
+    bool isEmpty();
 
 };
 
