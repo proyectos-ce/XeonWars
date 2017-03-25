@@ -35,14 +35,19 @@ int main(){
                 window.close();
             }
         }
-        Time time = clock.getElapsedTime();
+
+
         window.clear();
+
+        Time time = clock.getElapsedTime();
+
 
         background.update(window, time.asMilliseconds());
         background.render(window);
         ownSpaceShip.update(window, time.asMilliseconds());
         ownSpaceShip.render(window);
 
+        clock.restart().asMilliseconds();
 
 
         window.display();
