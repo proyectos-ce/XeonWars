@@ -1,10 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <time.h>
-#include <list>
 #include <iostream>
 #include "Background.h"
 #include "MainSpaceShip.h"
+#include "List.h"
 
 #define RES nullptr
 
@@ -12,7 +12,7 @@ using namespace sf;
 
 
 int main(){
-   RenderWindow window(VideoMode(1200, 800), "XeonWars");
+ /*  RenderWindow window(VideoMode(1200, 800), "XeonWars");
     window.setFramerateLimit(60);
     Clock clock;
 
@@ -54,6 +54,12 @@ int main(){
         window.display();
 
     }
+
+*/
+
+
+
+
 
 
 

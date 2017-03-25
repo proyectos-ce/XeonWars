@@ -13,10 +13,15 @@ public:
     MainSpaceShip();
     void update(RenderWindow &window, float time);
     void render(RenderWindow &window);
+    bool gameOver();
+
+
+private:
     Sprite SOwnSpaceShip;
-
-
     Texture TOwnSpaceShip;
+    int lifes;
+    int globalScore;
+    int scoreForLifes;
 
 };
 

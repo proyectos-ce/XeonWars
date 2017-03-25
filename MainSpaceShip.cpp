@@ -5,6 +5,10 @@
 #include "MainSpaceShip.h"
 
 MainSpaceShip::MainSpaceShip() {
+    lifes = 3;
+    scoreForLifes = 0;
+    globalScore = 0;
+
     TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
@@ -43,4 +47,12 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
 void MainSpaceShip::render(RenderWindow &window) {
     window.draw(SOwnSpaceShip);
+}
+
+bool MainSpaceShip::gameOver() {
+    bool result = false;
+    if(lifes <=0){
+        result = true;
+    }
+    return result;
 }
