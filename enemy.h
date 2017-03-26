@@ -4,19 +4,21 @@
 #include "bullet.h"
 #include "entity.h"
 
+
 class Enemy : public Entity
 {
 public:
     Enemy();
-    Enemy(sf::Texture* texture);
-    Enemy(sf::Texture* texture, std::vector<Entity>* enemyList);
+    Enemy(sf::Texture texture);
+    Enemy(sf::Texture texture, std::vector<Entity *> *enemyList);
     ~Enemy();
-    void attack(int damage);
+    std::vector<Entity *> *getEnemyList() const;
+    void setEnemyList(std::vector<Entity *> *value);
 
 protected:
-    int life;
     int shoutDelay;
     Bullet* shout();
+    std::vector<Entity *> *enemyList;
 
 };
 

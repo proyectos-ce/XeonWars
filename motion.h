@@ -8,11 +8,11 @@ class Motion
 {
 public:
     Motion();
-    virtual sf::Vector2u getNext(int speed)=0;
+    virtual sf::Vector2f getNext(int speed)=0;
     int getX() const;
     void setX(int value);
 
 protected:
-    int x;
+    int x= 0;
 };
 #endif // MOTION_H
