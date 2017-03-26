@@ -13,6 +13,7 @@ protected:
     int speed;
     sf::Sprite sprite;
     sf::Texture texture;
+
 };
 
 #endif // ENTITY_H

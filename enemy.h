@@ -8,6 +8,8 @@ class Enemy : public Entity
 {
 public:
     Enemy();
+    Enemy(sf::Texture* texture);
+    Enemy(sf::Texture* texture, std::vector<Entity>* enemyList);
     ~Enemy();
     void attack(int damage);
 
