@@ -5,18 +5,34 @@
 Game::Game() {
     cout<<"Juego Creado"<<endl;
 }
-void Game::run(RenderWindow &window) {
+
+void Game::pauseGame() {
+    running = false;
+    std::cout << running << std::endl;
+}
+int Game::run(RenderWindow &window, Texture &tex) {
     backgroundMusic.openFromFile("Resources/BackgroundMusic.ogg");
     backgroundMusic.setLoop(true);
     backgroundMusic.play();
+    std::cout << running << std::endl;
 
-    while (window.isOpen()) {
+    running = true;
+    clock.restart().asMilliseconds();
+
+    while (running) {
+        cout << "RUN" << endl;
         Event event;
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
-                window.close();
+            {
+                sf::Image img = window.capture();
+                tex.loadFromImage(img);
+                return(0);
+            }
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
-                window.close();
+                sf::Image img = window.capture();
+                tex.loadFromImage(img);
+                return(0);
             }
         }
 
@@ -37,6 +53,8 @@ void Game::run(RenderWindow &window) {
         window.display();
 
     }
+
+    return (-1);
 }
 
 
