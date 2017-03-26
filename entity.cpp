@@ -88,7 +88,11 @@ void Entity::setLife(int value)
 bool Entity::attack(int damage)
 {
     bool result=false;
-    if(damage>0){
+    if(damage==-1){
+        kill();
+        result=true;
+    }
+    else if(damage>0){
         life-=damage;
         if(life<=0){
             kill();

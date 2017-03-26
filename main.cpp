@@ -24,31 +24,35 @@ int main(){
     Texture enemyShipTexture;
     MotionGenerator motionGenerator;
 
+    std::vector<Enemy *> enemyList;
+
+
+
     Motion *enemyShipMotion = motionGenerator.createLinearMotion(45);
     enemyShipTexture.loadFromFile("Resources/FramesNave.png");
-    Enemy enemyShip1(enemyShipTexture);
+    Enemy enemyShip1(enemyShipTexture, &enemyList);
     enemyShip1.setTexturesAmount(4);
-    enemyShip1.getSprite().setPosition(200,200);
     enemyShip1.setMotion(enemyShipMotion);
     enemyShip1.setSpeed(3);
     enemyShip1.setPosition(300,0);
-
+    enemyShip1.setTrigger(30);
 
     enemyShipMotion = motionGenerator.createSimpleMotion();
-    Enemy enemyShip2(enemyShipTexture);
+    Enemy enemyShip2(enemyShipTexture, &enemyList);
     enemyShip2.setTexturesAmount(4);
-    enemyShip2.getSprite().setPosition(200,200);
     enemyShip2.setMotion(enemyShipMotion);
     enemyShip2.setSpeed(3);
     enemyShip2.setPosition(100,0);
+    enemyShip2.setTrigger(20);
+
 
     enemyShipMotion = motionGenerator.createSinMotion(200);
-    Enemy enemyShip3(enemyShipTexture);
+    Enemy enemyShip3(enemyShipTexture, &enemyList);
     enemyShip3.setTexturesAmount(4);
-    enemyShip3.getSprite().setPosition(200,200);
     enemyShip3.setMotion(enemyShipMotion);
     enemyShip3.setSpeed(3);
-    enemyShip3.setPosition(700,0);
+    enemyShip3.setPosition(700,200);
+    enemyShip3.setTrigger(10);
 
 
 
@@ -79,7 +83,7 @@ int main(){
         background.render(window);
         ownSpaceShip.update(window, time.asMilliseconds());
         ownSpaceShip.render(window);
-
+           /*
         enemyShip1.update(window, time.asMilliseconds());
         enemyShip1.render(window);
 
@@ -88,7 +92,13 @@ int main(){
 
         enemyShip3.update(window, time.asMilliseconds());
         enemyShip3.render(window);
+        */
+        for (int i = 0; i < enemyList.size(); ++i) {
+            enemyList[i]->update(window, time.asMilliseconds());
+            enemyList[i]->render(window);
 
+        }
+        //std::cout<<enemyList.size()<<std::endl;
         clock.restart().asMilliseconds();
 
 
