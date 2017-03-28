@@ -70,15 +70,15 @@ void Enemy::shout()
         sf::Texture bulletTexture;
         bulletTexture.loadFromFile("Resources/laserRed.png");
         Enemy *newBullet = new Enemy(bulletTexture, enemyList);
+        newBullet->sprite.setColor(sf::Color(255, 255, 255, 255));
         newBullet->setTexturesAmount(1);
         MotionGenerator motionGenerator;
         newBullet->setPosition(getCenterPosition());
         Motion *enemyShipMotion = motionGenerator.createSimpleMotion();
         newBullet->setMotion(enemyShipMotion);
         newBullet->setSpeed(6);
-
-
 }
+
 }
 
 int Enemy::getMoves() const

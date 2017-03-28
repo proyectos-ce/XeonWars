@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "motion.h"
 #include "motiongenerator.h"
+//#include "cannon.h"
 
 class Enemy : public Entity
 {
@@ -27,6 +28,7 @@ protected:
     std::vector<Enemy *> *enemyList;
     int getMoves() const;
     void setMoves(int value);
+    //Cannon cannon;
 
 
 };
