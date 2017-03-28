@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Background.h"
 #include "MainSpaceShip.h"
+#include "entity.h"
 #include "enemy.h"
 #include "motion.h"
 #include "motiongenerator.h"
@@ -24,7 +25,7 @@ int main(){
     Texture enemyShipTexture;
     MotionGenerator motionGenerator;
 
-    std::vector<Enemy *> enemyList;
+    std::vector<Entity *> enemyList;
 
 
 

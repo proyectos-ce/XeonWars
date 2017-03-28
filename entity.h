@@ -7,7 +7,9 @@ class Entity
 {
 public:
     Entity();
-    void update(sf::RenderWindow &window, float time);
+
+    virtual void update(sf::RenderWindow &window, float time);
+
     void render(sf::RenderWindow &window);
     void kill();
 

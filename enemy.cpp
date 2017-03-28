@@ -13,7 +13,7 @@ Enemy::Enemy(sf::Texture texture)
 
 }
 
-Enemy::Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList)
+Enemy::Enemy(sf::Texture texture, std::vector<Entity *> *enemyList)
 {
     setTexture(texture);
     setEnemyList(enemyList);
@@ -26,12 +26,12 @@ Enemy::~Enemy()
     delete(motion);
 }
 
-std::vector<Enemy *> *Enemy::getEnemyList() const
+std::vector<Entity *> *Enemy::getEnemyList() const
 {
     return enemyList;
 }
 
-void Enemy::setEnemyList(std::vector<Enemy *> *value)
+void Enemy::setEnemyList(std::vector<Entity *> *value)
 {
     enemyList = value;
 }

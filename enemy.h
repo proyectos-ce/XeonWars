@@ -11,26 +11,22 @@ class Enemy : public Entity
 public:
     Enemy();
     Enemy(sf::Texture texture);
-    Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList);
+    Enemy(sf::Texture texture, std::vector<Entity *> *enemyList);
     ~Enemy();
-    std::vector<Enemy *> *getEnemyList() const;
-    void setEnemyList(std::vector<Enemy *> *value);
+    std::vector<Entity *> *getEnemyList() const;
+    void setEnemyList(std::vector<Entity *> *value);
     bool attack(int damage);
     void update(sf::RenderWindow &window, float time);
     int getTrigger() const;
     void setTrigger(int value);
 
 protected:
-    int shoutDelay;
     int moves=1;
     int trigger=0;
     void shout();
-    std::vector<Enemy *> *enemyList;
+    std::vector<Entity *> *enemyList;
     int getMoves() const;
     void setMoves(int value);
-    //Cannon cannon;
-
-
 };
 
 #endif // ENEMY_H

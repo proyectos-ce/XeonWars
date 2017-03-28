@@ -47,7 +47,7 @@ Enemy *Cannon::getOwner() const
     return owner;
 }
 
-void Cannon::setOwner(Enemy *value)
+void Cannon::setOwner(Entity *value)
 {
     owner = value;
 }
