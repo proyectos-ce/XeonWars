@@ -16,8 +16,6 @@ public:
     void setEnemyList(std::vector<Enemy *> *value);
     bool attack(int damage);
     void update(sf::RenderWindow &window, float time);
-
-
     int getTrigger() const;
     void setTrigger(int value);
 

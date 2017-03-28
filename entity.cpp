@@ -112,9 +112,23 @@ void Entity::setSpeed(int value)
     speed = value;
 }
 
-void Entity::setPosition(int x, int y)
+void Entity::setPosition(sf::Vector2f postion)
 {
-    sprite.setPosition(x,y);
+    sprite.setPosition(postion);
+}
+
+sf::Vector2f Entity::getPosition()
+{
+    return sprite.getPosition();
+}
+
+sf::Vector2f Entity::getCenterPosition()
+{
+    sf::Vector2f position = sprite.getPosition();
+    position.x+=(texture.getSize().x/texturesAmount/2);
+    position.y+=(texture.getSize().y/texturesAmount/2);
+    return position;
+
 }
 
 

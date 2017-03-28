@@ -34,7 +34,7 @@ int main(){
     enemyShip1.setTexturesAmount(4);
     enemyShip1.setMotion(enemyShipMotion);
     enemyShip1.setSpeed(3);
-    enemyShip1.setPosition(300,0);
+    enemyShip1.setPosition(sf::Vector2f(300,0));
     enemyShip1.setTrigger(30);
 
     enemyShipMotion = motionGenerator.createSimpleMotion();
@@ -42,7 +42,7 @@ int main(){
     enemyShip2.setTexturesAmount(4);
     enemyShip2.setMotion(enemyShipMotion);
     enemyShip2.setSpeed(3);
-    enemyShip2.setPosition(100,0);
+    enemyShip2.setPosition(sf::Vector2f(100,0));
     enemyShip2.setTrigger(20);
 
 
@@ -51,7 +51,7 @@ int main(){
     enemyShip3.setTexturesAmount(4);
     enemyShip3.setMotion(enemyShipMotion);
     enemyShip3.setSpeed(3);
-    enemyShip3.setPosition(700,200);
+    enemyShip3.setPosition(sf::Vector2f(700,200));
     enemyShip3.setTrigger(10);
 
 

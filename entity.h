@@ -31,7 +31,9 @@ public:
     int getSpeed() const;
     void setSpeed(int value);
 
-    void setPosition(int x, int y);
+    void setPosition(sf::Vector2f postion);
+    sf::Vector2f getPosition();
+    sf::Vector2f getCenterPosition();
 
 protected:
     int life;

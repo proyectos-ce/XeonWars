@@ -72,12 +72,13 @@ void Enemy::shout()
         Enemy *newBullet = new Enemy(bulletTexture, enemyList);
         newBullet->setTexturesAmount(1);
         MotionGenerator motionGenerator;
-        newBullet->setPosition(sprite.getPosition().x, sprite.getPosition().y);
+        newBullet->setPosition(getCenterPosition());
         Motion *enemyShipMotion = motionGenerator.createSimpleMotion();
         newBullet->setMotion(enemyShipMotion);
         newBullet->setSpeed(6);
-    }
 
+
+}
 }
 
 int Enemy::getMoves() const
