@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include "Screens.h"
+#include "Utils.h"
 
 
 using namespace sf;
@@ -12,24 +13,11 @@ int main(){
     std::vector<Screen*> screens;
     int screen = 0;
 
-    
-
-    sf::VideoMode resolution = sf::VideoMode::getDesktopMode();
-    RenderWindow window(VideoMode(resX,resY), "XeonWars", sf::Style::Default);
+    RenderWindow window(VideoMode(1366,768), "XeonWars", sf::Style::Fullscreen);
+    window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
     window.setMouseCursorVisible(false);
     window.requestFocus();
-
-    int newH = (width*resY)/resX;
-    int displace = (newH - height)/(-2);
-
-    v1 = sf::View(sf::FloatRect(0,displace,width,newH));
-    v1.setCenter(width/2,height/2);
-
-    window.setView(v1);
-
-    height = resY;
-    width = resX;
 
     //Screens preparations
     Menu menu;

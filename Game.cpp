@@ -2,6 +2,8 @@
 // Created by jimena on 3/25/17.
 //
 #include "Game.h"
+#include "Utils.h"
+
 Game::Game() {
     cout<<"Juego Creado"<<endl;
 }
@@ -34,6 +36,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 tex.loadFromImage(img);
                 return(0);
             }
+            if (event.type == sf::Event::Resized)
+                window.setView(Utils::calcView(sf::Vector2u(event.size.width, event.size.height), Utils::designedsize));
         }
 
         Time time = clock.getElapsedTime();

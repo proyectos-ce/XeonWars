@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Menu.h"
+#include "Utils.h"
 
 Menu::Menu()
 {
@@ -52,6 +53,8 @@ int Menu::run(sf::RenderWindow &App, sf::Texture &tex)
     Menu3.setString("Continue");
     Menu3.setPosition({ 280.f, 160.f });
 
+
+
     if (playing)
     {
         alpha = alpha_max;
@@ -62,6 +65,9 @@ int Menu::run(sf::RenderWindow &App, sf::Texture &tex)
         //Verifying events
         while (App.pollEvent(Event))
         {
+
+            if (Event.type == sf::Event::Resized)
+                App.setView(Utils::calcView(sf::Vector2u(Event.size.width, Event.size.height), Utils::designedsize));
             // Window closed
             if (Event.type == sf::Event::Closed)
             {

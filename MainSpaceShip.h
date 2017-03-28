@@ -24,7 +24,7 @@ private:
     int scoreForLifes;
 
     const float speed = 6;
-    const float maxSpeed = speed*8;
+    const float maxSpeed = speed*10;
     sf::Vector2f velocity;
 
 };
