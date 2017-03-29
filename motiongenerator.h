@@ -9,7 +9,7 @@ class MotionGenerator
 {
 public:
     static Motion *createSimpleMotion();
-    static Motion *createLinearMotion(int angle);
+    static Motion *createLinearMotion(double angle);
     static Motion *createSinMotion(int scale);
 
     class SimpleMotion : public Motion{
@@ -22,10 +22,10 @@ public:
     class LinearMotion : public Motion{
 
        public:
-        LinearMotion(int angle);
+        LinearMotion(double angle);
         sf::Vector2f getNext(int speed);
        protected:
-        int angle;
+        double angle;
     };
 
     class SinMotion : public Motion{

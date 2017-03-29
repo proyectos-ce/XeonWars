@@ -20,7 +20,7 @@ void Entity::render(sf::RenderWindow &window)
 
 void Entity::kill()
 {
-    setLife(0);
+    //setLife(0);
 }
 
 Motion *Entity::getMotion() const
@@ -75,32 +75,6 @@ void Entity::updateTexture(int value)
     }
 }
 
-int Entity::getLife() const
-{
-    return life;
-}
-
-void Entity::setLife(int value)
-{
-    life = value;
-}
-
-bool Entity::attack(int damage)
-{
-    bool result=false;
-    if(damage==-1){
-        kill();
-        result=true;
-    }
-    else if(damage>0){
-        life-=damage;
-        if(life<=0){
-            kill();
-            result=true;
-        }
-    }
-    return result;
-}
 
 int Entity::getSpeed() const
 {

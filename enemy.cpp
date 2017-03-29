@@ -18,9 +18,10 @@ Enemy::Enemy(sf::Texture texture, std::vector<Entity *> *enemyList)
     setTexture(texture);
     setEnemyList(enemyList);
     enemyList->push_back(this);
-
+    cannon.setBulletTextureFilename("Resources/laserRed.png");
+    cannon.setOwner(this);
+    cannon.setEnemyList(enemyList);
 }
-
 Enemy::~Enemy()
 {
     delete(motion);
@@ -38,7 +39,21 @@ void Enemy::setEnemyList(std::vector<Entity *> *value)
 
 bool Enemy::attack(int damage)
 {
-    Entity::attack(damage);
+
+    bool result=false;
+    if(damage==-1){
+        kill();
+        result=true;
+    }
+    else if(damage>0){
+        life-=damage;
+        if(life<=0){
+            kill();
+            result=true;
+        }
+    }
+    return result;
+
 }
 
 void Enemy::update(sf::RenderWindow &window, float time)
@@ -65,19 +80,7 @@ void Enemy::setTrigger(int value)
 
 void Enemy::shout()
 {
-    std::cout<<(enemyList!=NULL)<<std::endl;
-    if(enemyList!=NULL){
-        sf::Texture bulletTexture;
-        bulletTexture.loadFromFile("Resources/laserRed.png");
-        Enemy *newBullet = new Enemy(bulletTexture, enemyList);
-        newBullet->sprite.setColor(sf::Color(255, 255, 255, 255));
-        newBullet->setTexturesAmount(1);
-        MotionGenerator motionGenerator;
-        newBullet->setPosition(getCenterPosition());
-        Motion *enemyShipMotion = motionGenerator.createSimpleMotion();
-        newBullet->setMotion(enemyShipMotion);
-        newBullet->setSpeed(6);
-}
+    cannon.shout();
 
 }
 

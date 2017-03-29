@@ -1,4 +1,5 @@
 #include "motiongenerator.h"
+#define PI 3.14159265
 
 Motion *MotionGenerator::createSimpleMotion()
 {
@@ -6,7 +7,7 @@ Motion *MotionGenerator::createSimpleMotion()
     return newSimple;
 }
 
-Motion *MotionGenerator::createLinearMotion(int angle)
+Motion *MotionGenerator::createLinearMotion(double angle)
 {
     Motion *newLinear =  new MotionGenerator::LinearMotion(angle);
     return newLinear;
@@ -20,16 +21,16 @@ Motion *MotionGenerator::createSinMotion(int scale)
 }
 
 
-MotionGenerator::LinearMotion::LinearMotion(int angle)
+MotionGenerator::LinearMotion::LinearMotion(double angle)
 {
-    this->angle=angle;
+    this->angle=(angle*PI/180.0);
 }
 
 sf::Vector2f MotionGenerator::MotionGenerator::LinearMotion::getNext(int speed)
 {
     sf::Vector2f newPos;
-    newPos.x= speed*cos(angle);
-    newPos.y= speed*sin(angle);
+    newPos.x= speed*sin(angle);
+    newPos.y= speed*cos(angle);
     x+=speed;
     return newPos;
 }
