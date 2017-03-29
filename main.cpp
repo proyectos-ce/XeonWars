@@ -8,7 +8,7 @@
 #include "entity.h"
 #include "enemy.h"
 #include "motion.h"
-#include "motiongenerator.h"
+//#include "motiongenerator.h"
 #define RES nullptr
 
 using namespace sf;
