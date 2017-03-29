@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include "entity.h"
 #include "motion.h"
-//#include "motiongenerator.h"
 #include "cannon.h"
 
 class Enemy : public Entity

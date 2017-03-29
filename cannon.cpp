@@ -20,8 +20,8 @@ void Cannon::shout()
 {
 
     for (int i = -1; i < 2; ++i) {
-    Motion *bulletMotion = motionGenerator.createLinearMotion(5*i);
-    //Motion *bulletMotion = motionGenerator.createLinearMotion(15);
+    Motion *bulletMotion = motionFactory.createLinearMotion(5*i);
+    //Motion *bulletMotion = MotionFactory.createLinearMotion(15);
         shoutBullet(8, bulletMotion);
     }
 

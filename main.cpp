@@ -1,14 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <time.h>
-#include <list>
 #include <iostream>
 #include "Background.h"
 #include "MainSpaceShip.h"
 #include "entity.h"
 #include "enemy.h"
 #include "motion.h"
-//#include "motiongenerator.h"
 #define RES nullptr
 
 using namespace sf;
@@ -23,13 +21,13 @@ int main(){
 
 
     Texture enemyShipTexture;
-    MotionGenerator motionGenerator;
+    MotionFactory motionFactory;
 
     std::vector<Entity *> enemyList;
 
 
 
-    Motion *enemyShipMotion = motionGenerator.createLinearMotion(45);
+    Motion *enemyShipMotion = motionFactory.createLinearMotion(45);
     enemyShipTexture.loadFromFile("Resources/FramesNave.png");
     Enemy enemyShip1(enemyShipTexture, &enemyList);
     enemyShip1.setTexturesAmount(4);
@@ -38,7 +36,7 @@ int main(){
     enemyShip1.setPosition(sf::Vector2f(300,0));
     enemyShip1.setTrigger(30);
 
-    enemyShipMotion = motionGenerator.createSimpleMotion();
+    enemyShipMotion = motionFactory.createSimpleMotion();
     Enemy enemyShip2(enemyShipTexture, &enemyList);
     enemyShip2.setTexturesAmount(4);
     enemyShip2.setMotion(enemyShipMotion);
@@ -47,7 +45,7 @@ int main(){
     enemyShip2.setTrigger(20);
 
 
-    enemyShipMotion = motionGenerator.createSinMotion(200);
+    enemyShipMotion = motionFactory.createSinMotion(200);
     Enemy enemyShip3(enemyShipTexture, &enemyList);
     enemyShip3.setTexturesAmount(4);
     enemyShip3.setMotion(enemyShipMotion);

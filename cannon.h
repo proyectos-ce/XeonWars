@@ -3,7 +3,6 @@
 #include "entity.h"
 #include "bullet.h"
 #include "motion.h"
-//#include "motiongenerator.h"
 #include <SFML/Graphics.hpp>
 
 class Cannon
@@ -13,7 +12,7 @@ public:
     ~Cannon();
     Cannon(Entity *owner, std::string bulletTextureFilename);
     void shout();
-    MotionGenerator motionGenerator;
+    MotionFactory motionFactory;
     Entity *getOwner() const;
     void setOwner(Entity *value);
     std::string getBulletTextureFilename() const;
@@ -27,6 +26,9 @@ private:
     std::string bulletTextureFilename;
     Entity *owner;
     std::vector<Entity *> *enemyList;
+
+};
+class CannonFactory{
 
 };
 

@@ -62,7 +62,6 @@ void Enemy::update(sf::RenderWindow &window, float time)
     Entity::update(window, time);
     if(trigger!=0 && moves%trigger==0){
         shout();
-        std::cout<<moves<<"shout\n";
         updateTexture(1);
     }
     moves++;

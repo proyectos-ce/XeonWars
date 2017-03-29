@@ -20,32 +20,32 @@ void Motion::setX(int value)
 
 
 
-Motion *MotionGenerator::createSimpleMotion()
+Motion *MotionFactory::createSimpleMotion()
 {
-    Motion *newSimple =  new MotionGenerator::SimpleMotion();
+    Motion *newSimple =  new SimpleMotion();
     return newSimple;
 }
 
-Motion *MotionGenerator::createLinearMotion(double angle)
+Motion *MotionFactory::createLinearMotion(double angle)
 {
-    Motion *newLinear =  new MotionGenerator::LinearMotion(angle);
+    Motion *newLinear =  new LinearMotion(angle);
     return newLinear;
 
 }
 
-Motion *MotionGenerator::createSinMotion(int scale)
+Motion *MotionFactory::createSinMotion(int scale)
 {
-    Motion *newSin =  new MotionGenerator::SinMotion(scale);
+    Motion *newSin =  new SinMotion(scale);
     return newSin;
 }
 
 
-MotionGenerator::LinearMotion::LinearMotion(double angle)
+LinearMotion::LinearMotion(double angle)
 {
     this->angle=(angle*PI/180.0);
 }
 
-sf::Vector2f MotionGenerator::MotionGenerator::LinearMotion::getNext(int speed)
+sf::Vector2f LinearMotion::getNext(int speed)
 {
     sf::Vector2f newPos;
     newPos.x= speed*sin(angle);
@@ -55,13 +55,13 @@ sf::Vector2f MotionGenerator::MotionGenerator::LinearMotion::getNext(int speed)
 }
 
 
-MotionGenerator::SinMotion::SinMotion(int scale)
+SinMotion::SinMotion(int scale)
 {
     this->scale=scale;
     x=0.01;
 }
 
-sf::Vector2f MotionGenerator::MotionGenerator::SinMotion::getNext(int speed)
+sf::Vector2f SinMotion::getNext(int speed)
 {
     sf::Vector2f newPos;
     double sin1 =sin((x+1)/15.0), sin2 = sin(x/15.0);
@@ -72,11 +72,11 @@ sf::Vector2f MotionGenerator::MotionGenerator::SinMotion::getNext(int speed)
 
 }
 
-MotionGenerator::SimpleMotion::SimpleMotion()
+SimpleMotion::SimpleMotion()
 {
 }
 
-sf::Vector2f MotionGenerator::SimpleMotion::getNext(int speed)
+sf::Vector2f SimpleMotion::getNext(int speed)
 {
     x+=speed;
     sf::Vector2f newPos;
