@@ -18,9 +18,6 @@ Enemy::Enemy(sf::Texture texture, std::vector<Entity *> *enemyList)
     setTexture(texture);
     setEnemyList(enemyList);
     enemyList->push_back(this);
-    cannon.setBulletTextureFilename("Resources/laserRed.png");
-    cannon.setOwner(this);
-    cannon.setEnemyList(enemyList);
 }
 Enemy::~Enemy()
 {
@@ -79,7 +76,7 @@ void Enemy::setTrigger(int value)
 
 void Enemy::shout()
 {
-    cannon.shout();
+    cannon->shout();
 
 }
 
@@ -91,6 +88,18 @@ int Enemy::getMoves() const
 void Enemy::setMoves(int value)
 {
     moves = value;
+}
+
+Cannon *Enemy::getCannon() const
+{
+    return cannon;
+}
+
+void Enemy::setCannon(Cannon *value)
+{
+    cannon = value;
+    cannon->setOwner(this);
+    cannon->setEnemyList(enemyList);
 }
 
 

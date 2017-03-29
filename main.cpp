@@ -7,6 +7,7 @@
 #include "entity.h"
 #include "enemy.h"
 #include "motion.h"
+#include "cannon.h"
 #define RES nullptr
 
 using namespace sf;
@@ -26,33 +27,80 @@ int main(){
     std::vector<Entity *> enemyList;
 
 
+    CannonFactory cannonFactory;
 
     Motion *enemyShipMotion = motionFactory.createLinearMotion(45);
+
+    Cannon *enemyShipCannon = cannonFactory.createSimpleCannon();
     enemyShipTexture.loadFromFile("Resources/FramesNave.png");
+
+    /*
+    enemyShipCannon->setBulletDamage(30);
+    enemyShipCannon->setBulletSpeed(6);
+    enemyShipCannon->setEnemyList(&enemyList);
+
     Enemy enemyShip1(enemyShipTexture, &enemyList);
     enemyShip1.setTexturesAmount(4);
     enemyShip1.setMotion(enemyShipMotion);
     enemyShip1.setSpeed(3);
     enemyShip1.setPosition(sf::Vector2f(300,0));
     enemyShip1.setTrigger(30);
+    enemyShip1.setCannon(enemyShipCannon);
+*/
+
+
+
 
     enemyShipMotion = motionFactory.createSimpleMotion();
+
+    enemyShipCannon = cannonFactory.createSprayCannon(5,4);
+    enemyShipCannon->setBulletDamage(30);
+    enemyShipCannon->setBulletSpeed(6);
+
+
     Enemy enemyShip2(enemyShipTexture, &enemyList);
     enemyShip2.setTexturesAmount(4);
     enemyShip2.setMotion(enemyShipMotion);
     enemyShip2.setSpeed(3);
     enemyShip2.setPosition(sf::Vector2f(100,0));
     enemyShip2.setTrigger(20);
+    enemyShip2.setCannon(enemyShipCannon);
 
 
-    enemyShipMotion = motionFactory.createSinMotion(200);
+
+
+    enemyShipMotion = motionFactory.createSimpleMotion();
+    enemyShipCannon = cannonFactory.createSprayCannon(2,3);
+    enemyShipCannon->setBulletDamage(30);
+    enemyShipCannon->setBulletSpeed(12);
+
     Enemy enemyShip3(enemyShipTexture, &enemyList);
     enemyShip3.setTexturesAmount(4);
     enemyShip3.setMotion(enemyShipMotion);
     enemyShip3.setSpeed(3);
-    enemyShip3.setPosition(sf::Vector2f(700,200));
-    enemyShip3.setTrigger(10);
+    enemyShip3.setPosition(sf::Vector2f(300,0));
+    enemyShip3.setTrigger(20);
+    enemyShip3.setCannon(enemyShipCannon);
 
+
+
+/*
+    enemyShipMotion = motionFactory.createSimpleMotion();
+
+    enemyShipCannon = cannonFactory.createSimpleCannon();
+    enemyShipCannon->setBulletDamage(30);
+    enemyShipCannon->setBulletSpeed(6);
+
+    enemyShipMotion = motionFactory.createSinMotion(200);
+    Enemy enemyShip4(enemyShipTexture, &enemyList);
+    enemyShip4.setTexturesAmount(4);
+    enemyShip4.setMotion(enemyShipMotion);
+    enemyShip4.setSpeed(3);
+    enemyShip4.setPosition(sf::Vector2f(700,200));
+    enemyShip4.setTrigger(10);
+    enemyShip4.setCannon(enemyShipCannon);
+
+*/
 
 
     Background background;
@@ -82,16 +130,7 @@ int main(){
         background.render(window);
         ownSpaceShip.update(window, time.asMilliseconds());
         ownSpaceShip.render(window);
-           /*
-        enemyShip1.update(window, time.asMilliseconds());
-        enemyShip1.render(window);
 
-        enemyShip2.update(window, time.asMilliseconds());
-        enemyShip2.render(window);
-
-        enemyShip3.update(window, time.asMilliseconds());
-        enemyShip3.render(window);
-        */
         for (int i = 0; i < enemyList.size(); ++i) {
             enemyList[i]->update(window, time.asMilliseconds());
             enemyList[i]->render(window);

@@ -48,9 +48,6 @@ public:
     static Motion *createSimpleMotion();
     static Motion *createLinearMotion(double angle);
     static Motion *createSinMotion(int scale);
-
-
-
 };
 
 

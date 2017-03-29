@@ -19,6 +19,9 @@ public:
     int getTrigger() const;
     void setTrigger(int value);
 
+    Cannon *getCannon() const;
+    void setCannon(Cannon *value);
+
 protected:
     int life = 100;
     int moves=1;
@@ -27,7 +30,7 @@ protected:
     std::vector<Entity *> *enemyList;
     int getMoves() const;
     void setMoves(int value);
-    Cannon cannon;
+    Cannon *cannon;
 };
 
 #endif // ENEMY_H
