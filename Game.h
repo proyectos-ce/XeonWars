@@ -12,6 +12,7 @@
 #include "MainSpaceShip.h"
 #include "List.h"
 #include "Screen.h"
+#include "powerUp.h"
 
 class Game : public Screen {
 
