@@ -35,9 +35,15 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
                 return(0);
-            }
-            if (event.type == sf::Event::Resized)
+
+            if (event.type == sf::Event::Resized) {
                 window.setView(Utils::calcView(sf::Vector2u(event.size.width, event.size.height), Utils::designedsize));
+            }
+
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space) {
+                ownSpaceShip.usePowerUp();
+            }
+
         }
 
         Time time = clock.getElapsedTime();

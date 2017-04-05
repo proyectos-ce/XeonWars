@@ -14,9 +14,10 @@ template <class T> class Queue {
 
 public:
     Queue<T>();
-    void dequeue();
+    T dequeue();
     void enqueue(T data);
     void printQueue();
+    bool isEmpty();
 
 };
 
