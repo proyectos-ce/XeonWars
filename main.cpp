@@ -1,27 +1,42 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <time.h>
 #include <iostream>
-#include "Background.h"
-#include "MainSpaceShip.h"
-#include "List.h"
-#include "Game.h"
-#include "powerUp.h"
+#include "Screens.h"
+#include "Utils.h"
 
 
-#define RES nullptr
 
 using namespace sf;
 
 
 int main(){
-   RenderWindow window(VideoMode(1200, 800), "XeonWars");
+
+    std::vector<Screen*> screens;
+    int screen = 0;
+
+    RenderWindow window(VideoMode(1366,768), "XeonWars", sf::Style::Fullscreen);
+    window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
+    window.setMouseCursorVisible(false);
+    window.requestFocus();
 
-    Game application;
-    application.run(window);
+    //Screens preparations
+    Menu menu;
+    screens.push_back(&menu);
+    Game game;
+    screens.push_back(&game);
+
+    Texture pauseTexture;
 
 
+    //Main loop
+    while (screen >= 0)
+    {
+        if (screen == 0)
+            game.pauseGame();
+        screen = screens[screen]->run(window, pauseTexture);
+    }
 
-    return 0;
+    return EXIT_SUCCESS;
+
 }

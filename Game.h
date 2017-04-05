@@ -11,18 +11,21 @@
 #include "Background.h"
 #include "MainSpaceShip.h"
 #include "List.h"
+#include "Screen.h"
 
-class Game{
+class Game : public Screen {
 
     Clock clock;
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
+    bool running = true;
 
 public:
     Game();
-    void run(RenderWindow &window);
+    int run(RenderWindow &window, Texture &tex);
 
+    void pauseGame();
 };
 
 
