@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include "Queue.h"
 #include "powerUp.h"
+#include "math.h"
 
 using namespace sf;
 
