@@ -22,6 +22,7 @@ public:
     void shield();
 
 
+    const Sprite &getSprite();
 
 private:
     Sprite SOwnSpaceShip;

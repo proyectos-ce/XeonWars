@@ -154,3 +154,7 @@ bool MainSpaceShip::gameOver() {
     return result;
 }
 
+const Sprite &MainSpaceShip::getSprite() {
+    return SOwnSpaceShip;
+}
+
