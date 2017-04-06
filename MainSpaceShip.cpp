@@ -150,3 +150,4 @@ bool MainSpaceShip::gameOver() {
     }
     return result;
 }
+

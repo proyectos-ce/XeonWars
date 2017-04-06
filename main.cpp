@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+
 #include <iostream>
 #include "Screens.h"
 #include "Utils.h"
@@ -13,6 +14,7 @@ int main(){
 
     std::vector<Screen*> screens;
     int screen = 0;
+
 
     RenderWindow window(VideoMode(1366,768), "XeonWars", sf::Style::Fullscreen);
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
@@ -29,6 +31,7 @@ int main(){
     Texture pauseTexture;
 
 
+
     //Main loop
     while (screen >= 0)
     {
@@ -40,3 +43,4 @@ int main(){
     return EXIT_SUCCESS;
 
 }
+
