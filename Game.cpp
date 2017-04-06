@@ -169,28 +169,28 @@ int Game::run(RenderWindow &window, Texture &tex) {
             playerbulletList[i]->render(window);
 
         }
-        float score = 000000;
+
         sf::Font font;
         if (!font.loadFromFile("Resources/menu/verdana.ttf"))
         {
             // error...
         }
         sf::Text text;
-        text.setPosition(100,100);
+        text.setPosition(20,10);
 // select the font
         text.setFont(font);
 // set the string to display
         text.setString("Score: "+to_string(score));
 // set the character size
-        text.setCharacterSize(24); // in pixels, not points!
+        text.setCharacterSize(30); // in pixels, not points!
 // set the color
-        text.setColor(sf::Color::Red);
+        text.setColor(sf::Color::White);
 // set the text style
-        text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+        text.setStyle(sf::Text::Bold );
 // inside the main loop, between window.clear() and window.display()
         window.draw(text);
 
-
+        score++;
         collisionManager.checkCollisions();
 
         clock.restart().asMilliseconds();

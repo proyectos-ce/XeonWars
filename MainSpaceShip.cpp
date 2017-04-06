@@ -44,7 +44,16 @@ void MainSpaceShip::setplayerbulletList(std::vector<Entity *> *value)
     shipCannon->setEnemyList(playerbulletList);
 
 }
-
+void MainSpaceShip::lifeManager(int daño){
+    lifeLevel-=daño;
+    if (lifeLevel<=0){
+        lifes -=1;
+        lifeLevel=100;
+        if (lifes <= 0){
+            gameOver();
+        }
+    }
+}
 
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
@@ -165,11 +174,7 @@ void MainSpaceShip::shield() {
 }
 
 bool MainSpaceShip::gameOver() {
-    bool result = false;
-    if(lifes <=0){
-        result = true;
-    }
-    return result;
+   cout << "aqui hay que programar que termine el juego" << endl;
 }
 
 const Sprite &MainSpaceShip::getSprite() {

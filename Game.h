@@ -23,6 +23,7 @@
 
 class Game : public Screen {
 
+    int score = 0;
     Clock clock;
     MainSpaceShip ownSpaceShip;
     Background background;

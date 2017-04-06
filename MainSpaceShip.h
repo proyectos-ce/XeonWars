@@ -23,6 +23,7 @@ public:
     bool gameOver();
     void shield();
     void playerShoot();
+    void lifeManager(int);
 
     std::vector<Entity *> *getplayerbulletList() const;
     void setplayerbulletList(std::vector<Entity *> *value);
