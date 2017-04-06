@@ -14,8 +14,6 @@ public:
     ~Cannon();
     virtual void shout();
     MotionFactory motionFactory;
-    Entity *getOwner() const;
-    void setOwner(Entity *value);
     std::string getBulletTextureFilename() const;
     void setBulletTextureFilename(const std::string &value);
     std::vector<Entity *> *getEnemyList() const;
@@ -26,13 +24,17 @@ public:
     int getBulletSpeed() const;
     void setBulletSpeed(int value);
 
+    sf::Sprite *getOwnerSprite() const;
+    void setOwnerSprite(sf::Sprite *value);
+
 protected:
     int bulletDamage;
     int bulletSpeed;
     void shoutBullet(int speed, Motion *bulletMotion);
     std::string bulletTextureFilename;
-    Entity *owner;
+    sf::Sprite *ownerSprite;
     std::vector<Entity *> *enemyList;
+    sf::Vector2f getCenterPosition();
 
 };
 

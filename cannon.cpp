@@ -21,8 +21,27 @@ void Cannon::shoutBullet(int speed, Motion *bulletMotion)
     bulletTexture.loadFromFile(bulletTextureFilename);
     Bullet *newBullet = new Bullet(bulletTexture, bulletMotion, bulletDamage, speed);
     newBullet->setTexturesAmount(1);
-    newBullet->setPosition(owner->getCenterPosition());
+    newBullet->setPosition(getCenterPosition());
     enemyList->push_back(newBullet);
+}
+
+sf::Vector2f Cannon::getCenterPosition()
+{
+    sf::FloatRect rect =   ownerSprite->getGlobalBounds();
+    sf::Vector2f centerPosition;
+    centerPosition.x = rect.left+rect.width/2;
+    centerPosition.y = rect.top+rect.height/2;
+    return centerPosition;
+}
+
+sf::Sprite *Cannon::getOwnerSprite() const
+{
+    return ownerSprite;
+}
+
+void Cannon::setOwnerSprite(sf::Sprite *value)
+{
+    ownerSprite = value;
 }
 
 std::vector<Entity *> *Cannon::getEnemyList() const
@@ -63,16 +82,6 @@ std::string Cannon::getBulletTextureFilename() const
 void Cannon::setBulletTextureFilename(const std::string &value)
 {
     bulletTextureFilename = value;
-}
-
-Entity *Cannon::getOwner() const
-{
-    return owner;
-}
-
-void Cannon::setOwner(Entity *value)
-{
-    owner = value;
 }
 
 SimpleCannon::SimpleCannon()

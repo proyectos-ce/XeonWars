@@ -98,7 +98,7 @@ Cannon *Enemy::getCannon() const
 void Enemy::setCannon(Cannon *value)
 {
     cannon = value;
-    cannon->setOwner(this);
+    cannon->setOwnerSprite(&(this->sprite));
     cannon->setEnemyList(enemyList);
 }
 
