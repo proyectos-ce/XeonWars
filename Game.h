@@ -13,6 +13,10 @@
 #include "List.h"
 #include "Screen.h"
 #include "powerUp.h"
+#include "entity.h"
+#include "enemy.h"
+#include "motion.h"
+#include "cannon.h"
 
 class Game : public Screen {
 
