@@ -29,11 +29,15 @@ public:
 
 
     const Sprite &getSprite();
+    bool attack(int damage);
+    int getLifeLevel() const;
+    void setLifeLevel(int value);
 
 private:
     Sprite SOwnSpaceShip;
     Texture TOwnSpaceShip;
     int lifes;
+    int lifeLevel=100;
     int globalScore;
     int scoreForLifes;
     bool shieldActivated;

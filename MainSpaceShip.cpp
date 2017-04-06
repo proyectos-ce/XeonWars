@@ -178,3 +178,18 @@ void MainSpaceShip::playerShoot() {
     shipCannon->shout();
     cout << "disparo" << endl;
 }
+bool MainSpaceShip::attack(int damage)
+{
+
+}
+
+int MainSpaceShip::getLifeLevel() const
+{
+    return lifeLevel;
+}
+
+void MainSpaceShip::setLifeLevel(int value)
+{
+    lifeLevel = value;
+}
+

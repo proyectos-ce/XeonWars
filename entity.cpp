@@ -4,6 +4,11 @@ Entity::Entity()
 
 }
 
+Entity::~Entity()
+{
+    std::cout<<"destruyendo"<<std::endl;
+}
+
 
 
 void Entity::update(sf::RenderWindow &window, float time)
@@ -104,5 +109,12 @@ sf::Vector2f Entity::getCenterPosition()
     return position;
 
 }
+
+char Entity::getType() const
+{
+    return 'U';
+}
+
+
 
 

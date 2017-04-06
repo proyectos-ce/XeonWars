@@ -5,6 +5,11 @@ Bullet::Bullet()
 
 }
 
+Bullet::~Bullet()
+{
+
+}
+
 Bullet::Bullet(sf::Texture texture, Motion *motion , int damage, int speed)
 {
     setTexture(texture);
@@ -21,4 +26,9 @@ int Bullet::getDamage() const
 void Bullet::setDamage(int value)
 {
     damage = value;
+}
+
+char Bullet::getType() const
+{
+    return 'B';
 }

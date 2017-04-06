@@ -5,6 +5,8 @@
 
 
 
+#include "Utils.h"
+
 Game::Game() {
     cout<<"Juego Creado"<<endl;
 }
@@ -31,6 +33,12 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     Cannon *enemyShipCannon = cannonFactory.createSimpleCannon();
     enemyShipTexture.loadFromFile("Resources/FramesNave.png");
+
+
+    CollisionManager collisionManager;
+    collisionManager.setEnemyList(&enemyList);
+    collisionManager.setPlayerShip(&ownSpaceShip);
+    //collisionManager.setPlayerShip(&ownSpaceShip);
 
     /*
     enemyShipCannon->setBulletDamage(30);
@@ -70,12 +78,12 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipMotion = motionFactory.createSimpleMotion();
     enemyShipCannon = cannonFactory.createSprayCannon(2,3);
     enemyShipCannon->setBulletDamage(30);
-    enemyShipCannon->setBulletSpeed(12);
+    enemyShipCannon->setBulletSpeed(3);
 
     Enemy enemyShip3(enemyShipTexture, &enemyList);
     enemyShip3.setTexturesAmount(4);
     enemyShip3.setMotion(enemyShipMotion);
-    enemyShip3.setSpeed(3);
+    enemyShip3.setSpeed(2);
     enemyShip3.setPosition(sf::Vector2f(300,0));
     enemyShip3.setTrigger(20);
     enemyShip3.setCannon(enemyShipCannon);
@@ -152,11 +160,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
         for (int i = 0; i < enemyList.size(); ++i) {
             enemyList[i]->update(window, time.asMilliseconds());
             enemyList[i]->render(window);
+            //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
-
-
-        // std::cout << Collision::PixelPerfectTest(enemyShip2.getSprite(), ownSpaceShip.getSprite()) << std::endl;
+        collisionManager.checkCollisions();
 
         clock.restart().asMilliseconds();
 
