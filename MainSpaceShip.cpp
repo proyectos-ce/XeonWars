@@ -158,3 +158,18 @@ const Sprite &MainSpaceShip::getSprite() {
     return SOwnSpaceShip;
 }
 
+bool MainSpaceShip::attack(int damage)
+{
+
+}
+
+int MainSpaceShip::getLifeLevel() const
+{
+    return lifeLevel;
+}
+
+void MainSpaceShip::setLifeLevel(int value)
+{
+    lifeLevel = value;
+}
+

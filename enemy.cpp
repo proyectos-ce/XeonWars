@@ -102,5 +102,13 @@ void Enemy::setCannon(Cannon *value)
     cannon->setEnemyList(enemyList);
 }
 
+char Enemy::getType() const
+{
+    return 'E';
+}
+
+
+
+
 
 

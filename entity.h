@@ -7,6 +7,7 @@ class Entity
 {
 public:
     Entity();
+    ~Entity();
 
     virtual void update(sf::RenderWindow &window, float time);
     void render(sf::RenderWindow &window);
@@ -25,6 +26,7 @@ public:
     void setPosition(sf::Vector2f postion);
     sf::Vector2f getPosition();
     sf::Vector2f getCenterPosition();
+    virtual char getType() const;
 
 protected:
     int speed=10;

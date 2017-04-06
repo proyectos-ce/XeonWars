@@ -21,7 +21,7 @@ public:
 
     Cannon *getCannon() const;
     void setCannon(Cannon *value);
-
+    char getType() const;
 protected:
     int life = 100;
     int moves=1;
