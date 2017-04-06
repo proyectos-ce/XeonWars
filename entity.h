@@ -28,6 +28,10 @@ public:
     sf::Vector2f getCenterPosition();
     virtual char getType() const;
 
+
+    virtual bool attack(int damage);
+    virtual int getDamage() const;
+
 protected:
     int speed=10;
     int texturesAmount=2;

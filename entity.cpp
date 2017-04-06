@@ -115,6 +115,16 @@ char Entity::getType() const
     return 'U';
 }
 
+bool Entity::attack(int damage)
+{
+
+}
+
+int Entity::getDamage() const
+{
+
+}
+
 
 
 

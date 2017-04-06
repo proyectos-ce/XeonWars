@@ -18,14 +18,42 @@ void CollisionManager::checkCollisions()
     for(int i=0;i<enemyList->size();i++){
 
         if( enemyList->operator[](i)->getType()=='B'  &   Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())){
-            std::cout<<"choque"<<std::endl;
+            std::cout<<"choque bala"<<std::endl;
             Entity *toDelete = (enemyList->operator[](i));
 
             enemyList->erase(enemyList->begin()+i);
             //std::cout<<toDelete->getSpeed()<<std::endl;
             //delete toDelete;
         }
+        else if( enemyList->operator[](i)->getType()=='E'  &   Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())){
+            std::cout<<"choque nave"<<std::endl;
+            //Entity *toDelete = (enemyList->operator[](i));
+
+            enemyList->erase(enemyList->begin()+i);
+            //delete toDelete;
+        }
+
+
     }
+    //player bullets vs enemies
+
+    for(int j=0;j<playerBulletList->size();j++){
+        for(int i=0;i<enemyList->size();i++){
+
+            if( enemyList->operator[](i)->getType()=='E'  &   Collision::PixelPerfectTest(playerBulletList->operator[](j)->getSprite(), enemyList->operator[](i)->getSprite())){
+                if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
+                    enemyList->erase(enemyList->begin()+i);
+                }
+                std::cout<<"choque"<<std::endl;
+                Entity *toDelete = (enemyList->operator[](i));
+                playerBulletList->erase(playerBulletList->begin()+j);
+                break;
+            }
+
+
+        }
+    }
+
 
 }
 

@@ -4,6 +4,7 @@
 #include "MainSpaceShip.h"
 #include "Collision.h"
 #include "iostream"
+#include "bullet.h"
 
 class CollisionManager
 {

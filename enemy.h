@@ -23,7 +23,7 @@ public:
     void setCannon(Cannon *value);
     char getType() const;
 protected:
-    int life = 100;
+    int life = 20;
     int moves=1;
     int trigger=0;
     void shoot();

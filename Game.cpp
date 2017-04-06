@@ -39,7 +39,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
     collisionManager.setPlayerShip(&ownSpaceShip);
-    //collisionManager.setPlayerShip(&ownSpaceShip);
+    collisionManager.setPlayerBulletList(&playerbulletList);
 
     /*
     enemyShipCannon->setBulletDamage(30);

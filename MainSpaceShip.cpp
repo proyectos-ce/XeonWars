@@ -26,7 +26,7 @@ MainSpaceShip::MainSpaceShip() {
 
     shipCannon = cannonFactory.createSprayCannon(2,3);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
-    shipCannon->setBulletDamage(30);
+    shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(-6);
 
 }
