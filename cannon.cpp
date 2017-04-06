@@ -9,13 +9,13 @@ Cannon::~Cannon()
 
 }
 
-void Cannon::shout()
+void Cannon::shoot()
 {
- std::cout << "shout \n";
+ std::cout << "shoot \n";
 }
 
 
-void Cannon::shoutBullet(int speed, Motion *bulletMotion)
+void Cannon::shootBullet(int speed, Motion *bulletMotion)
 {
     sf::Texture bulletTexture;
     bulletTexture.loadFromFile(bulletTextureFilename);
@@ -94,25 +94,25 @@ SimpleCannon::SimpleCannon()
     setBulletTextureFilename("Resources/laserRed.png");
 }
 
-void SimpleCannon::shout()
+void SimpleCannon::shoot()
 {
     Motion *bulletMotion = motionFactory.createSimpleMotion();
-    shoutBullet(bulletSpeed, bulletMotion);
+    shootBullet(bulletSpeed, bulletMotion);
 
 }
 
-SprayCannon::SprayCannon(int angle, int bulletsByShout)
+SprayCannon::SprayCannon(int angle, int bulletsByshoot)
 {
     setBulletTextureFilename("Resources/laserRed.png");
     setAngle(angle);
-    setBulletsByShout(bulletsByShout);
+    setBulletsByshoot(bulletsByshoot);
 }
 
-void SprayCannon::shout()
+void SprayCannon::shoot()
 {
-    for (int i = -(bulletsByShout/2); i < (bulletsByShout/2+bulletsByShout%2) ; ++i) {
+    for (int i = -(bulletsByshoot/2); i < (bulletsByshoot/2+bulletsByshoot%2) ; ++i) {
     Motion *bulletMotion = motionFactory.createLinearMotion(angle*i);
-       shoutBullet(bulletSpeed, bulletMotion);
+       shootBullet(bulletSpeed, bulletMotion);
     }
 
 }
@@ -127,14 +127,14 @@ void SprayCannon::setAngle(int value)
     angle = value;
 }
 
-int SprayCannon::getBulletsByShout() const
+int SprayCannon::getBulletsByshoot() const
 {
-    return bulletsByShout;
+    return bulletsByshoot;
 }
 
-void SprayCannon::setBulletsByShout(int value)
+void SprayCannon::setBulletsByshoot(int value)
 {
-    bulletsByShout = value;
+    bulletsByshoot = value;
 }
 
 Cannon *CannonFactory::createSimpleCannon()
@@ -143,8 +143,8 @@ Cannon *CannonFactory::createSimpleCannon()
     return newCannon;
 }
 
-Cannon *CannonFactory::createSprayCannon(int angle, int bulletsByShout)
+Cannon *CannonFactory::createSprayCannon(int angle, int bulletsByshoot)
 {
-    Cannon *newCannon =  new SprayCannon(angle, bulletsByShout);
+    Cannon *newCannon =  new SprayCannon(angle, bulletsByshoot);
     return newCannon;
 }

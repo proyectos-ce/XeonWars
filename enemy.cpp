@@ -58,7 +58,7 @@ void Enemy::update(sf::RenderWindow &window, float time)
 
     Entity::update(window, time);
     if(trigger!=0 && moves%trigger==0){
-        shout();
+        shoot();
         updateTexture(1);
     }
     moves++;
@@ -74,9 +74,9 @@ void Enemy::setTrigger(int value)
     trigger = value;
 }
 
-void Enemy::shout()
+void Enemy::shoot()
 {
-    cannon->shout();
+    cannon->shoot();
 
 }
 

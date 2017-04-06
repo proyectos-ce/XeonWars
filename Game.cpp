@@ -159,8 +159,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
         ownSpaceShip.render(window);
 
         for (int i = 0; i < enemyList.size(); ++i) {
-            //enemyList[i]->update(window, time.asMilliseconds());
-            //enemyList[i]->render(window);
+            enemyList[i]->update(window, time.asMilliseconds());
+            enemyList[i]->render(window);
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
