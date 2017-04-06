@@ -159,17 +159,39 @@ int Game::run(RenderWindow &window, Texture &tex) {
         ownSpaceShip.render(window);
 
         for (int i = 0; i < enemyList.size(); ++i) {
-            //enemyList[i]->update(window, time.asMilliseconds());
-            //enemyList[i]->render(window);
+            enemyList[i]->update(window, time.asMilliseconds());
+            enemyList[i]->render(window);
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
         for (int i = 0; i < playerbulletList.size(); ++i) {
             playerbulletList[i]->update(window, time.asMilliseconds());
             playerbulletList[i]->render(window);
+
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
+        float score = 000000;
+        sf::Font font;
+        if (!font.loadFromFile("Resources/menu/verdana.ttf"))
+        {
+            // error...
+        }
+        sf::Text text;
+        text.setPosition(100,100);
+// select the font
+        text.setFont(font);
+// set the string to display
+        text.setString("Score: "+to_string(score));
+// set the character size
+        text.setCharacterSize(24); // in pixels, not points!
+// set the color
+        text.setColor(sf::Color::Red);
+// set the text style
+        text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+// inside the main loop, between window.clear() and window.display()
+        window.draw(text);
+
 
 
         collisionManager.checkCollisions();
