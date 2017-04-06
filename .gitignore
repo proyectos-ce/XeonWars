@@ -10,6 +10,7 @@ compile_commands.json
 CTestTestfile.cmake
 cmake-build-debug
 cmake-build-debug/
+bin/XeonWars
 .idea/
 # Compiled Object files
 *.slo

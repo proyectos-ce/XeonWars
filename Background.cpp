@@ -15,7 +15,7 @@ Background::Background()
     bg1Sprite.setTexture(bg1Tex);
     bg1Sprite.setPosition(0, 0);
     bg1Y = 0;
-    bg1Sprite.setTextureRect(IntRect(0,bg1Y,1200,800));
+    bg1Sprite.setTextureRect(IntRect(0,bg1Y,1366,768));
 }
 
 
@@ -30,7 +30,7 @@ void Background::update(RenderWindow &window, float elapsedTime)
         bg1Y = 0;
     }
 
-    bg1Sprite.setTextureRect(IntRect(0, bg1Y, 1200,800));
+    bg1Sprite.setTextureRect(IntRect(0, bg1Y, 1366,768));
 }
 void Background::render(RenderWindow &window)
 {
