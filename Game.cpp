@@ -2,8 +2,8 @@
 // Created by jimena on 3/25/17.
 //
 #include "Game.h"
-#include "Utils.h"
-#include "Collision.h"
+
+
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;

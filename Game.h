@@ -17,6 +17,8 @@
 #include "enemy.h"
 #include "motion.h"
 #include "cannon.h"
+#include "Collision.h"
+#include "Utils.h"
 
 class Game : public Screen {
 
