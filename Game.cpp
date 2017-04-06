@@ -168,8 +168,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
             playerbulletList[i]->update(window, time.asMilliseconds());
             playerbulletList[i]->render(window);
 
-            //std::cout<<enemyList[i]->getType()<<std::endl;
-
         }
         float score = 000000;
         sf::Font font;
@@ -191,7 +189,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
         text.setStyle(sf::Text::Bold | sf::Text::Underlined);
 // inside the main loop, between window.clear() and window.display()
         window.draw(text);
-
 
 
         collisionManager.checkCollisions();

@@ -12,7 +12,7 @@ class Cannon
 public:
     Cannon();
     ~Cannon();
-    virtual void shout();
+    virtual void shoot();
     MotionFactory motionFactory;
     std::string getBulletTextureFilename() const;
     void setBulletTextureFilename(const std::string &value);
@@ -30,7 +30,7 @@ public:
 protected:
     int bulletDamage;
     int bulletSpeed;
-    void shoutBullet(int speed, Motion *bulletMotion);
+    void shootBullet(int speed, Motion *bulletMotion);
     std::string bulletTextureFilename;
     sf::Sprite *ownerSprite;
     std::vector<Entity *> *enemyList;
@@ -42,28 +42,28 @@ class SimpleCannon : public Cannon
 {
 public:
     SimpleCannon();
-    void shout();
+    void shoot();
 };
 
 class SprayCannon : public Cannon
 {
 public:
-    SprayCannon(int angle, int bulletsByShout);
-    void shout();
+    SprayCannon(int angle, int bulletsByshoot);
+    void shoot();
     int getAngle() const;
     void setAngle(int value);
-    int getBulletsByShout() const;
-    void setBulletsByShout(int value);
+    int getBulletsByshoot() const;
+    void setBulletsByshoot(int value);
 
 private:
     int angle;
-    int bulletsByShout;
+    int bulletsByshoot;
 };
 
 class CannonFactory{
 public:
     static Cannon *createSimpleCannon();
-    static Cannon *createSprayCannon(int angle, int bulletsByShout);
+    static Cannon *createSprayCannon(int angle, int bulletsByshoot);
 
 };
 

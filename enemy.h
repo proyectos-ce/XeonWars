@@ -26,7 +26,7 @@ protected:
     int life = 100;
     int moves=1;
     int trigger=0;
-    void shout();
+    void shoot();
     std::vector<Entity *> *enemyList;
     int getMoves() const;
     void setMoves(int value);

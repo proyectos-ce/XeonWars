@@ -24,8 +24,8 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p3);
 
 
-
     shipCannon = cannonFactory.createSimpleCannon();
+
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(30);
     shipCannon->setBulletSpeed(-6);
@@ -179,7 +179,9 @@ const Sprite &MainSpaceShip::getSprite() {
 void MainSpaceShip::playerShoot() {
     // CHEQUEAR SI LA NAVE TIENE ACTIVADO LOS MISILES _______________________________******
 
-    shipCannon->shout();
+
+    shipCannon->shoot();
+
     //std::cout<< shipCannon->getBulletDamage()<<endl;
     cout << "disparo" << endl;
 }
