@@ -163,6 +163,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
+
+
         collisionManager.checkCollisions();
 
         clock.restart().asMilliseconds();
