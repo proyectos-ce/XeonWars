@@ -22,6 +22,11 @@ void Cannon::shoutBullet(int speed, Motion *bulletMotion)
     Bullet *newBullet = new Bullet(bulletTexture, bulletMotion, bulletDamage, speed);
     newBullet->setTexturesAmount(1);
     newBullet->setPosition(getCenterPosition());
+    //enemyList->size();
+    if(enemyList==NULL){
+        std::cout<<"ERROR nullptr"<<std::endl;
+    }
+    //std::cout<<enemyList->size()<<std::endl;
     enemyList->push_back(newBullet);
 }
 
@@ -107,7 +112,7 @@ void SprayCannon::shout()
 {
     for (int i = -(bulletsByShout/2); i < (bulletsByShout/2+bulletsByShout%2) ; ++i) {
     Motion *bulletMotion = motionFactory.createLinearMotion(angle*i);
-        shoutBullet(bulletSpeed, bulletMotion);
+       shoutBullet(bulletSpeed, bulletMotion);
     }
 
 }
