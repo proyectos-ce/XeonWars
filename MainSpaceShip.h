@@ -4,13 +4,13 @@
 
 #ifndef AIRWAR_MAINSPACESHIP_H
 #define AIRWAR_MAINSPACESHIP_H
-
 #include <SFML/Graphics.hpp>
 #include "Queue.h"
 #include "powerUp.h"
 #include "math.h"
 #include "cannon.h"
 #include "motion.h"
+#include "ScoreManager.h"
 
 using namespace sf;
 
@@ -24,6 +24,7 @@ public:
     void shield();
     void playerShoot();
     void lifeManager(int);
+    ScoreManager score;
 
     std::vector<Entity *> *getplayerbulletList() const;
     void setplayerbulletList(std::vector<Entity *> *value);

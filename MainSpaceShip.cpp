@@ -3,11 +3,13 @@
 //
 #include <iostream>
 #include "MainSpaceShip.h"
+#include "ScoreManager.h"
 
 MainSpaceShip::MainSpaceShip() {
     lifes = 3;
     scoreForLifes = 0;
     globalScore = 0;
+
 
     TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
     TOwnSpaceShip.setSmooth(true);
@@ -44,8 +46,8 @@ void MainSpaceShip::setplayerbulletList(std::vector<Entity *> *value)
     shipCannon->setEnemyList(playerbulletList);
 
 }
-void MainSpaceShip::lifeManager(int daño){
-    lifeLevel-=daño;
+void MainSpaceShip::lifeManager(int damage){
+    lifeLevel-=damage;
     if (lifeLevel<=0){
         lifes -=1;
         lifeLevel=100;
