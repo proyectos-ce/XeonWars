@@ -25,6 +25,7 @@ MainSpaceShip::MainSpaceShip() {
 
 
     Cannon *shipCannon = cannonFactory.createSimpleCannon();
+    //shipCannon.set
     shipCannon->setBulletDamage(30);
     shipCannon->setBulletSpeed(6);
     shipCannon->setEnemyList(playerbulletList);
