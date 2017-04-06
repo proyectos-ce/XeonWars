@@ -24,11 +24,11 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p3);
 
 
-    Cannon *shipCannon = cannonFactory.createSimpleCannon();
+    shipCannon = cannonFactory.createSprayCannon(2,10);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(30);
     shipCannon->setBulletSpeed(6);
-    shipCannon->setEnemyList(playerbulletList);
+
 }
 
 
@@ -40,6 +40,8 @@ std::vector<Entity *> *MainSpaceShip::getplayerbulletList() const
 void MainSpaceShip::setplayerbulletList(std::vector<Entity *> *value)
 {
     playerbulletList = value;
+    shipCannon->setEnemyList(playerbulletList);
+
 }
 
 
@@ -175,7 +177,9 @@ const Sprite &MainSpaceShip::getSprite() {
 
 void MainSpaceShip::playerShoot() {
     // CHEQUEAR SI LA NAVE TIENE ACTIVADO LOS MISILES _______________________________******
+
     shipCannon->shout();
+    //std::cout<< shipCannon->getBulletDamage()<<endl;
     cout << "disparo" << endl;
 }
 bool MainSpaceShip::attack(int damage)
