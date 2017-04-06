@@ -3,6 +3,7 @@
 //
 #include "Game.h"
 #include "Utils.h"
+#include "Collision.h"
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;
@@ -148,6 +149,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
             enemyList[i]->render(window);
 
         }
+
+
+        // std::cout << Collision::PixelPerfectTest(enemyShip2.getSprite(), ownSpaceShip.getSprite()) << std::endl;
 
         clock.restart().asMilliseconds();
 
