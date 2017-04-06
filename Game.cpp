@@ -21,6 +21,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
     MotionFactory motionFactory;
 
     std::vector<Entity *> enemyList;
+    std::vector<Entity *> playerbulletList;
+    ownSpaceShip.setplayerbulletList(&playerbulletList);
 
 
     CannonFactory cannonFactory;
@@ -127,8 +129,11 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 window.setView(Utils::calcView(sf::Vector2u(event.size.width, event.size.height), Utils::designedsize));
             }
 
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space) {
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::X) {
                 ownSpaceShip.usePowerUp();
+            }
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z) {
+                ownSpaceShip.playerShoot();
             }
 
         }

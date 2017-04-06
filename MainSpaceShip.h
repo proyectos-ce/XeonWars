@@ -9,6 +9,8 @@
 #include "Queue.h"
 #include "powerUp.h"
 #include "math.h"
+#include "cannon.h"
+#include "motion.h"
 
 using namespace sf;
 
@@ -20,6 +22,10 @@ public:
     void usePowerUp();
     bool gameOver();
     void shield();
+    void playerShoot();
+
+    std::vector<Entity *> *getplayerbulletList() const;
+    void setplayerbulletList(std::vector<Entity *> *value);
 
 
     const Sprite &getSprite();
@@ -32,6 +38,9 @@ private:
     int scoreForLifes;
     bool shieldActivated;
     Queue<powerUp> powerUpsQueue;
+    Cannon *shipCannon;
+    CannonFactory cannonFactory;
+    std::vector<Entity *> *playerbulletList;
 
 
     const float speed = 6;
