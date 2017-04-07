@@ -32,6 +32,15 @@ MainSpaceShip::MainSpaceShip() {
     shipCannon->setBulletDamage(30);
     shipCannon->setBulletSpeed(-6);
 
+    missileCannon = cannonFactory.createSprayCannon(10,7);
+
+    missileCannon->setOwnerSprite(&SOwnSpaceShip);
+    missileCannon->setBulletDamage(30);
+    missileCannon->setBulletSpeed(-6);
+
+    missiles_On=false;
+    laser_On= false;
+
 }
 
 
@@ -44,6 +53,7 @@ void MainSpaceShip::setplayerbulletList(std::vector<Entity *> *value)
 {
     playerbulletList = value;
     shipCannon->setEnemyList(playerbulletList);
+    missileCannon->setEnemyList(playerbulletList);
 
 }
 void MainSpaceShip::lifeManager(int damage){
@@ -155,6 +165,7 @@ void MainSpaceShip::usePowerUp() {
         int powerToUse = powerUpsQueue.dequeue().getType();
         if(powerToUse == 0){
             cout <<"Misiles"<<endl;
+            missiles_On=true;
         }
         else if(powerToUse == 1){
             shield();
@@ -162,6 +173,7 @@ void MainSpaceShip::usePowerUp() {
         }
         else if(powerToUse == 2){
             cout <<"Laser"<<endl;
+            laser_On;
         }
     }else{
         cout <<"No hay power ups"<<endl;
@@ -185,12 +197,17 @@ const Sprite &MainSpaceShip::getSprite() {
 
 void MainSpaceShip::playerShoot() {
     // CHEQUEAR SI LA NAVE TIENE ACTIVADO LOS MISILES _______________________________******
+    if (missiles_On){
+        missileCannon->shoot();
+        cout << "disparo misil" << endl;
+    } else if (laser_On){
+        cout << "disparo laser" << endl;
+    } else {
 
-
-    shipCannon->shoot();
-
-    //std::cout<< shipCannon->getBulletDamage()<<endl;
-    cout << "disparo" << endl;
+        shipCannon->shoot();
+        //std::cout<< shipCannon->getBulletDamage()<<endl;
+        cout << "disparo simple" << endl;
+    }
 }
 bool MainSpaceShip::attack(int damage)
 {

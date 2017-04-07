@@ -172,7 +172,11 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
         ownSpaceShip.score.scoreRender(window);
+        ownSpaceShip.score.add_score(1);
+
+
         collisionManager.checkCollisions();
+
 
         clock.restart().asMilliseconds();
 

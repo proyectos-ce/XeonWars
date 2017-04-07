@@ -26,7 +26,8 @@ ScoreManager::ScoreManager(){
     text.setStyle(sf::Text::Bold );
 // inside the main loop, between window.clear() and window.display()
 };
-int ScoreManager::get_score() {
+
+float ScoreManager::get_score() {
     return GeneralScore;
 }
 void ScoreManager::add_score(int score) {
@@ -44,6 +45,6 @@ void ScoreManager::nextlevelReached() {
     currentLevel+=1;
 }
 void ScoreManager::scoreRender(sf::RenderWindow &window){
-    text.setString("Score: "+GeneralScore);
+    text.setString("Score: "+to_string(GeneralScore));
     window.draw(text);
 }

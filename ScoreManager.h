@@ -13,7 +13,8 @@
 class ScoreManager {
     public:
     ScoreManager();
-    int get_score();
+
+    float get_score();
     void add_score(int);
     bool isBossTime();
     int getLevel();

@@ -36,6 +36,8 @@ public:
     void setLifeLevel(int value);
 
 private:
+    bool missiles_On;
+    bool laser_On;
     Sprite SOwnSpaceShip;
     Texture TOwnSpaceShip;
     int lifes;
@@ -45,6 +47,8 @@ private:
     bool shieldActivated;
     Queue<powerUp> powerUpsQueue;
     Cannon *shipCannon;
+    Cannon *missileCannon;
+    Cannon *laserCannon;
     CannonFactory cannonFactory;
     std::vector<Entity *> *playerbulletList;
 
