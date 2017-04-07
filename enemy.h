@@ -22,6 +22,9 @@ public:
     Cannon *getCannon() const;
     void setCannon(Cannon *value);
     char getType() const;
+    int getLife() const;
+    void setLife(int value);
+
 protected:
     int life = 20;
     int moves=1;

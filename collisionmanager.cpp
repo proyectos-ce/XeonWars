@@ -39,22 +39,19 @@ void CollisionManager::checkCollisions()
 
     for(int j=0;j<playerBulletList->size();j++){
         for(int i=0;i<enemyList->size();i++){
-
             if( enemyList->operator[](i)->getType()=='E'  &   Collision::PixelPerfectTest(playerBulletList->operator[](j)->getSprite(), enemyList->operator[](i)->getSprite())){
                 if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
                     enemyList->erase(enemyList->begin()+i);
                 }
                 std::cout<<"choque"<<std::endl;
-                Entity *toDelete = (enemyList->operator[](i));
+                Entity *toDelete = (playerBulletList->operator[](j));
+                delete toDelete;
                 playerBulletList->erase(playerBulletList->begin()+j);
+                std::cout<<"deleted endzzzz"<<std::endl;
                 break;
             }
-
-
         }
     }
-
-
 }
 
 std::vector<Entity *> *CollisionManager::getEnemyList() const

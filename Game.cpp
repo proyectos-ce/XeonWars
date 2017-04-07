@@ -161,12 +161,24 @@ int Game::run(RenderWindow &window, Texture &tex) {
         for (int i = 0; i < enemyList.size(); ++i) {
             enemyList[i]->update(window, time.asMilliseconds());
             enemyList[i]->render(window);
+            if( enemyList[i]->getPosition().y >= 3000 | enemyList[i]->getPosition().x >= 2000 | enemyList[i]->getPosition().x <= -500){
+                Entity *toDelete = (enemyList.operator[](i));
+                enemyList.erase(enemyList.begin()+i);
+                delete toDelete;
+
+            }
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
         for (int i = 0; i < playerbulletList.size(); ++i) {
             playerbulletList[i]->update(window, time.asMilliseconds());
             playerbulletList[i]->render(window);
+            if( (playerbulletList[i]->getPosition().y) <= -1000| playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
+                Entity *toDelete = (playerbulletList.operator[](i));
+                playerbulletList.erase(playerbulletList.begin()+i);
+               delete toDelete;
+                playerbulletList.clear();
+            }
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }

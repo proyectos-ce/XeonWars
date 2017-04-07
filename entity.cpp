@@ -6,7 +6,7 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-    std::cout<<"destruyendo"<<std::endl;
+    delete motion;
 }
 
 

@@ -24,7 +24,7 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p3);
 
 
-    shipCannon = cannonFactory.createSprayCannon(2,3);
+    shipCannon = cannonFactory.createSprayCannon(5,200);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(-6);
@@ -180,7 +180,7 @@ void MainSpaceShip::playerShoot() {
 
     shipCannon->shoot();
     //std::cout<< shipCannon->getBulletDamage()<<endl;
-    cout << "disparo" << endl;
+    //cout << "disparo" << endl;
 }
 bool MainSpaceShip::attack(int damage)
 {

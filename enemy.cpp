@@ -21,7 +21,7 @@ Enemy::Enemy(sf::Texture texture, std::vector<Entity *> *enemyList)
 }
 Enemy::~Enemy()
 {
-    delete(motion);
+    delete cannon;
 }
 
 std::vector<Entity *> *Enemy::getEnemyList() const
@@ -105,6 +105,16 @@ void Enemy::setCannon(Cannon *value)
 char Enemy::getType() const
 {
     return 'E';
+}
+
+int Enemy::getLife() const
+{
+    return life;
+}
+
+void Enemy::setLife(int value)
+{
+    life = value;
 }
 
 
