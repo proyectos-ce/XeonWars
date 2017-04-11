@@ -6,17 +6,17 @@ Enemy::Enemy()
 
 Enemy::Enemy(sf::Texture texture)
 {
-    setEnemyList(NULL);
+    setBulletList(NULL);
     setTexture(texture);
     updateTexture(0);
 
 
 }
 
-Enemy::Enemy(sf::Texture texture, std::vector<Entity *> *enemyList)
+Enemy::Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
 {
     setTexture(texture);
-    setEnemyList(enemyList);
+    setBulletList(bulletList);
     enemyList->push_back(this);
 }
 Enemy::~Enemy()
@@ -24,14 +24,14 @@ Enemy::~Enemy()
     delete cannon;
 }
 
-std::vector<Entity *> *Enemy::getEnemyList() const
+std::vector<Bullet *> *Enemy::getBulletList() const
 {
-    return enemyList;
+    return bulletList;
 }
 
-void Enemy::setEnemyList(std::vector<Entity *> *value)
+void Enemy::setBulletList(std::vector<Bullet *> *value)
 {
-    enemyList = value;
+    bulletList = value;
 }
 
 bool Enemy::attack(int damage)
@@ -99,7 +99,7 @@ void Enemy::setCannon(Cannon *value)
 {
     cannon = value;
     cannon->setOwnerSprite(&(this->sprite));
-    cannon->setEnemyList(enemyList);
+    cannon->setBulletList(bulletList);
 }
 
 char Enemy::getType() const

@@ -10,10 +10,10 @@ class Enemy : public Entity
 public:
     Enemy();
     Enemy(sf::Texture texture);
-    Enemy(sf::Texture texture, std::vector<Entity *> *enemyList);
+    Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
     ~Enemy();
-    std::vector<Entity *> *getEnemyList() const;
-    void setEnemyList(std::vector<Entity *> *value);
+    std::vector<Bullet *> *getBulletList() const;
+    void setBulletList(std::vector<Bullet *> *value);
     bool attack(int damage);
     void update(sf::RenderWindow &window, float time);
     int getTrigger() const;
@@ -30,7 +30,7 @@ protected:
     int moves=1;
     int trigger=0;
     void shoot();
-    std::vector<Entity *> *enemyList;
+    std::vector<Bullet *> *bulletList;
     int getMoves() const;
     void setMoves(int value);
     Cannon *cannon;

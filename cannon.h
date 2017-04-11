@@ -16,8 +16,8 @@ public:
     MotionFactory motionFactory;
     std::string getBulletTextureFilename() const;
     void setBulletTextureFilename(const std::string &value);
-    std::vector<Entity *> *getEnemyList() const;
-    void setEnemyList(std::vector<Entity *> *value);
+    std::vector<Bullet *> *getBulletList() const;
+    void setBulletList(std::vector<Bullet *> *value);
     int getBulletDamage() const;
     void setBulletDamage(int value);
 
@@ -33,7 +33,7 @@ protected:
     void shootBullet(int speed, Motion *bulletMotion);
     std::string bulletTextureFilename;
     sf::Sprite *ownerSprite;
-    std::vector<Entity *> *enemyList;
+    std::vector<Bullet *> *bulletList;
     sf::Vector2f getCenterPosition();
 
 };

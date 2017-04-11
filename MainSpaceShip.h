@@ -24,8 +24,8 @@ public:
     void shield();
     void playerShoot();
 
-    std::vector<Entity *> *getplayerbulletList() const;
-    void setplayerbulletList(std::vector<Entity *> *value);
+    std::vector<Bullet *> *getbulletList() const;
+    void setbulletList(std::vector<Bullet *> *value);
 
 
     const Sprite &getSprite();
@@ -44,7 +44,7 @@ private:
     Queue<powerUp> powerUpsQueue;
     Cannon *shipCannon;
     CannonFactory cannonFactory;
-    std::vector<Entity *> *playerbulletList;
+    std::vector<Bullet *> *bulletList;
 
 
     const float speed = 6;

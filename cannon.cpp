@@ -22,12 +22,12 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion)
     Bullet *newBullet = new Bullet(bulletTexture, bulletMotion, bulletDamage, speed);
     newBullet->setTexturesAmount(1);
     newBullet->setPosition(getCenterPosition());
-    //enemyList->size();
-    if(enemyList==NULL){
+    //BulletList->size();
+    if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }
-    //std::cout<<enemyList->size()<<std::endl;
-    enemyList->push_back(newBullet);
+    //std::cout<<bulletList->size()<<std::endl;
+    bulletList->push_back(newBullet);
 }
 
 sf::Vector2f Cannon::getCenterPosition()
@@ -49,14 +49,14 @@ void Cannon::setOwnerSprite(sf::Sprite *value)
     ownerSprite = value;
 }
 
-std::vector<Entity *> *Cannon::getEnemyList() const
+std::vector<Bullet *> *Cannon::getBulletList() const
 {
-    return enemyList;
+    return bulletList;
 }
 
-void Cannon::setEnemyList(std::vector<Entity *> *value)
+void Cannon::setBulletList(std::vector<Bullet *> *value)
 {
-    enemyList = value;
+    bulletList = value;
 }
 
 int Cannon::getBulletDamage() const

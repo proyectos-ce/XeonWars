@@ -32,16 +32,15 @@ MainSpaceShip::MainSpaceShip() {
 }
 
 
-std::vector<Entity *> *MainSpaceShip::getplayerbulletList() const
+std::vector<Bullet *> *MainSpaceShip::getbulletList() const
 {
-    return playerbulletList;
+    return bulletList;
 }
 
-void MainSpaceShip::setplayerbulletList(std::vector<Entity *> *value)
+void MainSpaceShip::setbulletList(std::vector<Bullet *> *value)
 {
-    playerbulletList = value;
-    shipCannon->setEnemyList(playerbulletList);
-
+    bulletList = value;
+    shipCannon->setBulletList(bulletList);
 }
 
 
