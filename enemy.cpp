@@ -22,6 +22,7 @@ Enemy::Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList, std::vector<B
 Enemy::~Enemy()
 {
     delete cannon;
+
 }
 
 std::vector<Bullet *> *Enemy::getBulletList() const
@@ -102,10 +103,7 @@ void Enemy::setCannon(Cannon *value)
     cannon->setBulletList(bulletList);
 }
 
-char Enemy::getType() const
-{
-    return 'E';
-}
+
 
 int Enemy::getLife() const
 {

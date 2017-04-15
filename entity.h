@@ -26,11 +26,6 @@ public:
     void setPosition(sf::Vector2f postion);
     sf::Vector2f getPosition();
     sf::Vector2f getCenterPosition();
-    virtual char getType() const;
-
-
-    virtual bool attack(int damage);
-    virtual int getDamage() const;
 
 protected:
     int speed=10;

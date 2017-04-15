@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "motion.h"
 #include "cannon.h"
-
+#include "iostream"
 class Enemy : public Entity
 {
 public:
@@ -21,7 +21,6 @@ public:
 
     Cannon *getCannon() const;
     void setCannon(Cannon *value);
-    char getType() const;
     int getLife() const;
     void setLife(int value);
 

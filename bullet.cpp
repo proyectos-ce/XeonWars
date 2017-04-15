@@ -7,7 +7,7 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
-
+    std::cout<<"eliminado bala\n";
 }
 
 Bullet::Bullet(sf::Texture texture, Motion *motion , int damage, int speed)
@@ -28,7 +28,4 @@ void Bullet::setDamage(int value)
     damage = value;
 }
 
-char Bullet::getType() const
-{
-    return 'B';
-}
+

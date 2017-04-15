@@ -7,6 +7,7 @@ Entity::Entity()
 Entity::~Entity()
 {
     delete motion;
+
 }
 
 
@@ -110,20 +111,7 @@ sf::Vector2f Entity::getCenterPosition()
 
 }
 
-char Entity::getType() const
-{
-    return 'U';
-}
 
-bool Entity::attack(int damage)
-{
-
-}
-
-int Entity::getDamage() const
-{
-
-}
 
 
 

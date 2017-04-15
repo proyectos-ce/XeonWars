@@ -11,7 +11,6 @@ public:
     Bullet(sf::Texture texture, Motion *motion, int damage, int speed);
     int getDamage() const;
     void setDamage(int value);
-    char getType() const;
 
 
 private:

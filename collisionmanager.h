@@ -2,31 +2,37 @@
 #define COLLISIONMANAGER_H
 #include "entity.h"
 #include "MainSpaceShip.h"
-#include "Collision.h"
 #include "iostream"
 #include "bullet.h"
-
+#include "enemy.h"
+#include"Collision.h"
 class CollisionManager
 {
 public:
     CollisionManager();
-    CollisionManager(MainSpaceShip *PlayerShip,std::vector<Entity *> *playerBulletList, std::vector<Entity *> *enemyList);
+    CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet *> *playerBulletList, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *enemyBulletList);
     void checkCollisions();
 
-    std::vector<Entity *> *getEnemyList() const;
-    void setEnemyList(std::vector<Entity *> *value);
-
-    std::vector<Entity *> *getPlayerBulletList() const;
-    void setPlayerBulletList(std::vector<Entity *> *value);
 
     MainSpaceShip *getPlayerShip() const;
     void setPlayerShip(MainSpaceShip *value);
 
-private:
-    std::vector<Entity *> *enemyList;
-    std::vector<Entity *> *playerBulletList;
-    MainSpaceShip *playerShip;
+    std::vector<Enemy *> *getEnemyList() const;
+    void setEnemyList(std::vector<Enemy *> *value);
 
+    std::vector<Bullet *> *getPlayerBulletList() const;
+    void setPlayerBulletList(std::vector<Bullet *> *value);
+
+    std::vector<Bullet *> *getEnemyBulletList() const;
+    void setEnemyBulletList(std::vector<Bullet *> *value);
+
+private:
+    std::vector<Enemy *> *enemyList;
+    std::vector<Bullet *> *playerBulletList;
+    std::vector<Bullet *> *enemyBulletList;
+    MainSpaceShip *playerShip;
+    void deleteEnemy(std::vector<Enemy *> *enemyList, int index);
+    void deleteBullet(std::vector<Bullet *> *bulletList, int index);
 };
 
 #endif // COLLISIONMANAGER_H

@@ -38,9 +38,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
     CollisionManager collisionManager;
-   // collisionManager.setEnemyList(&enemyList);
-    //collisionManager.setPlayerShip(&ownSpaceShip);
-    //collisionManager.setPlayerBulletList(&playerbulletList);
+    collisionManager.setEnemyList(&enemyList);
+    collisionManager.setPlayerShip(&ownSpaceShip);
+    collisionManager.setPlayerBulletList(&playerbulletList);
+    collisionManager.setEnemyBulletList(&enemyBulletList);
 
     /*
     enemyShipCannon->setBulletDamage(30);
@@ -196,7 +197,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
-       // collisionManager.checkCollisions();
+        collisionManager.checkCollisions();
 
         clock.restart().asMilliseconds();
 

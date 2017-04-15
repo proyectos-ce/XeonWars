@@ -5,7 +5,7 @@ CollisionManager::CollisionManager()
 
 }
 
-CollisionManager::CollisionManager(MainSpaceShip *playerShip, std::vector<Entity *> *playerBulletList, std::vector<Entity *> *enemyList)
+CollisionManager::CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet *> *playerBulletList, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *enemyBulletList)
 {
     setEnemyList(enemyList);
     setPlayerBulletList(playerBulletList);
@@ -15,65 +15,49 @@ CollisionManager::CollisionManager(MainSpaceShip *playerShip, std::vector<Entity
 
 void CollisionManager::checkCollisions()
 {
-    for(int i=0;i<enemyList->size();i++){
-
-        if( enemyList->operator[](i)->getType()=='B'  &   Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())){
-            std::cout<<"choque bala"<<std::endl;
-            Entity *toDelete = (enemyList->operator[](i));
-
-            enemyList->erase(enemyList->begin()+i);
-            //std::cout<<toDelete->getSpeed()<<std::endl;
-            //delete toDelete;
-        }
-        else if( enemyList->operator[](i)->getType()=='E'  &   Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())){
-            std::cout<<"choque nave"<<std::endl;
-            //Entity *toDelete = (enemyList->operator[](i));
-
-            enemyList->erase(enemyList->begin()+i);
-            //delete toDelete;
+    int i = 0, j=0;
+    while(i<enemyList->size()){
+        //player vs enemies
+        if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())){
+            //kill player
+            deleteEnemy(enemyList,i);
+            i--;
         }
 
-
-    }
-    //player bullets vs enemies
-
-    for(int j=0;j<playerBulletList->size();j++){
-        for(int i=0;i<enemyList->size();i++){
-            if( enemyList->operator[](i)->getType()=='E'  &   Collision::PixelPerfectTest(playerBulletList->operator[](j)->getSprite(), enemyList->operator[](i)->getSprite())){
-                if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
-                    enemyList->erase(enemyList->begin()+i);
+        else{
+            //player bullets vs enemies
+            j=0;
+            while(j<playerBulletList->size()){
+                if(Collision::PixelPerfectTest(playerBulletList->operator[](j)->getSprite(), enemyList->operator[](i)->getSprite())){
+                    std::cout<<"bala vs enemigo\n";
+                    if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
+                        deleteEnemy(enemyList,i);
+                        deleteBullet(playerBulletList, j);
+                        i--;
+                        break;
+                    }
+                    //delete player bullet
+                    deleteBullet(playerBulletList, j);
+                    j--;
                 }
-                std::cout<<"choque"<<std::endl;
-                Entity *toDelete = (playerBulletList->operator[](j));
-                delete toDelete;
-                playerBulletList->erase(playerBulletList->begin()+j);
-                std::cout<<"deleted endzzzz"<<std::endl;
-                break;
+                j++;
             }
         }
+        i++;
+    }
+    //player vs enemy bullets
+    i=0;
+    while(i<enemyBulletList->size()){
+        //player vs enemies
+        if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
+            //attack player
+            deleteBullet(enemyBulletList, i);
+            //delete bullet
+            i--;
+        }
+        i++;
     }
 }
-
-std::vector<Entity *> *CollisionManager::getEnemyList() const
-{
-    return enemyList;
-}
-
-void CollisionManager::setEnemyList(std::vector<Entity *> *value)
-{
-    enemyList = value;
-}
-
-std::vector<Entity *> *CollisionManager::getPlayerBulletList() const
-{
-    return playerBulletList;
-}
-
-void CollisionManager::setPlayerBulletList(std::vector<Entity *> *value)
-{
-    playerBulletList = value;
-}
-
 MainSpaceShip *CollisionManager::getPlayerShip() const
 {
     return playerShip;
@@ -82,4 +66,55 @@ MainSpaceShip *CollisionManager::getPlayerShip() const
 void CollisionManager::setPlayerShip(MainSpaceShip *value)
 {
     playerShip = value;
+}
+
+std::vector<Enemy *> *CollisionManager::getEnemyList() const
+{
+    return enemyList;
+}
+
+void CollisionManager::setEnemyList(std::vector<Enemy *> *value)
+{
+    enemyList = value;
+}
+
+std::vector<Bullet *> *CollisionManager::getPlayerBulletList() const
+{
+    return playerBulletList;
+}
+
+void CollisionManager::setPlayerBulletList(std::vector<Bullet *> *value)
+{
+    playerBulletList = value;
+}
+
+std::vector<Bullet *> *CollisionManager::getEnemyBulletList() const
+{
+    return enemyBulletList;
+}
+
+void CollisionManager::setEnemyBulletList(std::vector<Bullet *> *value)
+{
+    enemyBulletList = value;
+}
+
+void CollisionManager::deleteEnemy(std::vector<Enemy *> *list, int index)
+{
+    Enemy *enemyToDelete = (list->operator [](index));
+    //delete (list->operator [](index));
+    list->erase(list->begin()+index);
+    std::cout<<"eliminado-- enemigo\n";
+    //delete enemyToDelete;
+    std::cout<<"eliminado enemigo\n";
+
+
+}
+
+void CollisionManager::deleteBullet(std::vector<Bullet *> *list, int index)
+{
+    Bullet *bulletToDelete = list->operator [](index);
+    //delete (list->operator [](index));
+    list->erase(list->begin()+index);
+    delete bulletToDelete;
+
 }
