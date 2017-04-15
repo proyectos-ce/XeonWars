@@ -29,7 +29,7 @@ void CollisionManager::checkCollisions()
             j=0;
             while(j<playerBulletList->size()){
                 if(Collision::PixelPerfectTest(playerBulletList->operator[](j)->getSprite(), enemyList->operator[](i)->getSprite())){
-                    std::cout<<"bala vs enemigo\n";
+                    //std::cout<<"bala vs enemigo\n";
                     if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
                         deleteEnemy(enemyList,i);
                         deleteBullet(playerBulletList, j);
@@ -100,21 +100,13 @@ void CollisionManager::setEnemyBulletList(std::vector<Bullet *> *value)
 
 void CollisionManager::deleteEnemy(std::vector<Enemy *> *list, int index)
 {
-    Enemy *enemyToDelete = (list->operator [](index));
-    //delete (list->operator [](index));
+    delete (list->operator [](index));
     list->erase(list->begin()+index);
-    std::cout<<"eliminado-- enemigo\n";
-    //delete enemyToDelete;
-    std::cout<<"eliminado enemigo\n";
-
-
 }
 
 void CollisionManager::deleteBullet(std::vector<Bullet *> *list, int index)
 {
-    Bullet *bulletToDelete = list->operator [](index);
-    //delete (list->operator [](index));
+    delete (list->operator [](index));
     list->erase(list->begin()+index);
-    delete bulletToDelete;
 
 }

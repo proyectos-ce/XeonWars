@@ -7,7 +7,6 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
-    std::cout<<"eliminado bala\n";
 }
 
 Bullet::Bullet(sf::Texture texture, Motion *motion , int damage, int speed)

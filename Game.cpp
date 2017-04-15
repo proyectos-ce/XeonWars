@@ -67,13 +67,13 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon->setBulletSpeed(6);
 
 
-    Enemy enemyShip2(enemyShipTexture, &enemyList, &enemyBulletList);
-    enemyShip2.setTexturesAmount(4);
-    enemyShip2.setMotion(enemyShipMotion);
-    enemyShip2.setSpeed(3);
-    enemyShip2.setPosition(sf::Vector2f(100,0));
-    enemyShip2.setTrigger(20);
-    enemyShip2.setCannon(enemyShipCannon);
+    Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
+    enemyShip2->setTexturesAmount(4);
+    enemyShip2->setMotion(enemyShipMotion);
+    enemyShip2->setSpeed(3);
+    enemyShip2->setPosition(sf::Vector2f(100,0));
+    enemyShip2->setTrigger(20);
+    enemyShip2->setCannon(enemyShipCannon);
 
 
 
@@ -83,13 +83,13 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon->setBulletDamage(30);
     enemyShipCannon->setBulletSpeed(3);
 
-    Enemy enemyShip3(enemyShipTexture, &enemyList, &enemyBulletList);
-    enemyShip3.setTexturesAmount(4);
-    enemyShip3.setMotion(enemyShipMotion);
-    enemyShip3.setSpeed(2);
-    enemyShip3.setPosition(sf::Vector2f(300,0));
-    enemyShip3.setTrigger(20);
-    enemyShip3.setCannon(enemyShipCannon);
+    Enemy *enemyShip3 = new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
+    enemyShip3->setTexturesAmount(4);
+    enemyShip3->setMotion(enemyShipMotion);
+    enemyShip3->setSpeed(2);
+    enemyShip3->setPosition(sf::Vector2f(300,0));
+    enemyShip3->setTrigger(20);
+    enemyShip3->setCannon(enemyShipCannon);
 
 
 
