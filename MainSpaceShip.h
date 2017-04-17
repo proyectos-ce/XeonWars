@@ -41,9 +41,13 @@ public:
     Sprite getSprite() const;
     //void setSOwnSpaceShip(const Sprite &value);
 
+    void doDamageAnimation();
+
+
 private:
     bool missiles_On;
     bool laser_On;
+    bool isWhite = false;
     Sprite SOwnSpaceShip;
     Texture TOwnSpaceShip;
     SoundBuffer normalShootBuffer;
@@ -56,6 +60,8 @@ private:
     int missileShootCounter;
     int lifes;
     int lifeLevel=100;
+    int blinkAnimationCounter = 0;
+    int frameCounter = 0;
     int globalScore;
     int scoreForLifes;
     bool shieldActivated;

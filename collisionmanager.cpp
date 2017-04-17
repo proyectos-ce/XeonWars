@@ -14,7 +14,7 @@ CollisionManager::CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet
 
 }
 
-void CollisionManager::checkCollisions()
+bool CollisionManager::checkCollisions()
 {
     int i = 0, j=0;
     while(i<enemyList->size()){
@@ -25,6 +25,7 @@ void CollisionManager::checkCollisions()
             collisionSound.play();
             deleteEnemy(enemyList,i);
             i--;
+            return true;
         }
 
         else{
@@ -55,9 +56,12 @@ void CollisionManager::checkCollisions()
     while(i<enemyBulletList->size()){
         //player vs enemies
         if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
+
+            getPlayerShip()->doDamageAnimation();
+
+
             //attack player
-            collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
-            collisionSound.play();
+
             deleteBullet(enemyBulletList, i);
             //delete bullet
             playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
@@ -75,6 +79,7 @@ void CollisionManager::checkCollisions()
         }
         i++;
     }
+    return false;
 }
 MainSpaceShip *CollisionManager::getPlayerShip() const
 {

@@ -190,7 +190,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
         }
 
         updateAll(window);
-        collisionManager.checkCollisions();
+        if(collisionManager.checkCollisions()){
+           // return 2;
+        }
 
 
         clock.restart().asMilliseconds();

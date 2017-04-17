@@ -46,7 +46,7 @@ MainSpaceShip::MainSpaceShip() {
 
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
-    shipCannon->setBulletSpeed(3);
+    shipCannon->setBulletSpeed(8);
     shipCannon->setReverseDirection(1);
     shipCannon->setBulletTextureFilename("Resources/Bullets.png");
 
@@ -88,7 +88,28 @@ void MainSpaceShip::lifeManager(int damage){
 
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
+
     checkShieldTimer();
+
+    frameCounter++;
+
+    if (frameCounter == 4) {
+        std::cout << "Ejecutando" << std::endl;
+        if (blinkAnimationCounter > 0) {
+            std::cout << blinkAnimationCounter << std::endl;
+            if (isWhite) {
+                SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
+                isWhite = false;
+            } else {
+                SOwnSpaceShip.setColor(sf::Color(255,255,255,0));
+                isWhite = true;
+            }
+            blinkAnimationCounter--;
+        }
+        frameCounter = 0;
+    }
+
+
 
     bool anyKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
             sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
@@ -220,6 +241,10 @@ bool MainSpaceShip::gameOver() {
    cout << "aqui hay que programar que termine el juego" << endl;
 }
 
+void MainSpaceShip::doDamageAnimation() {
+    if (blinkAnimationCounter == 0)
+        blinkAnimationCounter = 6;
+}
 
 
 void MainSpaceShip::playerShoot() {

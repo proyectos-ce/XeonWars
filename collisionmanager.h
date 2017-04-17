@@ -11,7 +11,7 @@ class CollisionManager
 public:
     CollisionManager();
     CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet *> *playerBulletList, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *enemyBulletList);
-    void checkCollisions();
+    bool checkCollisions();
 
 
     MainSpaceShip *getPlayerShip() const;
