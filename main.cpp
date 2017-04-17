@@ -21,6 +21,7 @@ int main(){
     window.setFramerateLimit(60);
     window.setMouseCursorVisible(false);
 
+
     sf::Image icon;
     icon.loadFromFile("Resources/menu/icon.png");
     window.setIcon(256,256,icon.getPixelsPtr());
@@ -34,6 +35,7 @@ int main(){
     screens.push_back(&game);
 
     Texture pauseTexture;
+
 
     //Main loop
     while (screen >= 0)

@@ -18,13 +18,24 @@ MainSpaceShip::MainSpaceShip() {
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
     //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
     SOwnSpaceShip.setPosition(550,720);
+
+    normalShootBuffer.loadFromFile("Resources/sfx_laser1.ogg");
+    missileShootBuffer.loadFromFile("Resources/sfx_laser2.ogg");
+    
+
+
+
+
     powerUp p1(missile);
     powerUp p2(shieldd);
     powerUp p3(laser);
+    powerUp p4(missile);
+
 
     powerUpsQueue.enqueue(p1);
     powerUpsQueue.enqueue(p2);
     powerUpsQueue.enqueue(p3);
+    powerUpsQueue.enqueue(p4);
 
 
 
@@ -43,6 +54,7 @@ MainSpaceShip::MainSpaceShip() {
 
     missiles_On=false;
     laser_On= false;
+    missileShootCounter=0;
 
 }
 
@@ -199,16 +211,27 @@ bool MainSpaceShip::gameOver() {
 void MainSpaceShip::playerShoot() {
     // CHEQUEAR SI LA NAVE TIENE ACTIVADO LOS MISILES _______________________________******
     if (missiles_On){
-        missileCannon->shoot();
-        cout << "disparo misil" << endl;
+        if(missileShootCounter <5) {
+            missileShootCounter++;
+            missileCannon->shoot();
+            shootSound.setBuffer(missileShootBuffer);
+            cout << "disparo misil" << endl;
+        }else{
+            missiles_On= false;
+            missileShootCounter=0;
+            shootSound.setBuffer(normalShootBuffer);
+            shipCannon->shoot();
+        }
     } else if (laser_On){
         cout << "disparo laser" << endl;
     } else {
 
         shipCannon->shoot();
+        shootSound.setBuffer(normalShootBuffer);
         //std::cout<< shipCannon->getBulletDamage()<<endl;
         cout << "disparo simple" << endl;
     }
+    shootSound.play();
 }
 bool MainSpaceShip::attack(int damage)
 {
