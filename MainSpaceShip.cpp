@@ -9,7 +9,7 @@ MainSpaceShip::MainSpaceShip() {
     lifes = 3;
     scoreForLifes = 0;
     globalScore = 0;
-
+    shieldActivated = false;
 
     TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
     TOwnSpaceShip.setSmooth(true);
@@ -94,9 +94,7 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
     frameCounter++;
 
     if (frameCounter == 4) {
-        std::cout << "Ejecutando" << std::endl;
         if (blinkAnimationCounter > 0) {
-            std::cout << blinkAnimationCounter << std::endl;
             if (isWhite) {
                 SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
                 isWhite = false;

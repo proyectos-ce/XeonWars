@@ -2,7 +2,7 @@
 
 CollisionManager::CollisionManager()
 {
-    collisionSpaceEnemySoundBuffer.loadFromFile("Resources/gameover.ogg");
+    collisionSpaceEnemySoundBuffer.loadFromFile("Resources/explosion.ogg");
     collisionBulletEnemySoundBuffer.loadFromFile("Resources/collisionSpaceEnemy.ogg");
 }
 
@@ -25,7 +25,7 @@ bool CollisionManager::checkCollisions()
             collisionSound.play();
             deleteEnemy(enemyList,i);
             i--;
-            return true;
+            //return true;
         }
 
         else{
@@ -65,10 +65,11 @@ bool CollisionManager::checkCollisions()
             deleteBullet(enemyBulletList, i);
             //delete bullet
             playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
-            cout <<"ha recibido " <<enemyBulletList->operator[](i)->getDamage()<< " de dano, tiene " << playerShip->getLifeLevel()<< " de vida"<<endl;
             if(playerShip->getLifeLevel() <=0){
                 if(playerShip->getLifes() <=0){
-                    cout << "gameover"<<endl;
+                    collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+                    collisionSound.play();
+                    return true;
                 }else{
                     playerShip->setLifes(playerShip->getLifes()-1);
                     playerShip->setLifeLevel(100);

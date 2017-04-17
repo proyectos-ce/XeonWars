@@ -191,7 +191,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
         updateAll(window);
         if(collisionManager.checkCollisions()){
-           // return 2;
+           return 2;
         }
 
 
