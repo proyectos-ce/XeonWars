@@ -21,10 +21,10 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
     bulletTexture.loadFromFile(bulletTextureFilename);
     bulletMotion->setReverseDirection(reverseDirection);
     Bullet *newBullet = new Bullet(bulletTexture, bulletMotion, bulletDamage, speed);
-    newBullet->setTexturesAmount(1);
+    newBullet->setTexturesAmount(texturesAmount);
     newBullet->setPosition(getCenterPosition());
     //BulletList->size();
-    newBullet->rotate(angle*getDirection());
+    newBullet->rotate(angle*getDirection()+(180*reverseDirection));
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }
@@ -32,6 +32,16 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
         bulletList->push_back(newBullet);
     }
     //std::cout<<bulletList->size()<<std::endl;
+}
+
+int Cannon::getTexturesAmount() const
+{
+    return texturesAmount;
+}
+
+void Cannon::setTexturesAmount(int value)
+{
+    texturesAmount = value;
 }
 
 sf::Vector2f Cannon::getCenterPosition()
@@ -114,7 +124,7 @@ void Cannon::setBulletTextureFilename(const std::string &value)
 
 SimpleCannon::SimpleCannon()
 {
-    setBulletTextureFilename("Resources/laserRed.png");
+    //setBulletTextureFilename("Resources/Bullets.png");
 }
 
 void SimpleCannon::shoot()
@@ -126,7 +136,7 @@ void SimpleCannon::shoot()
 
 SprayCannon::SprayCannon(int angle, int bulletsByshoot)
 {
-    setBulletTextureFilename("Resources/laserRed.png");
+    //setBulletTextureFilename(bulletTextureFilename);
     setAngle(angle);
     setBulletsByshoot(bulletsByshoot);
 }
@@ -183,7 +193,7 @@ Cannon *createFollowerCannon(sf::Sprite *owner, sf::Sprite *target)
 
 FollowerCannon::FollowerCannon(sf::Sprite *owner, sf::Sprite *target)
 {
-    setBulletTextureFilename("Resources/Explosion.png");
+    //setBulletTextureFilename("Resources/Explosion.png");
     setOwner(owner);
     setTarget(target);
 }
@@ -223,9 +233,8 @@ void FollowerCannon::shootBullet(int speed)
     bulletMotion->setReverseDirection(reverseDirection);
     newBullet->setMotion(bulletMotion);
 
-    newBullet->setTexturesAmount(4);
+    newBullet->setTexturesAmount(texturesAmount);
     newBullet->setPosition(getCenterPosition());
-    //newBullet->rotate(angle*getDirection());
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }

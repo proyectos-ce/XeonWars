@@ -25,11 +25,12 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p3);
 
 
-    shipCannon = CannonFactory::createSprayCannon(3,3);
+    shipCannon = CannonFactory::createSprayCannon(3,10);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(6);
     shipCannon->setReverseDirection(1);
+    shipCannon->setBulletTextureFilename("Resources/Bullets.png");
 
 }
 

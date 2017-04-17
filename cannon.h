@@ -29,11 +29,15 @@ public:
     bool getReverseDirection() const;
     void setReverseDirection(bool value);
 
+    int getTexturesAmount() const;
+    void setTexturesAmount(int value);
+
 protected:
     int bulletDamage;
     int bulletSpeed;
     virtual void shootBullet(int speed, Motion *bulletMotion, float angle=0);
-    std::string bulletTextureFilename;
+    std::string bulletTextureFilename="Resources/EnemyBullets.png";
+    int texturesAmount=2;
     sf::Sprite *ownerSprite;
     std::vector<Bullet *> *bulletList;
     sf::Vector2f getCenterPosition();

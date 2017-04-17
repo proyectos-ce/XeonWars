@@ -55,7 +55,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
     enemyShipCannon->setBulletDamage(30);
-    enemyShipCannon->setBulletSpeed(2);
+    enemyShipCannon->setBulletSpeed(3);
+    enemyShipCannon->setBulletTextureFilename("Resources/KamikazeBullet.png");
     enemyShip2->setCannon(enemyShipCannon);
 
     enemyShip2->setScale(0.5);

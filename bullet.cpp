@@ -2,7 +2,6 @@
 
 Bullet::Bullet()
 {
-
 }
 
 Bullet::~Bullet()
@@ -30,13 +29,10 @@ void Bullet::setDamage(int value)
 
 void Bullet::animate(float passedTime)
 {
-    std::cout<<passedTime<<std::endl;
     time+=passedTime;
     if(this->time>500){
         updateTexture(++currentTexture);
         time=0;
-        //std::cout<<time<<" animate"<<std::endl;
-
     }
 
 }
