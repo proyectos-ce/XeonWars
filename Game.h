@@ -19,9 +19,11 @@
 #include "cannon.h"
 #include "Collision.h"
 #include "Utils.h"
+#include "collisionmanager.h"
 
 class Game : public Screen {
 
+    int score = 0;
     Clock clock;
     MainSpaceShip ownSpaceShip;
     Background background;

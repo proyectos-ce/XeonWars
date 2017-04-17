@@ -12,8 +12,14 @@ public:
     int getX() const;
     void setX(int value);
 
+    void setReverseDirection(bool value);
+
+
+
 protected:
     int x= 0;
+    int direction=1;
+    bool reverseDirection() const;
 };
 
 
@@ -41,14 +47,28 @@ protected:
     int scale;
 };
 
+class FollowerMotion : public Motion{
+   public:
+    FollowerMotion(sf::Sprite *owner,sf::Sprite *target);
+    sf::Vector2f getNext(int speed);
+    sf::Sprite *getTarget() const;
+    void setTarget(sf::Sprite *value);
 
-class MotionFactory
-{
-public:
-    static Motion *createSimpleMotion();
-    static Motion *createLinearMotion(double angle);
-    static Motion *createSinMotion(int scale);
+    sf::Sprite *getOwner() const;
+    void setOwner(sf::Sprite *value);
+
+protected:
+    sf::Sprite *owner;
+    sf::Sprite *target;
 };
+
+namespace MotionFactory{
+
+     Motion *createSimpleMotion();
+     Motion *createLinearMotion(double angle);
+     Motion *createSinMotion(int scale);
+     Motion *createFollowerMotion(sf::Sprite *owner,sf::Sprite *target);
+}
 
 
 

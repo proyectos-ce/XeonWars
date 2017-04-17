@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Screens.h"
+#include <time.h>
 
 
 
@@ -31,8 +32,6 @@ int main(){
     screens.push_back(&game);
 
     Texture pauseTexture;
-
-
 
     //Main loop
     while (screen >= 0)
