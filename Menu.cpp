@@ -13,45 +13,85 @@ Menu::Menu()
     playing = false;
 }
 
-int Menu::run(sf::RenderWindow &App, sf::Texture &tex)
+int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
 {
-    sf::Event Event;
-    bool Running = true;
-    sf::Texture Texture;
-    sf::Sprite Sprite;
+    sf::Event event;
+    bool running = true;
+    sf::Texture bgTexture;
+    sf::Sprite bg;
     int alpha = 0;
-    sf::Font Font;
-    sf::Text Menu1;
-    sf::Text Menu2;
-    sf::Text Menu3;
+    sf::Font verdana;
+    sf::Font classicFont;
+    sf::Text logo;
+    sf::Text playLabel;
+    sf::Text exitLabel;
+    sf::Text optionsLabel;
+    sf::Text continueLabel;
+    sf::Text copyLabel;
     int menu = 0;
 
-    if (!Texture.loadFromFile("Resources/menu/presentation.jpg"))
+    if (!bgTexture.loadFromFile("Resources/menu/presentation.gif"))
     {
         std::cerr << "Error loading presentation.gif" << std::endl;
         return (-1);
     }
-    Sprite.setTexture(Texture);
-    Sprite.setColor(sf::Color(255, 255, 255, alpha));
-    if (!Font.loadFromFile("Resources/menu/verdana.ttf"))
+
+    if (!verdana.loadFromFile("Resources/menu/verdana.ttf"))
     {
         std::cerr << "Error loading verdanab.ttf" << std::endl;
         return (-1);
     }
-    Menu1.setFont(Font);
-    Menu1.setCharacterSize(20);
-    Menu1.setString("Play");
-    Menu1.setPosition({ 280.f, 160.f });
 
-    Menu2.setFont(Font);
-    Menu2.setCharacterSize(20);
-    Menu2.setString("Exit");
-    Menu2.setPosition({ 280.f, 220.f });
+    if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
+    {
+        std::cerr << "Error loading 8bit.ttf" << std::endl;
+        return (-1);
+    }
 
-    Menu3.setFont(Font);
-    Menu3.setCharacterSize(20);
-    Menu3.setString("Continue");
-    Menu3.setPosition({ 280.f, 160.f });
+
+
+    bg.setTexture(bgTexture);
+    bg.setColor(sf::Color(255, 255, 255, alpha));
+
+
+    playLabel.setFont(classicFont);
+    playLabel.setCharacterSize(40);
+    playLabel.setString("Play");
+    playLabel.setPosition({ 300.f, 350.f });
+
+
+    optionsLabel.setFont(classicFont);
+    optionsLabel.setCharacterSize(40);
+    optionsLabel.setString("Options");
+    optionsLabel.setPosition({ 300.f, 400.f });
+
+
+    exitLabel.setFont(classicFont);
+    exitLabel.setCharacterSize(40);
+    exitLabel.setString("Exit");
+    exitLabel.setPosition({ 300.f, 450.f });
+
+    continueLabel.setFont(classicFont);
+    continueLabel.setCharacterSize(40);
+    continueLabel.setString("Continue");
+    continueLabel.setPosition({ 280.f, 160.f });
+
+    logo.setFont(classicFont);
+    logo.setCharacterSize(200);
+    logo.setString("XeonWars");
+    sf::FloatRect textRect = logo.getLocalBounds();
+    logo.setOrigin(textRect.left + textRect.width/2.0f,
+                   textRect.top  + textRect.height/2.0f);
+    logo.setPosition({ 1366/2.f, 200.f });
+
+
+    copyLabel.setFont(classicFont);
+    copyLabel.setCharacterSize(40);
+    copyLabel.setString("(C) 2017 Ximenathl and co");
+    textRect = copyLabel.getLocalBounds();
+    copyLabel.setOrigin(textRect.left + textRect.width/2.0f,
+                   textRect.top  + textRect.height/2.0f);
+    copyLabel.setPosition({ 1366/2.0f, 700.f });
 
 
 
@@ -60,29 +100,33 @@ int Menu::run(sf::RenderWindow &App, sf::Texture &tex)
         alpha = alpha_max;
     }
 
-    while (Running)
+    while (running)
     {
         //Verifying events
-        while (App.pollEvent(Event))
+        while (window.pollEvent(event))
         {
 
-            if (Event.type == sf::Event::Resized)
-                App.setView(Utils::calcView(sf::Vector2u(Event.size.width, Event.size.height), Utils::designedsize));
+            if (event.type == sf::Event::Resized)
+                window.setView(Utils::calcView(sf::Vector2u(event.size.width, event.size.height), Utils::designedsize));
             // Window closed
-            if (Event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed)
             {
                 return (-1);
             }
             //Key pressed
-            if (Event.type == sf::Event::KeyPressed)
+            if (event.type == sf::Event::KeyPressed)
             {
-                switch (Event.key.code)
+                switch (event.key.code)
                 {
                     case sf::Keyboard::Up:
-                        menu = 0;
+                        menu--;
+                        if (menu<0)
+                            menu = 0;
                         break;
                     case sf::Keyboard::Down:
-                        menu = 1;
+                        menu++;
+                        if (menu>2)
+                            menu = 2;
                         break;
                     case sf::Keyboard::Return:
                         if (menu == 0)
@@ -107,39 +151,52 @@ int Menu::run(sf::RenderWindow &App, sf::Texture &tex)
         {
             alpha+=3;
         }
-        Sprite.setColor(sf::Color(255, 255, 255, alpha / alpha_div));
+        bg.setColor(sf::Color(255, 255, 255, alpha / alpha_div));
         if (menu == 0)
         {
-            Menu1.setColor(sf::Color(255, 0, 0, 255));
-            Menu2.setColor(sf::Color(255, 255, 255, 255));
-            Menu3.setColor(sf::Color(255, 0, 0, 255));
+            playLabel.setColor(sf::Color(255, 0, 0, 255));
+            optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            exitLabel.setColor(sf::Color(255, 255, 255, 255));
+            continueLabel.setColor(sf::Color(255, 0, 0, 255));
+        }
+        else if (menu == 1)
+        {
+            playLabel.setColor(sf::Color(255, 255, 255, 255));
+            optionsLabel.setColor(sf::Color(255, 0, 0, 255));
+            exitLabel.setColor(sf::Color(255, 255, 255, 255));
+            continueLabel.setColor(sf::Color(255, 0, 0, 255));
         }
         else
         {
-            Menu1.setColor(sf::Color(255, 255, 255, 255));
-            Menu2.setColor(sf::Color(255, 0, 0, 255));
-            Menu3.setColor(sf::Color(255, 255, 255, 255));
+            playLabel.setColor(sf::Color(255, 255, 255, 255));
+            optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            exitLabel.setColor(sf::Color(255, 0, 0, 255));
+            continueLabel.setColor(sf::Color(255, 255, 255, 255));
         }
 
         //Clearing screen
-        App.clear();
+        window.clear();
         //Drawing
-        App.draw(Sprite);
+        window.draw(bg);
         if (alpha >= alpha_max)
             alpha = alpha_max;
         {
             if (playing)
             {
-                Sprite.setTexture(tex);
-                App.draw(Menu3);
+                bg.setTexture(pauseTexture);
+                alpha = 150;
+                window.draw(continueLabel);
             }
             else
             {
-                App.draw(Menu1);
+                window.draw(playLabel);
+                window.draw(copyLabel);
+                window.draw(logo);
+                window.draw(optionsLabel);
             }
-            App.draw(Menu2);
+            window.draw(exitLabel);
         }
-        App.display();
+        window.display();
     }
 
     //Never reaching this point normally, but just in case, exit the application

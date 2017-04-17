@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "Screens.h"
-#include "Utils.h"
 
 
 
@@ -20,6 +19,9 @@ int main(){
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
     window.setMouseCursorVisible(false);
+    sf::Image icon;
+    icon.loadFromFile("Resources/menu/icon.png");
+    window.setIcon(256,256,icon.getPixelsPtr());
     //window.requestFocus();
 
     //Screens preparations
