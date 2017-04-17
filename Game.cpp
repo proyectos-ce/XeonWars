@@ -90,7 +90,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
 
-    backgroundMusic.openFromFile("Resources/BackgroundMusic.ogg");
+    backgroundMusic.openFromFile("Resources/music2.ogg");
     backgroundMusic.setLoop(true);
     backgroundMusic.play();
     std::cout << running << std::endl;
