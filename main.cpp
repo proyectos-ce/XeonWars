@@ -23,8 +23,8 @@ int main(){
 
 
     sf::Image icon;
-    icon.loadFromFile("Resources/menu/icon.png");
-    window.setIcon(256,256,icon.getPixelsPtr());
+    //icon.loadFromFile("Resources/menu/icon.png");
+    //window.setIcon(256,256,icon.getPixelsPtr());
     //window.requestFocus();
 
 
