@@ -185,7 +185,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 ownSpaceShip.score.nextlevelReached();
             }
         }
-
+/*
          if( (playerbulletList[i]->getPosition().y) <= -1000| playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
                 delete playerbulletList.operator[](i);
                 playerbulletList.erase(playerbulletList.begin()+i);
@@ -194,7 +194,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
             }
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
-        }
+        }*/
         ownSpaceShip.update(window, time.asMilliseconds());
         ownSpaceShip.render(window);
 

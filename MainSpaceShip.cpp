@@ -28,14 +28,14 @@ MainSpaceShip::MainSpaceShip() {
 
 
 
-    shipCannon = CannonFactory::createSprayCannon(3,10);
+    shipCannon = CannonFactory::createSprayCannon(3,1);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(6);
     shipCannon->setReverseDirection(1);
     shipCannon->setBulletTextureFilename("Resources/Bullets.png");
 
-    missileCannon = cannonFactory.createSprayCannon(10,7);
+    missileCannon = CannonFactory::createSprayCannon(10,7);
 
     missileCannon->setOwnerSprite(&SOwnSpaceShip);
     missileCannon->setBulletDamage(30);
@@ -57,7 +57,7 @@ void MainSpaceShip::setbulletList(std::vector<Bullet *> *value)
 
     bulletList = value;
     shipCannon->setBulletList(bulletList);
-    missileCannon->setEnemyList(bulletList);
+    missileCannon->setBulletList(bulletList);
 }
 void MainSpaceShip::lifeManager(int damage){
     lifeLevel-=damage;
