@@ -37,6 +37,7 @@ protected:
     Motion *motion;
     sf::Sprite sprite;
     sf::Texture texture;
+    int currentTexture=0;
 
 
 

@@ -35,20 +35,14 @@ protected:
     Cannon *cannon;
 };
 
-class EnemyFactory
-{
-public:
-    EnemyFactory();
+namespace EnemyFactory {
+
     Enemy *createJet(int level);
     Enemy *createBomber(int level);
     Enemy *createTower(int level);
     Enemy *createMissileTower(int level);
     Enemy *createKamikazeJet(int level);
-
-private:
-    sf::Sprite *playerShipSprite;
-    //Enemy *createJet(int level);
-
-};
+    //Enemy *createMeteor(int level);
+}
 
 #endif // ENEMY_H

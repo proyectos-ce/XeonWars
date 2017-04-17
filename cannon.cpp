@@ -119,7 +119,7 @@ SimpleCannon::SimpleCannon()
 
 void SimpleCannon::shoot()
 {
-    Motion *bulletMotion = motionFactory.createSimpleMotion();
+    Motion *bulletMotion = MotionFactory::createSimpleMotion();
     shootBullet(bulletSpeed, bulletMotion);
 
 }
@@ -134,7 +134,7 @@ SprayCannon::SprayCannon(int angle, int bulletsByshoot)
 void SprayCannon::shoot()
 {
     for (int i = -(bulletsByshoot/2); i < (bulletsByshoot/2+bulletsByshoot%2) ; ++i) {
-        Motion *bulletMotion = motionFactory.createLinearMotion(angle*i);
+        Motion *bulletMotion = MotionFactory::createLinearMotion(angle*i);
         shootBullet(bulletSpeed, bulletMotion,-angle*i);
     }
 
@@ -160,14 +160,17 @@ void SprayCannon::setBulletsByshoot(int value)
     bulletsByshoot = value;
 }
 
-Cannon *CannonFactory::createSimpleCannon()
+namespace CannonFactory
+{
+Cannon *createSimpleCannon()
 {
     Cannon *newCannon =  new SimpleCannon();
     return newCannon;
 }
 
-Cannon *CannonFactory::createSprayCannon(int angle, int bulletsByshoot)
+Cannon *createSprayCannon(int angle, int bulletsByshoot)
 {
     Cannon *newCannon =  new SprayCannon(angle, bulletsByshoot);
     return newCannon;
+}
 }

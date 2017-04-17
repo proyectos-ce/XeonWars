@@ -46,7 +46,7 @@ private:
     bool shieldActivated;
     Queue<powerUp> powerUpsQueue;
     Cannon *shipCannon;
-    CannonFactory cannonFactory;
+    //CannonFactory cannonFactory;
     std::vector<Bullet *> *bulletList;
 
 

@@ -25,7 +25,7 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p3);
 
 
-    shipCannon = cannonFactory.createSprayCannon(3,3);
+    shipCannon = CannonFactory::createSprayCannon(3,3);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(6);

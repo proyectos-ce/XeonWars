@@ -76,9 +76,13 @@ void Entity::setTexturesAmount(int value)
 void Entity::updateTexture(int value)
 {
     if(value<texturesAmount){
-    int rectX = (texture.getSize().x/texturesAmount), rectY = texture.getSize().y;
-    sprite.setTextureRect(sf::IntRect(rectX*value,0 , rectX, rectY ));
+    currentTexture=value;
     }
+    else{
+        currentTexture=0;
+    }
+    int rectX = (texture.getSize().x/texturesAmount), rectY = texture.getSize().y;
+    sprite.setTextureRect(sf::IntRect(rectX*currentTexture,0 , rectX, rectY ));
 }
 
 void Entity::rotate(float angle)

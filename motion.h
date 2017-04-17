@@ -62,14 +62,13 @@ protected:
     sf::Sprite *target;
 };
 
-class MotionFactory
-{
-public:
-    static Motion *createSimpleMotion();
-    static Motion *createLinearMotion(double angle);
-    static Motion *createSinMotion(int scale);
-    static Motion *createFollowerMotion(sf::Sprite *owner,sf::Sprite *target);
-};
+namespace MotionFactory{
+
+     Motion *createSimpleMotion();
+     Motion *createLinearMotion(double angle);
+     Motion *createSinMotion(int scale);
+     Motion *createFollowerMotion(sf::Sprite *owner,sf::Sprite *target);
+}
 
 
 

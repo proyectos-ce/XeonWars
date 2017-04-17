@@ -18,7 +18,6 @@ Enemy::Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList, std::vector<B
     setTexture(texture);
     setBulletList(bulletList);
     enemyList->push_back(this);
-    //sprite.
 }
 Enemy::~Enemy()
 {
@@ -59,9 +58,11 @@ void Enemy::update(sf::RenderWindow &window, float time)
 {
 
     Entity::update(window, time);
+
     if(trigger!=0 && moves%trigger==0){
         shoot();
-        //updateTexture(1);
+        //updateTexture(++currentTexture);
+
     }
     moves++;
 }

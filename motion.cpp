@@ -40,30 +40,6 @@ bool Motion::reverseDirection() const
 
 
 
-Motion *MotionFactory::createSimpleMotion()
-{
-    Motion *newSimple =  new SimpleMotion();
-    return newSimple;
-}
-
-Motion *MotionFactory::createLinearMotion(double angle)
-{
-    Motion *newLinear =  new LinearMotion(angle);
-    return newLinear;
-
-}
-
-Motion *MotionFactory::createSinMotion(int scale)
-{
-    Motion *newSin =  new SinMotion(scale);
-    return newSin;
-}
-
-Motion *MotionFactory::createFollowerMotion(sf::Sprite *owner, sf::Sprite *target)
-{
-    return new FollowerMotion(owner, target);
-}
-
 
 LinearMotion::LinearMotion(double angle)
 {
@@ -151,4 +127,32 @@ sf::Sprite *FollowerMotion::getOwner() const
 void FollowerMotion::setOwner(sf::Sprite *value)
 {
     owner = value;
+}
+
+
+
+
+namespace MotionFactory {
+
+
+Motion *createSimpleMotion()
+{
+    return new SimpleMotion();
+}
+
+Motion *createLinearMotion(double angle)
+{
+    return new LinearMotion(angle);
+
+}
+
+Motion *createSinMotion(int scale)
+{
+    return new SinMotion(scale);
+}
+
+Motion *createFollowerMotion(sf::Sprite *owner, sf::Sprite *target)
+{
+    return new FollowerMotion(owner, target);
+}
 }

@@ -13,7 +13,6 @@ public:
     Cannon();
     ~Cannon();
     virtual void shoot();
-    MotionFactory motionFactory;
     std::string getBulletTextureFilename() const;
     void setBulletTextureFilename(const std::string &value);
     std::vector<Bullet *> *getBulletList() const;
@@ -65,11 +64,10 @@ private:
     int bulletsByshoot;
 };
 
-class CannonFactory{
-public:
-    static Cannon *createSimpleCannon();
-    static Cannon *createSprayCannon(int angle, int bulletsByshoot);
+namespace CannonFactory{
+     Cannon *createSimpleCannon();
+     Cannon *createSprayCannon(int angle, int bulletsByshoot);
 
-};
+}
 
 #endif // CANNON_H
