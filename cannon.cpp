@@ -24,6 +24,7 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
     newBullet->setTexturesAmount(texturesAmount);
     newBullet->setPosition(getCenterPosition());
     //BulletList->size();
+    newBullet->setScale(0.2);
     newBullet->rotate(angle*getDirection()+(180*reverseDirection));
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
@@ -236,6 +237,7 @@ void FollowerCannon::shootBullet(int speed)
 
     newBullet->setTexturesAmount(texturesAmount);
     newBullet->setPosition(getCenterPosition());
+    newBullet->setScale(0.2);
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }

@@ -96,9 +96,8 @@ FollowerMotion::FollowerMotion(sf::Sprite *owner,sf::Sprite *target)
 sf::Vector2f FollowerMotion::getNext(int speed)
 {
     sf::Vector2f next(0,speed*direction);
-    //owner->getLocalBounds().width/2+owner->getLocalBounds().left
-    //std::cout<<(owner->getLocalBounds().height/2)+owner->getPosition().y<<"     "<<target->getLocalBounds().height/2+target->getPosition().y<<std::endl;
-    if(owner->getLocalBounds().height/2+owner->getPosition().y < target->getLocalBounds().height/2+target->getPosition().y != reverseDirection()){
+    if((owner->getLocalBounds().height/2+owner->getPosition().y < target->getLocalBounds().height/2+target->getPosition().y != reverseDirection())
+            && (400 < fabs(target->getLocalBounds().width/2+target->getPosition().x - owner->getLocalBounds().width/2+owner->getPosition().x ) ) ){
         if(owner->getLocalBounds().width/2+owner->getPosition().x < target->getLocalBounds().width/2+target->getPosition().x){
             next.x=speed;
         }

@@ -51,15 +51,15 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShip2->setMotion(enemyShipMotion);
     enemyShip2->setSpeed(2);
     enemyShip2->setPosition(sf::Vector2f(100,0));
-    enemyShip2->setTrigger(20);
+    enemyShip2->setTrigger(40);
 
     enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
     enemyShipCannon->setBulletDamage(30);
-    enemyShipCannon->setBulletSpeed(3);
-    enemyShipCannon->setBulletTextureFilename("Resources/KamikazeBullet.png");
+    enemyShipCannon->setBulletSpeed(5);
+    enemyShipCannon->setBulletTextureFilename("Resources/FollowerBullet.png");
     enemyShip2->setCannon(enemyShipCannon);
 
-    enemyShip2->setScale(0.5);
+    enemyShip2->setScale(0.2);
 
 
 
@@ -84,7 +84,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
         enemyShip->setPosition(sf::Vector2f(300*i,0));
         enemyShip->setTrigger(60);
         enemyShip->setCannon(enemyShipCannon);
-        enemyShip->setScale(0.7);
+        enemyShip->setScale(0.2);
     }
 
 
@@ -163,9 +163,15 @@ int Game::run(RenderWindow &window, Texture &tex) {
         }
 
 
+
         for (int i = 0; i < playerbulletList.size(); ++i) {
             playerbulletList[i]->update(window, time.asMilliseconds());
             playerbulletList[i]->render(window);
+            if( playerbulletList[i]->getPosition().y <= 0 | playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
+                delete playerbulletList.operator[](i);
+                playerbulletList.erase(playerbulletList.begin()+i);
+                std::cout<<"eliminando bala\n";
+            }
         }
 
 
