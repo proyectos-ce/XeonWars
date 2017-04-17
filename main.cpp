@@ -20,7 +20,7 @@ int main(){
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
     window.setMouseCursorVisible(false);
-    window.requestFocus();
+//    window.requestFocus();
 
     //Screens preparations
     Menu menu;
