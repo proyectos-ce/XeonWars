@@ -10,7 +10,9 @@ using namespace std;
 ScoreManager::ScoreManager(){
     GeneralScore = 0;
     BossTime = false;
+    createBoss = false;
     currentLevel = 1;
+    nextBoss_score=5000;
     if (!font.loadFromFile("Resources/menu/verdana.ttf"))
     {
         cout << "error with the font" << endl;
@@ -30,6 +32,12 @@ ScoreManager::ScoreManager(){
 float ScoreManager::get_score() {
     return GeneralScore;
 }
+bool ScoreManager::getcreateBoss() {
+  return createBoss;
+};
+void ScoreManager::createbossOff(){
+    createBoss=false;
+}
 void ScoreManager::add_score(int score) {
     GeneralScore+=score;
 }
@@ -37,6 +45,16 @@ bool ScoreManager::isBossTime(){
     bool result = false;
     if (BossTime) result = true;
     return result;
+}
+void ScoreManager::BossTimeCheck(){
+    if (get_score()>=nextBoss_score) {
+        BossTime = true;
+        createBoss = true;
+        nextBoss_score += 10000;
+    }
+}
+void ScoreManager::setBossOn(){
+    Boss.BossInit(getLevel());
 }
 int ScoreManager::getLevel() {
     return currentLevel;

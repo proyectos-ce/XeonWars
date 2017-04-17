@@ -174,6 +174,19 @@ int Game::run(RenderWindow &window, Texture &tex) {
         ownSpaceShip.score.scoreRender(window);
         ownSpaceShip.score.add_score(1);
 
+        ownSpaceShip.score.BossTimeCheck();
+
+        if(ownSpaceShip.score.isBossTime()){
+            if(ownSpaceShip.score.getcreateBoss()){
+                cout << "viene el boss" << endl;
+                ownSpaceShip.score.setBossOn();
+                ownSpaceShip.score.createbossOff();
+            }
+            if(ownSpaceShip.score.Boss.isdead()){
+                ownSpaceShip.score.BossTime=false;
+                ownSpaceShip.score.nextlevelReached();
+            }
+        }
 
         collisionManager.checkCollisions();
 

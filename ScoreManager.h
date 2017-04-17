@@ -8,22 +8,29 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "BossManager.h"
 
 
 class ScoreManager {
     public:
     ScoreManager();
-
+    BossManager Boss;
     float get_score();
     void add_score(int);
     bool isBossTime();
     int getLevel();
     void nextlevelReached();
     void scoreRender(sf::RenderWindow &window);
+    void setBossOn();
+    bool createBoss;
+    bool getcreateBoss();
+    void createbossOff();
+    bool BossTime;
+    int nextBoss_score;
+    void BossTimeCheck();
 
 private:
     int GeneralScore;
-    bool BossTime;
     int currentLevel;
     sf::Text text;
     sf::Font font;

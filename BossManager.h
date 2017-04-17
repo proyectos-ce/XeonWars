@@ -9,6 +9,10 @@
 class BossManager {
 public:
     BossManager();
+    int Bosslife;
+    void BossInit(int level);
+    int BossLevel;
+    bool isdead();
 private:
 };
 
