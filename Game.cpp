@@ -18,6 +18,8 @@ void Game::pauseGame() {
 
 void Game::updateAll(RenderWindow &window)
 {
+    background.update(window, time.asMilliseconds());
+    background.render(window);
 
     for (int i = 0; i < enemyBulletList.size(); ++i) {
         enemyBulletList[i]->update(window, time.asMilliseconds());
@@ -88,7 +90,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon->setBulletTextureFilename("Resources/FollowerBullet.png");
     enemyShip2->setCannon(enemyShipCannon);
 
+
     enemyShip2->setScale(0.2);
+
 
 
 
