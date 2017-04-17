@@ -88,6 +88,8 @@ void MainSpaceShip::lifeManager(int damage){
 
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
+    checkShieldTimer();
+
     bool anyKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
             sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
             sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
@@ -189,7 +191,7 @@ void MainSpaceShip::usePowerUp() {
             missiles_On=true;
         }
         else if(powerToUse == 1){
-            shield();
+            if(!shieldActivated) shield();
             cout <<"Escudo"<<endl;
         }
         else if(powerToUse == 2){
@@ -204,6 +206,7 @@ void MainSpaceShip::usePowerUp() {
 void MainSpaceShip::shield() {
     if(shieldActivated == false){
         shieldActivated = true;
+        shieldClock.restart();
         sound.setBuffer(shieldOnSound);
         cout<<"Escudo activado"<<endl;
     }else{
@@ -268,6 +271,12 @@ Sprite *MainSpaceShip::getSpriteReference()
 Sprite MainSpaceShip::getSprite() const
 {
     return SOwnSpaceShip;
+}
+
+void MainSpaceShip::checkShieldTimer() {
+    if(shieldClock.getElapsedTime().asMilliseconds()>10000 && shieldActivated==true) {
+        shield();
+    }
 }
 
 

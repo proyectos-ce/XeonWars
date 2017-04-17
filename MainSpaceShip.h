@@ -23,6 +23,7 @@ public:
     bool gameOver();
     void shield();
     void playerShoot();
+    void checkShieldTimer();
     void lifeManager(int);
     ScoreManager score;
 
@@ -47,7 +48,6 @@ private:
     SoundBuffer missileShootBuffer;
     SoundBuffer shieldOnSound;
     SoundBuffer shieldOffSound;
-    
 
     Sound sound;
 
@@ -61,6 +61,7 @@ private:
     Cannon *shipCannon;
     Cannon *missileCannon;
     Cannon *laserCannon;
+    Clock shieldClock;
     std::vector<Bullet *> *bulletList;
 
 

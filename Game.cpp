@@ -88,7 +88,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon->setBulletTextureFilename("Resources/FollowerBullet.png");
     enemyShip2->setCannon(enemyShipCannon);
 
-    enemyShip2->setScale(0.9);
+    enemyShip2->setScale(0.2);
 
 
 
