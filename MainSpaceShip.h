@@ -4,13 +4,13 @@
 
 #ifndef AIRWAR_MAINSPACESHIP_H
 #define AIRWAR_MAINSPACESHIP_H
-
 #include <SFML/Graphics.hpp>
 #include "Queue.h"
 #include "powerUp.h"
 #include "math.h"
 #include "cannon.h"
 #include "motion.h"
+#include "ScoreManager.h"
 
 using namespace sf;
 
@@ -23,6 +23,8 @@ public:
     bool gameOver();
     void shield();
     void playerShoot();
+    void lifeManager(int);
+    ScoreManager score;
 
     std::vector<Bullet *> *getbulletList() const;
     void setbulletList(std::vector<Bullet *> *value);
@@ -37,6 +39,8 @@ public:
     //void setSOwnSpaceShip(const Sprite &value);
 
 private:
+    bool missiles_On;
+    bool laser_On;
     Sprite SOwnSpaceShip;
     Texture TOwnSpaceShip;
     int lifes;
@@ -46,8 +50,10 @@ private:
     bool shieldActivated;
     Queue<powerUp> powerUpsQueue;
     Cannon *shipCannon;
-    //CannonFactory cannonFactory;
+    Cannon *missileCannon;
+    Cannon *laserCannon;
     std::vector<Bullet *> *bulletList;
+
 
 
     const float speed = 6;

@@ -166,7 +166,27 @@ int Game::run(RenderWindow &window, Texture &tex) {
         for (int i = 0; i < playerbulletList.size(); ++i) {
             playerbulletList[i]->update(window, time.asMilliseconds());
             playerbulletList[i]->render(window);
-            if( (playerbulletList[i]->getPosition().y) <= -1000| playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
+        }
+
+
+        ownSpaceShip.score.scoreRender(window);
+        ownSpaceShip.score.add_score(1);
+
+        ownSpaceShip.score.BossTimeCheck();
+
+        if(ownSpaceShip.score.isBossTime()){
+            if(ownSpaceShip.score.getcreateBoss()){
+                cout << "viene el boss" << endl;
+                ownSpaceShip.score.setBossOn();
+                ownSpaceShip.score.createbossOff();
+            }
+            if(ownSpaceShip.score.Boss.isdead()){
+                ownSpaceShip.score.BossTime=false;
+                ownSpaceShip.score.nextlevelReached();
+            }
+        }
+
+         if( (playerbulletList[i]->getPosition().y) <= -1000| playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
                 delete playerbulletList.operator[](i);
                 playerbulletList.erase(playerbulletList.begin()+i);
                 //delete toDelete;
@@ -178,7 +198,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
         ownSpaceShip.update(window, time.asMilliseconds());
         ownSpaceShip.render(window);
 
+
         collisionManager.checkCollisions();
+
 
         clock.restart().asMilliseconds();
 

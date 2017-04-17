@@ -3,11 +3,13 @@
 //
 #include <iostream>
 #include "MainSpaceShip.h"
+#include "ScoreManager.h"
 
 MainSpaceShip::MainSpaceShip() {
     lifes = 3;
     scoreForLifes = 0;
     globalScore = 0;
+
 
     TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
     TOwnSpaceShip.setSmooth(true);
@@ -25,12 +27,22 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p3);
 
 
+
     shipCannon = CannonFactory::createSprayCannon(3,10);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(6);
     shipCannon->setReverseDirection(1);
     shipCannon->setBulletTextureFilename("Resources/Bullets.png");
+
+    missileCannon = cannonFactory.createSprayCannon(10,7);
+
+    missileCannon->setOwnerSprite(&SOwnSpaceShip);
+    missileCannon->setBulletDamage(30);
+    missileCannon->setBulletSpeed(-6);
+
+    missiles_On=false;
+    laser_On= false;
 
 }
 
@@ -42,10 +54,21 @@ std::vector<Bullet *> *MainSpaceShip::getbulletList() const
 
 void MainSpaceShip::setbulletList(std::vector<Bullet *> *value)
 {
+
     bulletList = value;
     shipCannon->setBulletList(bulletList);
+    missileCannon->setEnemyList(bulletList);
 }
-
+void MainSpaceShip::lifeManager(int damage){
+    lifeLevel-=damage;
+    if (lifeLevel<=0){
+        lifes -=1;
+        lifeLevel=100;
+        if (lifes <= 0){
+            gameOver();
+        }
+    }
+}
 
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
@@ -145,6 +168,7 @@ void MainSpaceShip::usePowerUp() {
         int powerToUse = powerUpsQueue.dequeue().getType();
         if(powerToUse == 0){
             cout <<"Misiles"<<endl;
+            missiles_On=true;
         }
         else if(powerToUse == 1){
             shield();
@@ -152,6 +176,7 @@ void MainSpaceShip::usePowerUp() {
         }
         else if(powerToUse == 2){
             cout <<"Laser"<<endl;
+            laser_On;
         }
     }else{
         cout <<"No hay power ups"<<endl;
@@ -166,21 +191,24 @@ void MainSpaceShip::shield() {
 }
 
 bool MainSpaceShip::gameOver() {
-    bool result = false;
-    if(lifes <=0){
-        result = true;
-    }
-    return result;
+   cout << "aqui hay que programar que termine el juego" << endl;
 }
 
 
 
 void MainSpaceShip::playerShoot() {
     // CHEQUEAR SI LA NAVE TIENE ACTIVADO LOS MISILES _______________________________******
+    if (missiles_On){
+        missileCannon->shoot();
+        cout << "disparo misil" << endl;
+    } else if (laser_On){
+        cout << "disparo laser" << endl;
+    } else {
 
-    shipCannon->shoot();
-    //std::cout<< shipCannon->getBulletDamage()<<endl;
-    //cout << "disparo" << endl;
+        shipCannon->shoot();
+        //std::cout<< shipCannon->getBulletDamage()<<endl;
+        cout << "disparo simple" << endl;
+    }
 }
 bool MainSpaceShip::attack(int damage)
 {

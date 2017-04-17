@@ -144,6 +144,7 @@ SprayCannon::SprayCannon(int angle, int bulletsByshoot)
 void SprayCannon::shoot()
 {
     for (int i = -(bulletsByshoot/2); i < (bulletsByshoot/2+bulletsByshoot%2) ; ++i) {
+
         Motion *bulletMotion = MotionFactory::createLinearMotion(angle*i);
         shootBullet(bulletSpeed, bulletMotion,-angle*i);
     }
