@@ -27,6 +27,9 @@ public:
     sf::Sprite *getOwnerSprite() const;
     void setOwnerSprite(sf::Sprite *value);
 
+    bool getReverseDirection() const;
+    void setReverseDirection(bool value);
+
 protected:
     int bulletDamage;
     int bulletSpeed;
@@ -35,6 +38,8 @@ protected:
     sf::Sprite *ownerSprite;
     std::vector<Bullet *> *bulletList;
     sf::Vector2f getCenterPosition();
+    bool reverseDirection=false;
+    int getDirection();
 
 };
 

@@ -28,7 +28,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     ownSpaceShip.setbulletList(&playerbulletList);
 
-
     CannonFactory cannonFactory;
     Motion *enemyShipMotion = motionFactory.createLinearMotion(45);
     Cannon *enemyShipCannon = cannonFactory.createSimpleCannon();
@@ -50,9 +49,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
     enemyShipMotion = motionFactory.createFollowerMotion(enemyShip2->getSpriteReference(), ownSpaceShip.getSpriteReference());
+    //enemyShipMotion->setReverseDirection(true);
     enemyShip2->setTexturesAmount(4);
     enemyShip2->setMotion(enemyShipMotion);
-    enemyShip2->setSpeed(3);
+    enemyShip2->setSpeed(2);
     enemyShip2->setPosition(sf::Vector2f(100,0));
     enemyShip2->setTrigger(20);
     enemyShip2->setCannon(enemyShipCannon);
@@ -152,20 +152,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
         background.update(window, time.asMilliseconds());
         background.render(window);
 
-        ownSpaceShip.update(window, time.asMilliseconds());
-        ownSpaceShip.render(window);
 
-        for (int i = 0; i < enemyList.size(); ++i) {
-            enemyList[i]->update(window, time.asMilliseconds());
-            enemyList[i]->render(window);
-            if( enemyList[i]->getPosition().y >= 3000 | enemyList[i]->getPosition().x >= 2000 | enemyList[i]->getPosition().x <= -500){
-                delete enemyList.operator[](i);
-                enemyList.erase(enemyList.begin()+i);
 
-            }
-            //std::cout<<enemyList[i]->getType()<<std::endl;
-
-        }
         for (int i = 0; i < enemyBulletList.size(); ++i) {
             enemyBulletList[i]->update(window, time.asMilliseconds());
             enemyBulletList[i]->render(window);
@@ -179,6 +167,19 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
         }
 
+        for (int i = 0; i < enemyList.size(); ++i) {
+            enemyList[i]->update(window, time.asMilliseconds());
+            enemyList[i]->render(window);
+            if( enemyList[i]->getPosition().y >= 3000 | enemyList[i]->getPosition().x >= 2000 | enemyList[i]->getPosition().x <= -500){
+                delete enemyList.operator[](i);
+                enemyList.erase(enemyList.begin()+i);
+
+            }
+            //std::cout<<enemyList[i]->getType()<<std::endl;
+
+        }
+
+
         for (int i = 0; i < playerbulletList.size(); ++i) {
             playerbulletList[i]->update(window, time.asMilliseconds());
             playerbulletList[i]->render(window);
@@ -191,6 +192,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
+        ownSpaceShip.update(window, time.asMilliseconds());
+        ownSpaceShip.render(window);
+
         collisionManager.checkCollisions();
 
         clock.restart().asMilliseconds();

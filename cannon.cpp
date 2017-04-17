@@ -19,11 +19,12 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
 {
     sf::Texture bulletTexture;
     bulletTexture.loadFromFile(bulletTextureFilename);
+    bulletMotion->setReverseDirection(reverseDirection);
     Bullet *newBullet = new Bullet(bulletTexture, bulletMotion, bulletDamage, speed);
     newBullet->setTexturesAmount(1);
     newBullet->setPosition(getCenterPosition());
     //BulletList->size();
-    newBullet->rotate(angle);
+    newBullet->rotate(angle*getDirection());
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }
@@ -40,6 +41,25 @@ sf::Vector2f Cannon::getCenterPosition()
     centerPosition.x = rect.left+rect.width/2;
     centerPosition.y = rect.top+rect.height/2;
     return centerPosition;
+}
+
+int Cannon::getDirection()
+{
+    int direction= 1;
+    if(reverseDirection){
+        direction=-1;
+    }
+    return direction;
+}
+
+bool Cannon::getReverseDirection() const
+{
+    return reverseDirection;
+}
+
+void Cannon::setReverseDirection(bool value)
+{
+    reverseDirection = value;
 }
 
 sf::Sprite *Cannon::getOwnerSprite() const

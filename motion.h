@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "math.h"
-#include "iostream"
 
 class Motion
 {
@@ -13,8 +12,14 @@ public:
     int getX() const;
     void setX(int value);
 
+    void setReverseDirection(bool value);
+
+
+
 protected:
     int x= 0;
+    int direction=1;
+    bool reverseDirection() const;
 };
 
 
