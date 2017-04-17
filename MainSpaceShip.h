@@ -34,6 +34,8 @@ public:
     //const Sprite &getSprite();
     bool attack(int damage);
     int getLifeLevel() const;
+    int getLifes() const;
+    void setLifes(int numLifes);
     void setLifeLevel(int value);
     sf::Sprite *getSpriteReference();
     Sprite getSprite() const;

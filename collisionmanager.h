@@ -31,6 +31,9 @@ private:
     std::vector<Bullet *> *playerBulletList;
     std::vector<Bullet *> *enemyBulletList;
     MainSpaceShip *playerShip;
+    SoundBuffer collisionSpaceEnemySoundBuffer;
+    SoundBuffer collisionBulletEnemySoundBuffer;
+    Sound collisionSound;
     void deleteEnemy(std::vector<Enemy *> *enemyList, int index);
     void deleteBullet(std::vector<Bullet *> *bulletList, int index);
 };

@@ -2,7 +2,8 @@
 
 CollisionManager::CollisionManager()
 {
-
+    collisionSpaceEnemySoundBuffer.loadFromFile("Resources/gameover.ogg");
+    collisionBulletEnemySoundBuffer.loadFromFile("Resources/collisionSpaceEnemy.ogg");
 }
 
 CollisionManager::CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet *> *playerBulletList, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *enemyBulletList)
@@ -20,6 +21,8 @@ void CollisionManager::checkCollisions()
         //player vs enemies
         if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())){
             //kill player
+            collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+            collisionSound.play();
             deleteEnemy(enemyList,i);
             i--;
         }
@@ -29,6 +32,8 @@ void CollisionManager::checkCollisions()
             j=0;
             while(j<playerBulletList->size()){
                 if(Collision::PixelPerfectTest(playerBulletList->operator[](j)->getSprite(), enemyList->operator[](i)->getSprite())){
+                    collisionSound.setBuffer(collisionBulletEnemySoundBuffer);
+                    collisionSound.play();
                     //std::cout<<"bala vs enemigo\n";
                     if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
                         deleteEnemy(enemyList,i);
@@ -51,8 +56,21 @@ void CollisionManager::checkCollisions()
         //player vs enemies
         if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
             //attack player
+            collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+            collisionSound.play();
             deleteBullet(enemyBulletList, i);
             //delete bullet
+            playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
+            cout <<"ha recibido " <<enemyBulletList->operator[](i)->getDamage()<< " de dano, tiene " << playerShip->getLifeLevel()<< " de vida"<<endl;
+            if(playerShip->getLifeLevel() <=0){
+                if(playerShip->getLifes() <=0){
+                    cout << "gameover"<<endl;
+                }else{
+                    playerShip->setLifes(playerShip->getLifes()-1);
+                    playerShip->setLifeLevel(100);
+                }
+            }
+
             i--;
         }
         i++;

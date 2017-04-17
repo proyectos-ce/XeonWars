@@ -35,6 +35,7 @@ private:
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
+
     bool running = true;
     Time time;
     std::vector<Enemy *> enemyList;

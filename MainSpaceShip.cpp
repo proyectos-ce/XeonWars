@@ -279,4 +279,11 @@ void MainSpaceShip::checkShieldTimer() {
     }
 }
 
+int MainSpaceShip::getLifes() const {
+    return lifes;
+}
+
+void MainSpaceShip::setLifes(int numLifes){
+    lifes =  numLifes;
+}
 

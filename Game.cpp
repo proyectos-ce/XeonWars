@@ -62,6 +62,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     Motion *enemyShipMotion = MotionFactory::createLinearMotion(45);
     Cannon *enemyShipCannon = CannonFactory::createSimpleCannon();
     enemyShipTexture.loadFromFile("Resources/MissileTower.png");
+
     //enemyShipTexture.loadFromFile("Resources/enemy2.png");
 
     CollisionManager collisionManager;
