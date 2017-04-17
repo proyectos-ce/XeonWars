@@ -6,32 +6,33 @@ Enemy::Enemy()
 
 Enemy::Enemy(sf::Texture texture)
 {
-    setEnemyList(NULL);
+    setBulletList(NULL);
     setTexture(texture);
     updateTexture(0);
 
 
 }
 
-Enemy::Enemy(sf::Texture texture, std::vector<Entity *> *enemyList)
+Enemy::Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
 {
     setTexture(texture);
-    setEnemyList(enemyList);
+    setBulletList(bulletList);
     enemyList->push_back(this);
 }
 Enemy::~Enemy()
 {
-    delete(motion);
+    delete cannon;
+
 }
 
-std::vector<Entity *> *Enemy::getEnemyList() const
+std::vector<Bullet *> *Enemy::getBulletList() const
 {
-    return enemyList;
+    return bulletList;
 }
 
-void Enemy::setEnemyList(std::vector<Entity *> *value)
+void Enemy::setBulletList(std::vector<Bullet *> *value)
 {
-    enemyList = value;
+    bulletList = value;
 }
 
 bool Enemy::attack(int damage)
@@ -57,9 +58,11 @@ void Enemy::update(sf::RenderWindow &window, float time)
 {
 
     Entity::update(window, time);
+
     if(trigger!=0 && moves%trigger==0){
-        shout();
-        updateTexture(1);
+        shoot();
+        //updateTexture(++currentTexture);
+
     }
     moves++;
 }
@@ -74,9 +77,9 @@ void Enemy::setTrigger(int value)
     trigger = value;
 }
 
-void Enemy::shout()
+void Enemy::shoot()
 {
-    cannon->shout();
+    cannon->shoot();
 
 }
 
@@ -98,9 +101,24 @@ Cannon *Enemy::getCannon() const
 void Enemy::setCannon(Cannon *value)
 {
     cannon = value;
-    cannon->setOwner(this);
-    cannon->setEnemyList(enemyList);
+    cannon->setOwnerSprite(&(this->sprite));
+    cannon->setBulletList(bulletList);
 }
+
+
+
+int Enemy::getLife() const
+{
+    return life;
+}
+
+void Enemy::setLife(int value)
+{
+    life = value;
+}
+
+
+
 
 
 
