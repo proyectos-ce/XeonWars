@@ -21,6 +21,8 @@ MainSpaceShip::MainSpaceShip() {
 
     normalShootBuffer.loadFromFile("Resources/sfx_laser1.ogg");
     missileShootBuffer.loadFromFile("Resources/sfx_laser2.ogg");
+    shieldOnSound.loadFromFile("Resources/sfx_shieldUp.ogg");
+    shieldOffSound.loadFromFile("Resources/sfx_shieldDown.ogg");
     
 
 
@@ -39,7 +41,7 @@ MainSpaceShip::MainSpaceShip() {
 
 
 
-    shipCannon = CannonFactory::createSprayCannon(3,3);
+    shipCannon = CannonFactory::createSprayCannon(3,1);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(3);
@@ -107,6 +109,8 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
         velocity.x -= speed;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         velocity.x += speed;
+   // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+     //   playerShoot();
 
 
 
@@ -198,8 +202,13 @@ void MainSpaceShip::usePowerUp() {
 void MainSpaceShip::shield() {
     if(shieldActivated == false){
         shieldActivated = true;
+        sound.setBuffer(shieldOnSound);
         cout<<"Escudo activado"<<endl;
+    }else{
+        shieldActivated =false;
+        sound.setBuffer(shieldOffSound);
     }
+    sound.play();
 }
 
 bool MainSpaceShip::gameOver() {
@@ -214,12 +223,12 @@ void MainSpaceShip::playerShoot() {
         if(missileShootCounter <5) {
             missileShootCounter++;
             missileCannon->shoot();
-            shootSound.setBuffer(missileShootBuffer);
+            sound.setBuffer(missileShootBuffer);
             cout << "disparo misil" << endl;
         }else{
             missiles_On= false;
             missileShootCounter=0;
-            shootSound.setBuffer(normalShootBuffer);
+            sound.setBuffer(normalShootBuffer);
             shipCannon->shoot();
         }
     } else if (laser_On){
@@ -227,11 +236,11 @@ void MainSpaceShip::playerShoot() {
     } else {
 
         shipCannon->shoot();
-        shootSound.setBuffer(normalShootBuffer);
+        sound.setBuffer(normalShootBuffer);
         //std::cout<< shipCannon->getBulletDamage()<<endl;
         cout << "disparo simple" << endl;
     }
-    shootSound.play();
+    sound.play();
 }
 bool MainSpaceShip::attack(int damage)
 {
