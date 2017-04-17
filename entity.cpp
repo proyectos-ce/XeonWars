@@ -81,6 +81,11 @@ void Entity::updateTexture(int value)
     }
 }
 
+void Entity::rotate(float angle)
+{
+    sprite.rotate(angle);
+}
+
 
 int Entity::getSpeed() const
 {

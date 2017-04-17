@@ -11,11 +11,11 @@ Cannon::~Cannon()
 
 void Cannon::shoot()
 {
- std::cout << "shoot \n";
+    std::cout << "shoot \n";
 }
 
 
-void Cannon::shootBullet(int speed, Motion *bulletMotion)
+void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
 {
     sf::Texture bulletTexture;
     bulletTexture.loadFromFile(bulletTextureFilename);
@@ -23,11 +23,14 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion)
     newBullet->setTexturesAmount(1);
     newBullet->setPosition(getCenterPosition());
     //BulletList->size();
+    newBullet->rotate(angle);
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }
+    else{
+        bulletList->push_back(newBullet);
+    }
     //std::cout<<bulletList->size()<<std::endl;
-    bulletList->push_back(newBullet);
 }
 
 sf::Vector2f Cannon::getCenterPosition()
@@ -111,8 +114,8 @@ SprayCannon::SprayCannon(int angle, int bulletsByshoot)
 void SprayCannon::shoot()
 {
     for (int i = -(bulletsByshoot/2); i < (bulletsByshoot/2+bulletsByshoot%2) ; ++i) {
-    Motion *bulletMotion = motionFactory.createLinearMotion(angle*i);
-       shootBullet(bulletSpeed, bulletMotion);
+        Motion *bulletMotion = motionFactory.createLinearMotion(angle*i);
+        shootBullet(bulletSpeed, bulletMotion,-angle*i);
     }
 
 }

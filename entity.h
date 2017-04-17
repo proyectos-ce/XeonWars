@@ -28,6 +28,7 @@ public:
     sf::Vector2f getCenterPosition();
     void setScale(float scale);
     void updateTexture(int value);
+    void rotate(float angle);
 
 protected:
     int speed=10;

@@ -30,7 +30,7 @@ public:
 protected:
     int bulletDamage;
     int bulletSpeed;
-    void shootBullet(int speed, Motion *bulletMotion);
+    void shootBullet(int speed, Motion *bulletMotion, float angle=0);
     std::string bulletTextureFilename;
     sf::Sprite *ownerSprite;
     std::vector<Bullet *> *bulletList;
