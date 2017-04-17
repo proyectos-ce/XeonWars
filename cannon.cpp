@@ -11,23 +11,37 @@ Cannon::~Cannon()
 
 void Cannon::shoot()
 {
- std::cout << "shoot \n";
+    std::cout << "shoot \n";
 }
 
 
-void Cannon::shootBullet(int speed, Motion *bulletMotion)
+void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
 {
     sf::Texture bulletTexture;
     bulletTexture.loadFromFile(bulletTextureFilename);
+    bulletMotion->setReverseDirection(reverseDirection);
     Bullet *newBullet = new Bullet(bulletTexture, bulletMotion, bulletDamage, speed);
-    newBullet->setTexturesAmount(1);
+    newBullet->setTexturesAmount(texturesAmount);
     newBullet->setPosition(getCenterPosition());
-    //enemyList->size();
-    if(enemyList==NULL){
+    //BulletList->size();
+    newBullet->rotate(angle*getDirection()+(180*reverseDirection));
+    if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }
-    //std::cout<<enemyList->size()<<std::endl;
-    enemyList->push_back(newBullet);
+    else{
+        bulletList->push_back(newBullet);
+    }
+    //std::cout<<bulletList->size()<<std::endl;
+}
+
+int Cannon::getTexturesAmount() const
+{
+    return texturesAmount;
+}
+
+void Cannon::setTexturesAmount(int value)
+{
+    texturesAmount = value;
 }
 
 sf::Vector2f Cannon::getCenterPosition()
@@ -37,6 +51,25 @@ sf::Vector2f Cannon::getCenterPosition()
     centerPosition.x = rect.left+rect.width/2;
     centerPosition.y = rect.top+rect.height/2;
     return centerPosition;
+}
+
+int Cannon::getDirection()
+{
+    int direction= 1;
+    if(reverseDirection){
+        direction=-1;
+    }
+    return direction;
+}
+
+bool Cannon::getReverseDirection() const
+{
+    return reverseDirection;
+}
+
+void Cannon::setReverseDirection(bool value)
+{
+    reverseDirection = value;
 }
 
 sf::Sprite *Cannon::getOwnerSprite() const
@@ -49,14 +82,14 @@ void Cannon::setOwnerSprite(sf::Sprite *value)
     ownerSprite = value;
 }
 
-std::vector<Entity *> *Cannon::getEnemyList() const
+std::vector<Bullet *> *Cannon::getBulletList() const
 {
-    return enemyList;
+    return bulletList;
 }
 
-void Cannon::setEnemyList(std::vector<Entity *> *value)
+void Cannon::setBulletList(std::vector<Bullet *> *value)
 {
-    enemyList = value;
+    bulletList = value;
 }
 
 int Cannon::getBulletDamage() const
@@ -91,19 +124,19 @@ void Cannon::setBulletTextureFilename(const std::string &value)
 
 SimpleCannon::SimpleCannon()
 {
-    setBulletTextureFilename("Resources/laserRed.png");
+    //setBulletTextureFilename("Resources/Bullets.png");
 }
 
 void SimpleCannon::shoot()
 {
-    Motion *bulletMotion = motionFactory.createSimpleMotion();
+    Motion *bulletMotion = MotionFactory::createSimpleMotion();
     shootBullet(bulletSpeed, bulletMotion);
 
 }
 
 SprayCannon::SprayCannon(int angle, int bulletsByshoot)
 {
-    setBulletTextureFilename("Resources/laserRed.png");
+    //setBulletTextureFilename(bulletTextureFilename);
     setAngle(angle);
     setBulletsByshoot(bulletsByshoot);
 }
@@ -111,10 +144,9 @@ SprayCannon::SprayCannon(int angle, int bulletsByshoot)
 void SprayCannon::shoot()
 {
     for (int i = -(bulletsByshoot/2); i < (bulletsByshoot/2+bulletsByshoot%2) ; ++i) {
-    Motion *bulletMotion = motionFactory.createLinearMotion(angle*i);
 
-       shootBullet(bulletSpeed, bulletMotion);
-
+        Motion *bulletMotion = MotionFactory::createLinearMotion(angle*i);
+        shootBullet(bulletSpeed, bulletMotion,-angle*i);
     }
 
 }
@@ -139,14 +171,75 @@ void SprayCannon::setBulletsByshoot(int value)
     bulletsByshoot = value;
 }
 
-Cannon *CannonFactory::createSimpleCannon()
+namespace CannonFactory
+{
+Cannon *createSimpleCannon()
 {
     Cannon *newCannon =  new SimpleCannon();
     return newCannon;
 }
 
-Cannon *CannonFactory::createSprayCannon(int angle, int bulletsByshoot)
+Cannon *createSprayCannon(int angle, int bulletsByshoot)
 {
     Cannon *newCannon =  new SprayCannon(angle, bulletsByshoot);
     return newCannon;
+}
+
+Cannon *createFollowerCannon(sf::Sprite *owner, sf::Sprite *target)
+{
+    return new FollowerCannon(owner, target);
+}
+
+}
+
+FollowerCannon::FollowerCannon(sf::Sprite *owner, sf::Sprite *target)
+{
+    //setBulletTextureFilename("Resources/Explosion.png");
+    setOwner(owner);
+    setTarget(target);
+}
+
+void FollowerCannon::shoot()
+{
+        shootBullet(bulletSpeed);
+}
+
+sf::Sprite *FollowerCannon::getOwner() const
+{
+    return owner;
+}
+
+void FollowerCannon::setOwner(sf::Sprite *value)
+{
+    owner = value;
+}
+
+sf::Sprite *FollowerCannon::getTarget() const
+{
+    return target;
+}
+
+void FollowerCannon::setTarget(sf::Sprite *value)
+{
+    target = value;
+}
+
+void FollowerCannon::shootBullet(int speed)
+{
+    sf::Texture bulletTexture;
+    bulletTexture.loadFromFile(bulletTextureFilename);
+    Bullet *newBullet = new Bullet(bulletTexture, NULL, bulletDamage, speed);
+    //newBullet->updateTexture(1);
+    Motion *bulletMotion = MotionFactory::createFollowerMotion(newBullet->getSpriteReference(),target);
+    bulletMotion->setReverseDirection(reverseDirection);
+    newBullet->setMotion(bulletMotion);
+
+    newBullet->setTexturesAmount(texturesAmount);
+    newBullet->setPosition(getCenterPosition());
+    if(bulletList==NULL){
+        std::cout<<"ERROR nullptr"<<std::endl;
+    }
+    else{
+        bulletList->push_back(newBullet);
+    }
 }

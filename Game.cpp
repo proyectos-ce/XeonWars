@@ -20,94 +20,74 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
     Texture enemyShipTexture;
-    MotionFactory motionFactory;
+    //MotionFactory motionFactory;
 
-    std::vector<Entity *> enemyList;
-    std::vector<Entity *> playerbulletList;
+    std::vector<Enemy *> enemyList;
+    std::vector<Bullet *> enemyBulletList;
+    std::vector<Bullet *> playerbulletList;
 
-    ownSpaceShip.setplayerbulletList(&playerbulletList);
+    ownSpaceShip.setbulletList(&playerbulletList);
 
-
-    CannonFactory cannonFactory;
-
-    Motion *enemyShipMotion = motionFactory.createLinearMotion(45);
-
-    Cannon *enemyShipCannon = cannonFactory.createSimpleCannon();
-    enemyShipTexture.loadFromFile("Resources/FramesNave.png");
-
+    Motion *enemyShipMotion = MotionFactory::createLinearMotion(45);
+    Cannon *enemyShipCannon = CannonFactory::createSimpleCannon();
+    enemyShipTexture.loadFromFile("Resources/MissileTower.png");
+    //enemyShipTexture.loadFromFile("Resources/enemy2.png");
 
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
     collisionManager.setPlayerShip(&ownSpaceShip);
-    //collisionManager.setPlayerShip(&ownSpaceShip);
-
-    /*
-    enemyShipCannon->setBulletDamage(30);
-    enemyShipCannon->setBulletSpeed(6);
-    enemyShipCannon->setEnemyList(&enemyList);
-
-    Enemy enemyShip1(enemyShipTexture, &enemyList);
-    enemyShip1.setTexturesAmount(4);
-    enemyShip1.setMotion(enemyShipMotion);
-    enemyShip1.setSpeed(3);
-    enemyShip1.setPosition(sf::Vector2f(300,0));
-    enemyShip1.setTrigger(30);
-    enemyShip1.setCannon(enemyShipCannon);
-*/
+    collisionManager.setPlayerBulletList(&playerbulletList);
+    collisionManager.setEnemyBulletList(&enemyBulletList);
 
 
+    //enemyShipMotion = motionFactory.createSimpleMotion();
 
 
-    enemyShipMotion = motionFactory.createSimpleMotion();
+    Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
+    enemyShipMotion = MotionFactory::createSimpleMotion();
+    //enemyShipMotion = MotionFactory::createFollowerMotion(enemyShip2->getSpriteReference(), ownSpaceShip.getSpriteReference());
+    //enemyShipMotion->setReverseDirection(true);
+    enemyShip2->setTexturesAmount(4);
+    enemyShip2->setMotion(enemyShipMotion);
+    enemyShip2->setSpeed(2);
+    enemyShip2->setPosition(sf::Vector2f(100,0));
+    enemyShip2->setTrigger(20);
 
-    enemyShipCannon = cannonFactory.createSprayCannon(5,4);
-    enemyShipCannon->setBulletDamage(30);
-    enemyShipCannon->setBulletSpeed(6);
-
-
-    Enemy enemyShip2(enemyShipTexture, &enemyList);
-    enemyShip2.setTexturesAmount(4);
-    enemyShip2.setMotion(enemyShipMotion);
-    enemyShip2.setSpeed(3);
-    enemyShip2.setPosition(sf::Vector2f(100,0));
-    enemyShip2.setTrigger(20);
-    enemyShip2.setCannon(enemyShipCannon);
-
-
-
-
-    enemyShipMotion = motionFactory.createSimpleMotion();
-    enemyShipCannon = cannonFactory.createSprayCannon(2,3);
+    enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
     enemyShipCannon->setBulletDamage(30);
     enemyShipCannon->setBulletSpeed(3);
+    enemyShipCannon->setBulletTextureFilename("Resources/KamikazeBullet.png");
+    enemyShip2->setCannon(enemyShipCannon);
 
-    Enemy enemyShip3(enemyShipTexture, &enemyList);
-    enemyShip3.setTexturesAmount(4);
-    enemyShip3.setMotion(enemyShipMotion);
-    enemyShip3.setSpeed(2);
-    enemyShip3.setPosition(sf::Vector2f(300,0));
-    enemyShip3.setTrigger(20);
-    enemyShip3.setCannon(enemyShipCannon);
+    enemyShip2->setScale(0.5);
 
 
 
-/*
-    enemyShipMotion = motionFactory.createSimpleMotion();
 
-    enemyShipCannon = cannonFactory.createSimpleCannon();
+    enemyShipMotion = MotionFactory::createSimpleMotion();
+    enemyShipCannon = CannonFactory::createSprayCannon(2,3);
     enemyShipCannon->setBulletDamage(30);
-    enemyShipCannon->setBulletSpeed(6);
+    enemyShipCannon->setBulletSpeed(3);
+    enemyShipTexture.loadFromFile("Resources/MissileTower.png");
+    Enemy *enemyShip;
+    for (int i = 0; i < 5; ++i) {
+        enemyShipMotion = MotionFactory::createSimpleMotion();
+        enemyShipCannon = CannonFactory::createSimpleCannon();
+        enemyShipCannon->setBulletDamage(30);
+        enemyShipCannon->setBulletSpeed(5);
 
-    enemyShipMotion = motionFactory.createSinMotion(200);
-    Enemy enemyShip4(enemyShipTexture, &enemyList);
-    enemyShip4.setTexturesAmount(4);
-    enemyShip4.setMotion(enemyShipMotion);
-    enemyShip4.setSpeed(3);
-    enemyShip4.setPosition(sf::Vector2f(700,200));
-    enemyShip4.setTrigger(10);
-    enemyShip4.setCannon(enemyShipCannon);
+        enemyShip = new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
+        enemyShip->setTexturesAmount(4);
+        enemyShip->updateTexture(i%4);
+        enemyShip->setMotion(enemyShipMotion);
+        enemyShip->setSpeed(1);
+        enemyShip->setPosition(sf::Vector2f(300*i,0));
+        enemyShip->setTrigger(60);
+        enemyShip->setCannon(enemyShipCannon);
+        enemyShip->setScale(0.7);
+    }
 
-*/
+
 
 
     backgroundMusic.openFromFile("Resources/BackgroundMusic.ogg");
@@ -155,19 +135,37 @@ int Game::run(RenderWindow &window, Texture &tex) {
         background.update(window, time.asMilliseconds());
         background.render(window);
 
-        ownSpaceShip.update(window, time.asMilliseconds());
-        ownSpaceShip.render(window);
+
+
+        for (int i = 0; i < enemyBulletList.size(); ++i) {
+            enemyBulletList[i]->update(window, time.asMilliseconds());
+            enemyBulletList[i]->render(window);
+            if( enemyBulletList[i]->getPosition().y >= 3000 | enemyBulletList[i]->getPosition().x >= 2000 | enemyBulletList[i]->getPosition().x <= -500){
+                delete enemyBulletList.operator[](i);
+                enemyBulletList.erase(enemyBulletList.begin()+i);
+                //delete toDelete;
+
+            }
+            //std::cout<<enemyList[i]->getType()<<std::endl;
+
+        }
 
         for (int i = 0; i < enemyList.size(); ++i) {
             enemyList[i]->update(window, time.asMilliseconds());
             enemyList[i]->render(window);
+            if( enemyList[i]->getPosition().y >= 3000 | enemyList[i]->getPosition().x >= 2000 | enemyList[i]->getPosition().x <= -500){
+                delete enemyList.operator[](i);
+                enemyList.erase(enemyList.begin()+i);
+
+            }
             //std::cout<<enemyList[i]->getType()<<std::endl;
 
         }
+
+
         for (int i = 0; i < playerbulletList.size(); ++i) {
             playerbulletList[i]->update(window, time.asMilliseconds());
             playerbulletList[i]->render(window);
-
         }
 
 
@@ -187,6 +185,19 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 ownSpaceShip.score.nextlevelReached();
             }
         }
+
+         if( (playerbulletList[i]->getPosition().y) <= -1000| playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
+                delete playerbulletList.operator[](i);
+                playerbulletList.erase(playerbulletList.begin()+i);
+                //delete toDelete;
+                //playerbulletList.clear();
+            }
+            //std::cout<<enemyList[i]->getType()<<std::endl;
+
+        }
+        ownSpaceShip.update(window, time.asMilliseconds());
+        ownSpaceShip.render(window);
+
 
         collisionManager.checkCollisions();
 

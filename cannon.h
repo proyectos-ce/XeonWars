@@ -13,11 +13,10 @@ public:
     Cannon();
     ~Cannon();
     virtual void shoot();
-    MotionFactory motionFactory;
     std::string getBulletTextureFilename() const;
     void setBulletTextureFilename(const std::string &value);
-    std::vector<Entity *> *getEnemyList() const;
-    void setEnemyList(std::vector<Entity *> *value);
+    std::vector<Bullet *> *getBulletList() const;
+    void setBulletList(std::vector<Bullet *> *value);
     int getBulletDamage() const;
     void setBulletDamage(int value);
 
@@ -27,14 +26,23 @@ public:
     sf::Sprite *getOwnerSprite() const;
     void setOwnerSprite(sf::Sprite *value);
 
+    bool getReverseDirection() const;
+    void setReverseDirection(bool value);
+
+    int getTexturesAmount() const;
+    void setTexturesAmount(int value);
+
 protected:
     int bulletDamage;
     int bulletSpeed;
-    void shootBullet(int speed, Motion *bulletMotion);
-    std::string bulletTextureFilename;
+    virtual void shootBullet(int speed, Motion *bulletMotion, float angle=0);
+    std::string bulletTextureFilename="Resources/EnemyBullets.png";
+    int texturesAmount=2;
     sf::Sprite *ownerSprite;
-    std::vector<Entity *> *enemyList;
+    std::vector<Bullet *> *bulletList;
     sf::Vector2f getCenterPosition();
+    bool reverseDirection=false;
+    int getDirection();
 
 };
 
@@ -60,11 +68,31 @@ private:
     int bulletsByshoot;
 };
 
-class CannonFactory{
+class FollowerCannon : public Cannon
+{
 public:
-    static Cannon *createSimpleCannon();
-    static Cannon *createSprayCannon(int angle, int bulletsByshoot);
+    FollowerCannon(sf::Sprite *owner,sf::Sprite *target);
+    void shoot();
+    sf::Sprite *getOwner() const;
+    void setOwner(sf::Sprite *value);
+    sf::Sprite *getTarget() const;
+    void setTarget(sf::Sprite *value);
 
+private:
+    sf::Sprite *owner;
+    sf::Sprite *target;
+    void shootBullet(int speed);
 };
+
+
+
+
+
+namespace CannonFactory{
+     Cannon *createSimpleCannon();
+     Cannon *createSprayCannon(int angle, int bulletsByshoot);
+     Cannon *createFollowerCannon(sf::Sprite *owner,sf::Sprite *target);
+
+}
 
 #endif // CANNON_H

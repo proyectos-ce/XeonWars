@@ -15,8 +15,9 @@ MainSpaceShip::MainSpaceShip() {
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
     SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+    //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
+    //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
     SOwnSpaceShip.setPosition(550,720);
-
     powerUp p1(missile);
     powerUp p2(shieldd);
     powerUp p3(laser);
@@ -26,11 +27,13 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p3);
 
 
-    shipCannon = cannonFactory.createSimpleCannon();
 
+    shipCannon = CannonFactory::createSprayCannon(3,10);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
-    shipCannon->setBulletDamage(30);
-    shipCannon->setBulletSpeed(-6);
+    shipCannon->setBulletDamage(14);
+    shipCannon->setBulletSpeed(6);
+    shipCannon->setReverseDirection(1);
+    shipCannon->setBulletTextureFilename("Resources/Bullets.png");
 
     missileCannon = cannonFactory.createSprayCannon(10,7);
 
@@ -44,17 +47,17 @@ MainSpaceShip::MainSpaceShip() {
 }
 
 
-std::vector<Entity *> *MainSpaceShip::getplayerbulletList() const
+std::vector<Bullet *> *MainSpaceShip::getbulletList() const
 {
-    return playerbulletList;
+    return bulletList;
 }
 
-void MainSpaceShip::setplayerbulletList(std::vector<Entity *> *value)
+void MainSpaceShip::setbulletList(std::vector<Bullet *> *value)
 {
-    playerbulletList = value;
-    shipCannon->setEnemyList(playerbulletList);
-    missileCannon->setEnemyList(playerbulletList);
 
+    bulletList = value;
+    shipCannon->setBulletList(bulletList);
+    missileCannon->setEnemyList(bulletList);
 }
 void MainSpaceShip::lifeManager(int damage){
     lifeLevel-=damage;
@@ -191,9 +194,7 @@ bool MainSpaceShip::gameOver() {
    cout << "aqui hay que programar que termine el juego" << endl;
 }
 
-const Sprite &MainSpaceShip::getSprite() {
-    return SOwnSpaceShip;
-}
+
 
 void MainSpaceShip::playerShoot() {
     // CHEQUEAR SI LA NAVE TIENE ACTIVADO LOS MISILES _______________________________******
@@ -223,4 +224,16 @@ void MainSpaceShip::setLifeLevel(int value)
 {
     lifeLevel = value;
 }
+
+Sprite *MainSpaceShip::getSpriteReference()
+{
+    return &SOwnSpaceShip;
+}
+
+
+Sprite MainSpaceShip::getSprite() const
+{
+    return SOwnSpaceShip;
+}
+
 

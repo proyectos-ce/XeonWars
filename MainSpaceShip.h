@@ -26,14 +26,17 @@ public:
     void lifeManager(int);
     ScoreManager score;
 
-    std::vector<Entity *> *getplayerbulletList() const;
-    void setplayerbulletList(std::vector<Entity *> *value);
+    std::vector<Bullet *> *getbulletList() const;
+    void setbulletList(std::vector<Bullet *> *value);
 
 
-    const Sprite &getSprite();
+    //const Sprite &getSprite();
     bool attack(int damage);
     int getLifeLevel() const;
     void setLifeLevel(int value);
+    sf::Sprite *getSpriteReference();
+    Sprite getSprite() const;
+    //void setSOwnSpaceShip(const Sprite &value);
 
 private:
     bool missiles_On;
@@ -49,8 +52,8 @@ private:
     Cannon *shipCannon;
     Cannon *missileCannon;
     Cannon *laserCannon;
-    CannonFactory cannonFactory;
-    std::vector<Entity *> *playerbulletList;
+    std::vector<Bullet *> *bulletList;
+
 
 
     const float speed = 6;

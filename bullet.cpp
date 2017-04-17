@@ -2,12 +2,10 @@
 
 Bullet::Bullet()
 {
-
 }
 
 Bullet::~Bullet()
 {
-
 }
 
 Bullet::Bullet(sf::Texture texture, Motion *motion , int damage, int speed)
@@ -16,6 +14,7 @@ Bullet::Bullet(sf::Texture texture, Motion *motion , int damage, int speed)
     setDamage(damage);
     setSpeed(speed);
     setMotion(motion);
+    //sprite.setColor(sf::Color(200,255,255,200));;
 }
 
 int Bullet::getDamage() const
@@ -28,7 +27,20 @@ void Bullet::setDamage(int value)
     damage = value;
 }
 
-char Bullet::getType() const
+void Bullet::animate(float passedTime)
 {
-    return 'B';
+    time+=passedTime;
+    if(this->time>500){
+        updateTexture(++currentTexture);
+        time=0;
+    }
+
 }
+
+void Bullet::update(sf::RenderWindow &window, float time)
+{
+    Entity::update(window, time);
+    animate(time);
+}
+
+

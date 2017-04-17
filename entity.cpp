@@ -6,7 +6,8 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-    std::cout<<"destruyendo"<<std::endl;
+    delete motion;
+
 }
 
 
@@ -15,6 +16,11 @@ void Entity::update(sf::RenderWindow &window, float time)
 {
     sf::Vector2f newMove = motion->getNext(speed);
     sprite.move(newMove.x, newMove.y);
+    animate(time);
+}
+
+void Entity::animate(float time)
+{
 }
 
 void Entity::render(sf::RenderWindow &window)
@@ -75,9 +81,23 @@ void Entity::setTexturesAmount(int value)
 void Entity::updateTexture(int value)
 {
     if(value<texturesAmount){
-    int rectX = (texture.getSize().x/texturesAmount), rectY = texture.getSize().y;
-    sprite.setTextureRect(sf::IntRect(rectX*value,0 , rectX, rectY ));
+    currentTexture=value;
     }
+    else{
+        currentTexture=0;
+    }
+    int rectX = (texture.getSize().x/texturesAmount), rectY = texture.getSize().y;
+    sprite.setTextureRect(sf::IntRect(rectX*currentTexture,0 , rectX, rectY ));
+}
+
+void Entity::rotate(float angle)
+{
+    sprite.rotate(angle);
+}
+
+sf::Sprite *Entity::getSpriteReference()
+{
+    return &sprite;
 }
 
 
@@ -110,10 +130,12 @@ sf::Vector2f Entity::getCenterPosition()
 
 }
 
-char Entity::getType() const
+void Entity::setScale(float scale)
 {
-    return 'U';
+    sprite.setScale(scale, scale);
 }
+
+
 
 
 

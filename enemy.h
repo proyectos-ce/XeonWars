@@ -4,16 +4,16 @@
 #include "entity.h"
 #include "motion.h"
 #include "cannon.h"
-
+#include "iostream"
 class Enemy : public Entity
 {
 public:
     Enemy();
     Enemy(sf::Texture texture);
-    Enemy(sf::Texture texture, std::vector<Entity *> *enemyList);
+    Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
     ~Enemy();
-    std::vector<Entity *> *getEnemyList() const;
-    void setEnemyList(std::vector<Entity *> *value);
+    std::vector<Bullet *> *getBulletList() const;
+    void setBulletList(std::vector<Bullet *> *value);
     bool attack(int damage);
     void update(sf::RenderWindow &window, float time);
     int getTrigger() const;
@@ -21,16 +21,28 @@ public:
 
     Cannon *getCannon() const;
     void setCannon(Cannon *value);
-    char getType() const;
+    int getLife() const;
+    void setLife(int value);
+
 protected:
-    int life = 100;
+    int life = 20;
     int moves=1;
     int trigger=0;
     void shoot();
-    std::vector<Entity *> *enemyList;
+    std::vector<Bullet *> *bulletList;
     int getMoves() const;
     void setMoves(int value);
     Cannon *cannon;
 };
+
+namespace EnemyFactory {
+
+    Enemy *createJet(int level);
+    Enemy *createBomber(int level);
+    Enemy *createTower(int level);
+    Enemy *createMissileTower(int level);
+    Enemy *createKamikazeJet(int level);
+    //Enemy *createMeteor(int level);
+}
 
 #endif // ENEMY_H
