@@ -36,15 +36,39 @@
      inkscape:window-height="987"
      id="namedview2756"
      showgrid="false"
-     inkscape:zoom="0.15611592"
-     inkscape:cx="386.29412"
-     inkscape:cy="-1392.395"
+     inkscape:zoom="4.9957094"
+     inkscape:cx="1162.0767"
+     inkscape:cy="-2402.321"
      inkscape:window-x="0"
      inkscape:window-y="52"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g2752" />
+     inkscape:current-layer="g14390" />
   <defs
      id="defs324">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient14384">
+      <stop
+         style="stop-color:#ff6600;stop-opacity:1;"
+         offset="0"
+         id="stop14380" />
+      <stop
+         style="stop-color:#ff6600;stop-opacity:0;"
+         offset="1"
+         id="stop14382" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient14348">
+      <stop
+         style="stop-color:#ffff00;stop-opacity:1;"
+         offset="0"
+         id="stop14344" />
+      <stop
+         style="stop-color:#ffff00;stop-opacity:0;"
+         offset="1"
+         id="stop14346" />
+    </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
        x1="-819.2"
@@ -1860,6 +1884,100 @@
          stop-color="#FFFFFF"
          id="stop55-64-5" />
     </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       x1="-819.20001"
+       x2="819.20001"
+       spreadMethod="pad"
+       gradientTransform="matrix(0,0.02746582,-0.03479004,0,1166.1966,2498.3899)"
+       id="gradient2-09-8">
+      <stop
+         offset="0"
+         stop-color="#AC3939"
+         stop-opacity="0"
+         id="stop48-4-9" />
+      <stop
+         offset="1"
+         stop-color="#AC3939"
+         id="stop50-5-5" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       x1="-819.20001"
+       x2="819.20001"
+       spreadMethod="pad"
+       gradientTransform="matrix(0,0.03112793,-0.03112793,0,1165.7466,2492.6399)"
+       id="gradient3-96-53"
+       y1="0"
+       y2="0">
+      <stop
+         offset="0"
+         stop-color="#AC3939"
+         id="stop53-0-86" />
+      <stop
+         offset="1"
+         stop-color="#FFFFFF"
+         id="stop55-64-0" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient14348"
+       id="linearGradient14350"
+       x1="1167.0015"
+       y1="2458.2236"
+       x2="1166.8013"
+       y2="2530.4856"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient14384"
+       id="linearGradient14378"
+       x1="1165.4"
+       y1="2471.4351"
+       x2="1165.6002"
+       y2="2502.8618"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(114.69842,-5.204466)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient14384"
+       id="linearGradient14386"
+       x1="1165.7466"
+       y1="2521.1399"
+       x2="1164.9998"
+       y2="2478.4412"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(114.69842,-5.204466)" />
+    <linearGradient
+       gradientTransform="translate(51.266265,16.227191)"
+       inkscape:collect="always"
+       xlink:href="#linearGradient14384"
+       id="linearGradient14378-1"
+       x1="1165.4"
+       y1="2471.4351"
+       x2="1165.6002"
+       y2="2502.8618"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       gradientTransform="translate(51.266265,16.227191)"
+       inkscape:collect="always"
+       xlink:href="#linearGradient14384"
+       id="linearGradient14386-0"
+       x1="1165.7466"
+       y1="2521.1399"
+       x2="1164.9998"
+       y2="2478.4412"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient14384"
+       id="linearGradient14656"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(51.266265,16.227191)"
+       x1="1165.7466"
+       y1="2521.1399"
+       x2="1164.9998"
+       y2="2478.4412" />
   </defs>
   <g
      id="g2752">
@@ -13166,8 +13284,8 @@
     </g>
     <g
        id="g14233"
-       transform="rotate(-180,1137.0702,2527.9135)"
-       inkscape:export-filename="/home/gsegura96/SpaceShooterRedux/Vector/Bullets.png"
+       transform="rotate(-180,1137.0702,2527.7767)"
+       inkscape:export-filename="/home/gsegura96/SpaceShooterRedux/Vector/EnemyBullets.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <path
@@ -13197,6 +13315,48 @@
          d="m 1127.0702,2610.9135 q 0,-1.45 1,-2.5 1.05,-1 2.5,-1 1.45,0 2.45,1 l 0.75,1 0.3,1.5 v 44 q 0,1.45 -1.05,2.45 -0.8,0.85 -1.95,1.05 h -0.5 -0.1 q -1.4,-0.05 -2.4,-1.05 -1,-1 -1,-2.45 v -44"
          style="fill:url(#gradient4-4);stroke:none"
          inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g14362">
+      <g
+         id="g14390"
+         transform="translate(-9.1764)"
+         inkscape:export-filename="/home/gsegura96/SpaceShooterRedux/Vector/EnemyBullets.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <path
+           inkscape:connector-curvature="0"
+           style="fill:url(#linearGradient14386);fill-opacity:1;stroke:none"
+           d="m 1284.995,2514.0854 q -0.9,0.9 -2,1.35 -1.15,0.5 -2.55,0.5 l -2.55,-0.5 q -1.1,-0.45 -2.05,-1.4 -1.35,-1.35 -1.75,-3.1 l -0.15,-1.5 v -44 q 0,-2.65 1.85,-4.55 l 0.1,-0.1 q 1.7,-1.65 4.05,-1.85 h 0.5 q 2.7,0 4.6,1.9 1.9,1.9 1.9,4.6 v 44 q 0,2.65 -1.85,4.55 l -0.1,0.1 m -1.05,-4.65 v -44 q 0,-1.45 -1,-2.45 -1.05,-1.05 -2.5,-1.05 h -0.5 q -1.15,0.2 -1.95,1.05 -1.05,1 -1.05,2.45 v 44 l 0.3,1.5 0.75,1 q 1,1 2.45,1 1.45,0 2.5,-1 1,-1.05 1,-2.5"
+           id="path912-3-3" />
+        <path
+           inkscape:connector-curvature="0"
+           style="fill:url(#linearGradient14378);fill-opacity:1;fill-rule:nonzero;stroke:none"
+           d="m 1283.945,2509.4354 q 0,1.45 -1,2.5 -1.05,1 -2.5,1 -1.45,0 -2.45,-1 l -0.75,-1 -0.3,-1.5 v -44 q 0,-1.45 1.05,-2.45 0.8,-0.85 1.95,-1.05 h 0.5 q 1.45,0 2.5,1.05 1,1 1,2.45 v 44"
+           id="path914-0-6" />
+        <g
+           id="g14654"
+           transform="translate(-51.2663,-16.2272)"
+           inkscape:export-filename="/home/gsegura96/SpaceShooterRedux/Vector/EnemyBullets.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90">
+          <path
+             id="path912-3-3-5"
+             d="m 1221.5629,2535.5171 q -0.9,0.9 -2,1.35 -1.15,0.5 -2.55,0.5 l -2.55,-0.5 q -1.1,-0.45 -2.05,-1.4 -1.35,-1.35 -1.75,-3.1 l -0.15,-1.5 v -44 q 0,-2.65 1.85,-4.55 l 0.1,-0.1 q 1.7,-1.65 4.05,-1.85 h 0.5 q 2.7,0 4.6,1.9 1.9,1.9 1.9,4.6 v 44 q 0,2.65 -1.85,4.55 l -0.1,0.1 m -1.05,-4.65 v -44 q 0,-1.45 -1,-2.45 -1.05,-1.05 -2.5,-1.05 h -0.5 q -1.15,0.2 -1.95,1.05 -1.05,1 -1.05,2.45 v 44 l 0.3,1.5 0.75,1 q 1,1 2.45,1 1.45,0 2.5,-1 1,-1.05 1,-2.5"
+             style="fill:url(#linearGradient14656);fill-opacity:1;stroke:none"
+             inkscape:connector-curvature="0" />
+          <path
+             id="path914-0-6-1-0"
+             d="m 1220.5129,2530.8671 q 0,1.45 -1,2.5 -1.05,1 -2.5,1 -1.45,0 -2.45,-1 l -0.75,-1 -0.3,-1.5 v -44 q 0,-1.45 1.05,-2.45 0.8,-0.85 1.95,-1.05 h 0.5 q 1.45,0 2.5,1.05 1,1 1,2.45 v 44"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             inkscape:connector-curvature="0" />
+          <path
+             id="path914-0-6-1"
+             d="m 1220.5129,2530.8671 q 0,1.45 -1,2.5 -1.05,1 -2.5,1 -1.45,0 -2.45,-1 l -0.75,-1 -0.3,-1.5 v -44 q 0,-1.45 1.05,-2.45 0.8,-0.85 1.95,-1.05 h 0.5 q 1.45,0 2.5,1.05 1,1 1,2.45 v 44"
+             style="fill:url(#linearGradient14378-1);fill-opacity:1;fill-rule:nonzero;stroke:none"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
     </g>
   </g>
 </svg>
