@@ -32,8 +32,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
     CannonFactory cannonFactory;
     Motion *enemyShipMotion = motionFactory.createLinearMotion(45);
     Cannon *enemyShipCannon = cannonFactory.createSimpleCannon();
-    enemyShipTexture.loadFromFile("Resources/FramesNave.png");
-
+    enemyShipTexture.loadFromFile("Resources/enemy1.png");
+    //enemyShipTexture.loadFromFile("Resources/enemy2.png");
 
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
@@ -55,6 +55,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShip2->setPosition(sf::Vector2f(100,0));
     enemyShip2->setTrigger(20);
     enemyShip2->setCannon(enemyShipCannon);
+    enemyShip2->setScale(0.5);
 
 
 
@@ -66,19 +67,22 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     Enemy *enemyShip;
     for (int i = 0; i < 9; ++i) {
-        //enemyShipMotion = motionFactory.createSimpleMotion();
-        enemyShipMotion = motionFactory.createSinMotion(200);
+        enemyShipMotion = motionFactory.createSimpleMotion();
+        //enemyShipMotion = motionFactory.createSinMotion(200);
         enemyShipCannon = cannonFactory.createSprayCannon(2,3);
         enemyShipCannon->setBulletDamage(30);
         enemyShipCannon->setBulletSpeed(10);
 
         enemyShip = new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
         enemyShip->setTexturesAmount(4);
+        enemyShip->updateTexture(i%4);
         enemyShip->setMotion(enemyShipMotion);
-        enemyShip->setSpeed(2);
+        enemyShip->setSpeed(1);
         enemyShip->setPosition(sf::Vector2f(150*i,0));
         enemyShip->setTrigger(60);
         enemyShip->setCannon(enemyShipCannon);
+        enemyShip->setScale(0.5);
+        //enemyShip->getSprite()->setScale(sf::Vector2f(0.2, 0.2));
     }
 
 
@@ -153,9 +157,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
             enemyList[i]->update(window, time.asMilliseconds());
             enemyList[i]->render(window);
             if( enemyList[i]->getPosition().y >= 3000 | enemyList[i]->getPosition().x >= 2000 | enemyList[i]->getPosition().x <= -500){
-                Entity *toDelete = (enemyList.operator[](i));
+                delete enemyList.operator[](i);
                 enemyList.erase(enemyList.begin()+i);
-                delete toDelete;
 
             }
             //std::cout<<enemyList[i]->getType()<<std::endl;
@@ -165,9 +168,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
             enemyBulletList[i]->update(window, time.asMilliseconds());
             enemyBulletList[i]->render(window);
             if( enemyBulletList[i]->getPosition().y >= 3000 | enemyBulletList[i]->getPosition().x >= 2000 | enemyBulletList[i]->getPosition().x <= -500){
-                Entity *toDelete = (enemyBulletList.operator[](i));
+                delete enemyBulletList.operator[](i);
                 enemyBulletList.erase(enemyBulletList.begin()+i);
-                delete toDelete;
+                //delete toDelete;
 
             }
             //std::cout<<enemyList[i]->getType()<<std::endl;
@@ -178,10 +181,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
             playerbulletList[i]->update(window, time.asMilliseconds());
             playerbulletList[i]->render(window);
             if( (playerbulletList[i]->getPosition().y) <= -1000| playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
-                Entity *toDelete = (playerbulletList.operator[](i));
+                delete playerbulletList.operator[](i);
                 playerbulletList.erase(playerbulletList.begin()+i);
-                delete toDelete;
-                playerbulletList.clear();
+                //delete toDelete;
+                //playerbulletList.clear();
             }
             //std::cout<<enemyList[i]->getType()<<std::endl;
 

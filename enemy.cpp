@@ -60,7 +60,7 @@ void Enemy::update(sf::RenderWindow &window, float time)
     Entity::update(window, time);
     if(trigger!=0 && moves%trigger==0){
         shoot();
-        updateTexture(1);
+        //updateTexture(1);
     }
     moves++;
 }

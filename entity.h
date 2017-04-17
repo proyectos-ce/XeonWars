@@ -26,6 +26,8 @@ public:
     void setPosition(sf::Vector2f postion);
     sf::Vector2f getPosition();
     sf::Vector2f getCenterPosition();
+    void setScale(float scale);
+    void updateTexture(int value);
 
 protected:
     int speed=10;
@@ -33,7 +35,6 @@ protected:
     Motion *motion;
     sf::Sprite sprite;
     sf::Texture texture;
-    void updateTexture(int value);
 
 
 

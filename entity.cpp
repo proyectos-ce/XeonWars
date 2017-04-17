@@ -111,6 +111,11 @@ sf::Vector2f Entity::getCenterPosition()
 
 }
 
+void Entity::setScale(float scale)
+{
+    sprite.setScale(scale, scale);
+}
+
 
 
 

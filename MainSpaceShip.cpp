@@ -13,6 +13,8 @@ MainSpaceShip::MainSpaceShip() {
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
     SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+    //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
+    SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
     SOwnSpaceShip.setPosition(550,720);
 
     powerUp p1(missile);
@@ -24,7 +26,7 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p3);
 
 
-    shipCannon = cannonFactory.createSprayCannon(2,10);
+    shipCannon = cannonFactory.createSprayCannon(3,3);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(-6);
