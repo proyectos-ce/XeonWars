@@ -16,6 +16,11 @@ void Entity::update(sf::RenderWindow &window, float time)
 {
     sf::Vector2f newMove = motion->getNext(speed);
     sprite.move(newMove.x, newMove.y);
+    animate(time);
+}
+
+void Entity::animate(float time)
+{
 }
 
 void Entity::render(sf::RenderWindow &window)

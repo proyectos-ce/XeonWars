@@ -28,4 +28,23 @@ void Bullet::setDamage(int value)
     damage = value;
 }
 
+void Bullet::animate(float passedTime)
+{
+    std::cout<<passedTime<<std::endl;
+    time+=passedTime;
+    if(this->time>500){
+        updateTexture(++currentTexture);
+        time=0;
+        //std::cout<<time<<" animate"<<std::endl;
+
+    }
+
+}
+
+void Bullet::update(sf::RenderWindow &window, float time)
+{
+    Entity::update(window, time);
+    animate(time);
+}
+
 

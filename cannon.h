@@ -32,7 +32,7 @@ public:
 protected:
     int bulletDamage;
     int bulletSpeed;
-    void shootBullet(int speed, Motion *bulletMotion, float angle=0);
+    virtual void shootBullet(int speed, Motion *bulletMotion, float angle=0);
     std::string bulletTextureFilename;
     sf::Sprite *ownerSprite;
     std::vector<Bullet *> *bulletList;
@@ -64,9 +64,30 @@ private:
     int bulletsByshoot;
 };
 
+class FollowerCannon : public Cannon
+{
+public:
+    FollowerCannon(sf::Sprite *owner,sf::Sprite *target);
+    void shoot();
+    sf::Sprite *getOwner() const;
+    void setOwner(sf::Sprite *value);
+    sf::Sprite *getTarget() const;
+    void setTarget(sf::Sprite *value);
+
+private:
+    sf::Sprite *owner;
+    sf::Sprite *target;
+    void shootBullet(int speed);
+};
+
+
+
+
+
 namespace CannonFactory{
      Cannon *createSimpleCannon();
      Cannon *createSprayCannon(int angle, int bulletsByshoot);
+     Cannon *createFollowerCannon(sf::Sprite *owner,sf::Sprite *target);
 
 }
 

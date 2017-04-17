@@ -41,20 +41,23 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
     //enemyShipMotion = motionFactory.createSimpleMotion();
-    enemyShipCannon = CannonFactory::createSprayCannon(5,4);
-    enemyShipCannon->setBulletDamage(30);
-    enemyShipCannon->setBulletSpeed(6);
 
 
     Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
-    enemyShipMotion = MotionFactory::createFollowerMotion(enemyShip2->getSpriteReference(), ownSpaceShip.getSpriteReference());
+    enemyShipMotion = MotionFactory::createSimpleMotion();
+    //enemyShipMotion = MotionFactory::createFollowerMotion(enemyShip2->getSpriteReference(), ownSpaceShip.getSpriteReference());
     //enemyShipMotion->setReverseDirection(true);
     enemyShip2->setTexturesAmount(4);
     enemyShip2->setMotion(enemyShipMotion);
     enemyShip2->setSpeed(2);
     enemyShip2->setPosition(sf::Vector2f(100,0));
     enemyShip2->setTrigger(20);
+
+    enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
+    enemyShipCannon->setBulletDamage(30);
+    enemyShipCannon->setBulletSpeed(2);
     enemyShip2->setCannon(enemyShipCannon);
+
     enemyShip2->setScale(0.5);
 
 

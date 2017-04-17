@@ -10,6 +10,7 @@ public:
     ~Entity();
 
     virtual void update(sf::RenderWindow &window, float time);
+    virtual void animate(float time);
     void render(sf::RenderWindow &window);
     void kill();
 
