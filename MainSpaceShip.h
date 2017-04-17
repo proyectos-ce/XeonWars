@@ -28,10 +28,13 @@ public:
     void setbulletList(std::vector<Bullet *> *value);
 
 
-    const Sprite &getSprite();
+    //const Sprite &getSprite();
     bool attack(int damage);
     int getLifeLevel() const;
     void setLifeLevel(int value);
+    sf::Sprite *getSpriteReference();
+    Sprite getSprite() const;
+    //void setSOwnSpaceShip(const Sprite &value);
 
 private:
     Sprite SOwnSpaceShip;

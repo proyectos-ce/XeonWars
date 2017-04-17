@@ -86,6 +86,11 @@ void Entity::rotate(float angle)
     sprite.rotate(angle);
 }
 
+sf::Sprite *Entity::getSpriteReference()
+{
+    return &sprite;
+}
+
 
 int Entity::getSpeed() const
 {

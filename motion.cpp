@@ -39,6 +39,11 @@ Motion *MotionFactory::createSinMotion(int scale)
     return newSin;
 }
 
+Motion *MotionFactory::createFollowerMotion(sf::Sprite *owner, sf::Sprite *target)
+{
+    return new FollowerMotion(owner, target);
+}
+
 
 LinearMotion::LinearMotion(double angle)
 {
@@ -85,3 +90,45 @@ sf::Vector2f SimpleMotion::getNext(int speed)
     return newPos;
 }
 
+
+FollowerMotion::FollowerMotion(sf::Sprite *owner,sf::Sprite *target)
+{
+    setOwner(owner);
+    setTarget(target);
+}
+
+sf::Vector2f FollowerMotion::getNext(int speed)
+{
+    sf::Vector2f next(0,speed);
+    //owner->getLocalBounds().width/2+owner->getLocalBounds().left
+    std::cout<<(owner->getLocalBounds().height/2)+owner->getPosition().y<<"     "<<target->getLocalBounds().height/2+target->getPosition().y<<std::endl;
+    if(owner->getLocalBounds().height/2+owner->getPosition().y < target->getLocalBounds().height/2+target->getPosition().y){
+        if(owner->getLocalBounds().width/2+owner->getPosition().x < target->getLocalBounds().width/2+target->getPosition().x){
+            next.x=speed;
+        }
+        else {
+            next.x=-speed;
+        }
+    }
+    return next;
+}
+
+sf::Sprite *FollowerMotion::getTarget() const
+{
+    return target;
+}
+
+void FollowerMotion::setTarget(sf::Sprite *value)
+{
+    target = value;
+}
+
+sf::Sprite *FollowerMotion::getOwner() const
+{
+    return owner;
+}
+
+void FollowerMotion::setOwner(sf::Sprite *value)
+{
+    owner = value;
+}

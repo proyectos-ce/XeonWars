@@ -42,13 +42,14 @@ int Game::run(RenderWindow &window, Texture &tex) {
     collisionManager.setEnemyBulletList(&enemyBulletList);
 
 
-    enemyShipMotion = motionFactory.createSimpleMotion();
+    //enemyShipMotion = motionFactory.createSimpleMotion();
     enemyShipCannon = cannonFactory.createSprayCannon(5,4);
     enemyShipCannon->setBulletDamage(30);
     enemyShipCannon->setBulletSpeed(6);
 
 
     Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
+    enemyShipMotion = motionFactory.createFollowerMotion(enemyShip2->getSpriteReference(), ownSpaceShip.getSpriteReference());
     enemyShip2->setTexturesAmount(4);
     enemyShip2->setMotion(enemyShipMotion);
     enemyShip2->setSpeed(3);
@@ -69,9 +70,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
     for (int i = 0; i < 9; ++i) {
         enemyShipMotion = motionFactory.createSimpleMotion();
         //enemyShipMotion = motionFactory.createSinMotion(200);
-        enemyShipCannon = cannonFactory.createSprayCannon(2,3);
+        //enemyShipCannon = cannonFactory.createSprayCannon(2,3);
+        enemyShipCannon = cannonFactory.createSimpleCannon();
         enemyShipCannon->setBulletDamage(30);
-        enemyShipCannon->setBulletSpeed(10);
+        enemyShipCannon->setBulletSpeed(5);
 
         enemyShip = new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
         enemyShip->setTexturesAmount(4);

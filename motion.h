@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "math.h"
+#include "iostream"
 
 class Motion
 {
@@ -41,6 +42,20 @@ protected:
     int scale;
 };
 
+class FollowerMotion : public Motion{
+   public:
+    FollowerMotion(sf::Sprite *owner,sf::Sprite *target);
+    sf::Vector2f getNext(int speed);
+    sf::Sprite *getTarget() const;
+    void setTarget(sf::Sprite *value);
+
+    sf::Sprite *getOwner() const;
+    void setOwner(sf::Sprite *value);
+
+protected:
+    sf::Sprite *owner;
+    sf::Sprite *target;
+};
 
 class MotionFactory
 {
@@ -48,6 +63,7 @@ public:
     static Motion *createSimpleMotion();
     static Motion *createLinearMotion(double angle);
     static Motion *createSinMotion(int scale);
+    static Motion *createFollowerMotion(sf::Sprite *owner,sf::Sprite *target);
 };
 
 

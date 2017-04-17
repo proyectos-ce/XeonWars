@@ -29,6 +29,7 @@ public:
     void setScale(float scale);
     void updateTexture(int value);
     void rotate(float angle);
+    sf::Sprite *getSpriteReference();
 
 protected:
     int speed=10;

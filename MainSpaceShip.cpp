@@ -14,9 +14,8 @@ MainSpaceShip::MainSpaceShip() {
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
     SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
-    SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
+    //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
     SOwnSpaceShip.setPosition(550,720);
-
     powerUp p1(missile);
     powerUp p2(shieldd);
     powerUp p3(laser);
@@ -172,9 +171,7 @@ bool MainSpaceShip::gameOver() {
     return result;
 }
 
-const Sprite &MainSpaceShip::getSprite() {
-    return SOwnSpaceShip;
-}
+
 
 void MainSpaceShip::playerShoot() {
     // CHEQUEAR SI LA NAVE TIENE ACTIVADO LOS MISILES _______________________________******
@@ -197,4 +194,16 @@ void MainSpaceShip::setLifeLevel(int value)
 {
     lifeLevel = value;
 }
+
+Sprite *MainSpaceShip::getSpriteReference()
+{
+    return &SOwnSpaceShip;
+}
+
+
+Sprite MainSpaceShip::getSprite() const
+{
+    return SOwnSpaceShip;
+}
+
 
