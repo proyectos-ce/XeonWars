@@ -12,27 +12,37 @@ class Cannon
 public:
     Cannon();
     ~Cannon();
-    virtual void shout();
-    MotionFactory motionFactory;
-    Entity *getOwner() const;
-    void setOwner(Entity *value);
+    virtual void shoot();
     std::string getBulletTextureFilename() const;
     void setBulletTextureFilename(const std::string &value);
-    std::vector<Entity *> *getEnemyList() const;
-    void setEnemyList(std::vector<Entity *> *value);
+    std::vector<Bullet *> *getBulletList() const;
+    void setBulletList(std::vector<Bullet *> *value);
     int getBulletDamage() const;
     void setBulletDamage(int value);
 
     int getBulletSpeed() const;
     void setBulletSpeed(int value);
 
+    sf::Sprite *getOwnerSprite() const;
+    void setOwnerSprite(sf::Sprite *value);
+
+    bool getReverseDirection() const;
+    void setReverseDirection(bool value);
+
+    int getTexturesAmount() const;
+    void setTexturesAmount(int value);
+
 protected:
     int bulletDamage;
     int bulletSpeed;
-    void shoutBullet(int speed, Motion *bulletMotion);
-    std::string bulletTextureFilename;
-    Entity *owner;
-    std::vector<Entity *> *enemyList;
+    virtual void shootBullet(int speed, Motion *bulletMotion, float angle=0);
+    std::string bulletTextureFilename="Resources/EnemyBullets.png";
+    int texturesAmount=2;
+    sf::Sprite *ownerSprite;
+    std::vector<Bullet *> *bulletList;
+    sf::Vector2f getCenterPosition();
+    bool reverseDirection=false;
+    int getDirection();
 
 };
 
@@ -40,29 +50,49 @@ class SimpleCannon : public Cannon
 {
 public:
     SimpleCannon();
-    void shout();
+    void shoot();
 };
 
 class SprayCannon : public Cannon
 {
 public:
-    SprayCannon(int angle, int bulletsByShout);
-    void shout();
+    SprayCannon(int angle, int bulletsByshoot);
+    void shoot();
     int getAngle() const;
     void setAngle(int value);
-    int getBulletsByShout() const;
-    void setBulletsByShout(int value);
+    int getBulletsByshoot() const;
+    void setBulletsByshoot(int value);
 
 private:
     int angle;
-    int bulletsByShout;
+    int bulletsByshoot;
 };
 
-class CannonFactory{
+class FollowerCannon : public Cannon
+{
 public:
-    static Cannon *createSimpleCannon();
-    static Cannon *createSprayCannon(int angle, int bulletsByShout);
+    FollowerCannon(sf::Sprite *owner,sf::Sprite *target);
+    void shoot();
+    sf::Sprite *getOwner() const;
+    void setOwner(sf::Sprite *value);
+    sf::Sprite *getTarget() const;
+    void setTarget(sf::Sprite *value);
 
+private:
+    sf::Sprite *owner;
+    sf::Sprite *target;
+    void shootBullet(int speed);
 };
+
+
+
+
+
+namespace CannonFactory{
+     Cannon *createSimpleCannon();
+     Cannon *createSprayCannon(int angle, int bulletsByshoot);
+     Cannon *createFollowerCannon(sf::Sprite *owner,sf::Sprite *target);
+
+}
 
 #endif // CANNON_H

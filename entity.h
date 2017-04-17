@@ -7,8 +7,10 @@ class Entity
 {
 public:
     Entity();
+    ~Entity();
 
     virtual void update(sf::RenderWindow &window, float time);
+    virtual void animate(float time);
     void render(sf::RenderWindow &window);
     void kill();
 
@@ -25,6 +27,10 @@ public:
     void setPosition(sf::Vector2f postion);
     sf::Vector2f getPosition();
     sf::Vector2f getCenterPosition();
+    void setScale(float scale);
+    void updateTexture(int value);
+    void rotate(float angle);
+    sf::Sprite *getSpriteReference();
 
 protected:
     int speed=10;
@@ -32,7 +38,7 @@ protected:
     Motion *motion;
     sf::Sprite sprite;
     sf::Texture texture;
-    void updateTexture(int value);
+    int currentTexture=0;
 
 
 
