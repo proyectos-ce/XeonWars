@@ -31,10 +31,12 @@ int main(){
     //Screens preparations
     Menu menu;
     screens.push_back(&menu);
-    Game* game = new Game();
-    std::cout << &game << std::endl;
-    screens.push_back(std::move(game));
-    std::cout << &game << std::endl;
+
+    Game* gameMemory = (Game*) malloc(sizeof(Game));
+    Game* game = new (gameMemory) Game();
+
+    screens.push_back(std::move(gameMemory));
+
     GameOverScreen gameOverScreen;
     screens.push_back(&gameOverScreen);
     PauseScreen pauseScreen;
@@ -49,13 +51,14 @@ int main(){
         if (screen == 3)
             game->pauseGame();
         if (screen == 0) {
-            delete(screens.at(1));
-            screens.at(1) = new Game();
+            Game* game = new (gameMemory) Game();
+            std::cout << &game << " creado" << std::endl;
         }
         screen = screens[screen]->run(window, pauseTexture);
     }
 
-    delete(screens.at(1));
+
+    delete(gameMemory);
 
     return EXIT_SUCCESS;
 
