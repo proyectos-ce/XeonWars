@@ -17,24 +17,31 @@
 #include "enemy.h"
 #include "motion.h"
 #include "cannon.h"
-#include "Collision.h"
 #include "Utils.h"
 #include "collisionmanager.h"
 
 class Game : public Screen {
 
-    int score = 0;
-    Clock clock;
-    MainSpaceShip ownSpaceShip;
-    Background background;
-    Music backgroundMusic;
-    bool running = true;
+
 
 public:
     Game();
     int run(RenderWindow &window, Texture &tex);
-
     void pauseGame();
+private:
+    int score = 0;
+    Clock clock;
+    Clock shootClock;
+    MainSpaceShip ownSpaceShip;
+    Background background;
+    Music backgroundMusic;
+    bool running = true;
+    Time time;
+    std::vector<Enemy *> enemyList;
+    std::vector<Bullet *> enemyBulletList;
+    std::vector<Bullet *> playerbulletList;
+    void updateAll(RenderWindow &window);
+
 };
 
 
