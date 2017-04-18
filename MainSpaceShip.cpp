@@ -23,9 +23,6 @@ MainSpaceShip::MainSpaceShip() {
     missileShootBuffer.loadFromFile("Resources/sfx_laser2.ogg");
     
 
-
-
-
     powerUp p1(missile);
     powerUp p2(shieldd);
     powerUp p3(laser);
