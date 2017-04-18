@@ -11,6 +11,6 @@
 //Including each screen of application
 #include "Game.h"
 #include "Menu.h"
-
+#include "GameOverScreen.h"
 
 #endif //XEONWARS_SCREENS_H

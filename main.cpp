@@ -30,6 +30,9 @@ int main(){
     screens.push_back(&menu);
     Game game;
     screens.push_back(&game);
+    GameOverScreen gameOverScreen;
+    screens.push_back(&gameOverScreen);
+
 
     Texture pauseTexture;
 
