@@ -87,7 +87,6 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
     frameCounter++;
 
     if (frameCounter == 4) {
-        std::cout << "Ejecutando" << std::endl;
         if (blinkAnimationCounter > 0) {
             std::cout << blinkAnimationCounter << std::endl;
             if (isWhite) {

@@ -62,7 +62,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
     Motion *enemyShipMotion = MotionFactory::createLinearMotion(45);
     Cannon *enemyShipCannon = CannonFactory::createSimpleCannon();
     enemyShipTexture.loadFromFile("Resources/MissileTower.png");
-    //enemyShipTexture.loadFromFile("Resources/enemy2.png");
 
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
@@ -76,17 +75,16 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
     enemyShipMotion = MotionFactory::createSimpleMotion();
-    //enemyShipMotion = MotionFactory::createFollowerMotion(enemyShip2->getSpriteReference(), ownSpaceShip.getSpriteReference());
-    //enemyShipMotion->setReverseDirection(true);
     enemyShip2->setTexturesAmount(4);
     enemyShip2->setMotion(enemyShipMotion);
     enemyShip2->setSpeed(0);
+
     enemyShip2->setPosition(sf::Vector2f(100,0));
-    enemyShip2->setTrigger(40);
+    enemyShip2->setTrigger(120);
 
     enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
     enemyShipCannon->setBulletDamage(30);
-    enemyShipCannon->setBulletSpeed(5);
+    enemyShipCannon->setBulletSpeed(3);
     enemyShipCannon->setBulletTextureFilename("Resources/FollowerBullet.png");
     enemyShip2->setCannon(enemyShipCannon);
 
@@ -101,7 +99,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon->setBulletSpeed(3);
     enemyShipTexture.loadFromFile("Resources/MissileTower.png");
     Enemy *enemyShip;
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 0; ++i) {
         enemyShipMotion = MotionFactory::createSimpleMotion();
         enemyShipCannon = CannonFactory::createSimpleCannon();
         enemyShipCannon->setBulletDamage(30);
@@ -188,7 +186,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
         updateAll(window);
         if(collisionManager.checkCollisions()){
-           // return 2;
+            return 2;
         }
 
 
