@@ -13,7 +13,7 @@ CollisionManager::CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet
 
 }
 
-void CollisionManager::checkCollisions()
+bool CollisionManager::checkCollisions()
 {
     int i = 0, j=0;
     while(i<enemyList->size()){
@@ -22,6 +22,7 @@ void CollisionManager::checkCollisions()
             //kill player
             deleteEnemy(enemyList,i);
             i--;
+            return true;
         }
 
         else{
@@ -57,6 +58,7 @@ void CollisionManager::checkCollisions()
         }
         i++;
     }
+    return false;
 }
 MainSpaceShip *CollisionManager::getPlayerShip() const
 {

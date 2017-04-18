@@ -42,7 +42,7 @@ MainSpaceShip::MainSpaceShip() {
     shipCannon = CannonFactory::createSprayCannon(2,3);
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
-    shipCannon->setBulletSpeed(3);
+    shipCannon->setBulletSpeed(8);
     shipCannon->setReverseDirection(1);
     shipCannon->setBulletTextureFilename("Resources/Bullets.png");
 
