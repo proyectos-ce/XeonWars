@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Screens.h"
+#include "ConnectionManager.h"
 #include <time.h>
 
 
@@ -15,7 +16,7 @@ int main(){
     std::vector<Screen*> screens;
     int screen = 0;
 
-
+    ConnectionManager* myConnectionManager = new ConnectionManager();
     RenderWindow window(VideoMode(1366,768), "XeonWars");
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);

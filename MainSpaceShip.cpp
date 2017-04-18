@@ -98,10 +98,10 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
     // Si no hay ninguna tecla presionada la velocidad se pone en 0 si es muy pequeña
     if (!anyKeyPressed) {
-        if (std::fabs(velocity.y) <= speed/2)
+        if (fabs(velocity.y) <= speed/2)
             velocity.y = 0;
 
-        if (std::fabs(velocity.x) <= speed/2)
+        if (fabs(velocity.x) <= speed/2)
             velocity.x = 0;
     }
 
@@ -135,14 +135,14 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
     // Maximum speed
 
-    if (std::fabs(velocity.x) > maxSpeed)
+    if (fabs(velocity.x) > maxSpeed)
     {
         if (velocity.x > 0)
             velocity.x = maxSpeed;
         else
             velocity.x = -maxSpeed;
     }
-    if (std::fabs(velocity.y) > maxSpeed)
+    if (fabs(velocity.y) > maxSpeed)
     {
         if (velocity.y > 0)
             velocity.y = maxSpeed;
