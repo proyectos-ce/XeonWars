@@ -82,7 +82,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     sf::FloatRect textRect = logo.getLocalBounds();
     logo.setOrigin(textRect.left + textRect.width/2.0f,
                    textRect.top  + textRect.height/2.0f);
-    logo.setPosition({ 1366/2.f, 200.f });
+    logo.setPosition({ window.getSize().x/2.f, 200.f });
 
 
     copyLabel.setFont(classicFont);
@@ -134,6 +134,8 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
                             //Let's get play !
                             playing = true;
                             return (1);
+                        } if (menu == 1) {
+                            return(2);
                         }
                         else
                         {
