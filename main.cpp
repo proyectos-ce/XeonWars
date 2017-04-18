@@ -20,10 +20,13 @@ int main(){
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
     window.setMouseCursorVisible(false);
+
+
     sf::Image icon;
     //icon.loadFromFile("Resources/menu/icon.png");
     //window.setIcon(256,256,icon.getPixelsPtr());
     //window.requestFocus();
+
 
     //Screens preparations
     Menu menu;
@@ -32,6 +35,7 @@ int main(){
     screens.push_back(&game);
 
     Texture pauseTexture;
+
 
     //Main loop
     while (screen >= 0)

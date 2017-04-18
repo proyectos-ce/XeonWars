@@ -43,6 +43,12 @@ private:
     bool laser_On;
     Sprite SOwnSpaceShip;
     Texture TOwnSpaceShip;
+    SoundBuffer normalShootBuffer;
+    SoundBuffer missileShootBuffer;
+
+    Sound shootSound;
+
+    int missileShootCounter;
     int lifes;
     int lifeLevel=100;
     int globalScore;

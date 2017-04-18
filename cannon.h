@@ -4,6 +4,7 @@
 #include "bullet.h"
 #include "motion.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "iostream"
 
@@ -12,6 +13,7 @@ class Cannon
 public:
     Cannon();
     ~Cannon();
+
     virtual void shoot();
     std::string getBulletTextureFilename() const;
     void setBulletTextureFilename(const std::string &value);
@@ -43,6 +45,7 @@ protected:
     sf::Vector2f getCenterPosition();
     bool reverseDirection=false;
     int getDirection();
+
 
 };
 
