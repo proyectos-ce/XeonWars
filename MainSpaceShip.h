@@ -41,6 +41,9 @@ public:
     void doDamageAnimation();
 
 
+    int getTexturesAmount() const;
+    void setTexturesAmount(int value);
+
 private:
     bool missiles_On;
     bool laser_On;
@@ -66,6 +69,9 @@ private:
     Cannon *laserCannon;
     std::vector<Bullet *> *bulletList;
 
+    int texturesAmount=4;
+    int currentTexture=0;
+    void updateTexture(int value);
 
 
     const float speed = 6;

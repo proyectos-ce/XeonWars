@@ -11,13 +11,14 @@ MainSpaceShip::MainSpaceShip() {
     globalScore = 0;
 
 
-    TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
+    TOwnSpaceShip.loadFromFile("Resources/PlayerShip.png");
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
     SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
     //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
     SOwnSpaceShip.setPosition(550,720);
+    SOwnSpaceShip.setScale(0.3,0.3);
 
     normalShootBuffer.loadFromFile("Resources/sfx_laser1.ogg");
     missileShootBuffer.loadFromFile("Resources/sfx_laser2.ogg");
@@ -135,13 +136,18 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
         velocity.y += speed/2;
 
     if (velocity.x > 0) {
-        SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
+        //SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
+        updateTexture(2);
+
         velocity.x -= speed/2;
     } else if (velocity.x < 0) {
-        SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
+        //SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
+        updateTexture(0);
+
         velocity.x += speed/2;
     } else {
-        SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+        //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+        updateTexture(1);
     }
 
     // Maximum speed
@@ -227,6 +233,31 @@ bool MainSpaceShip::gameOver() {
 void MainSpaceShip::doDamageAnimation() {
     if (blinkAnimationCounter == 0)
         blinkAnimationCounter = 6;
+}
+
+int MainSpaceShip::getTexturesAmount() const
+{
+    return texturesAmount;
+}
+
+void MainSpaceShip::setTexturesAmount(int value)
+{
+    texturesAmount = value;
+    updateTexture(0);
+
+}
+
+void MainSpaceShip::updateTexture(int value)
+{
+
+    if(value<texturesAmount){
+        currentTexture=value;
+    }
+    else{
+        currentTexture=0;
+    }
+    int rectX = (TOwnSpaceShip.getSize().x/texturesAmount), rectY = TOwnSpaceShip.getSize().y;
+    SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentTexture,0 , rectX, rectY ));
 }
 
 
