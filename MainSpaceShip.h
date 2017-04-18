@@ -47,11 +47,15 @@ public:
     int getTexturesAmount() const;
     void setTexturesAmount(int value);
 
+    Sprite getEffectSprite() const;
+    void setEffectSprite(const Sprite &value);
+
 private:
     bool missiles_On;
     bool laser_On;
     bool isWhite = false;
     Sprite SOwnSpaceShip;
+    Sprite effectSprite;
     Texture TOwnSpaceShip;
     SoundBuffer normalShootBuffer;
     SoundBuffer missileShootBuffer;
@@ -75,9 +79,10 @@ private:
     Clock shieldClock;
     std::vector<Bullet *> *bulletList;
 
-    int texturesAmount=4;
+    int texturesAmount=7;
     int defaultTexture=1;
     void updateTexture(int value);
+    void updateEffect(int value);
 
 
     const float speed = 6;

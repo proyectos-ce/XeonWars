@@ -14,22 +14,22 @@ MainSpaceShip::MainSpaceShip() {
     TOwnSpaceShip.loadFromFile("Resources/PlayerShip.png");
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
+    effectSprite.setTexture(TOwnSpaceShip);
 
     //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
     //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
     SOwnSpaceShip.setPosition(550,720);
-    SOwnSpaceShip.setScale(0.4,0.4)
-            ;
+    SOwnSpaceShip.setScale(0.4,0.4);
+    effectSprite.setPosition(550,720);
+    effectSprite.setScale(0.4,0.4);
+    updateEffect(0);
+
 
     normalShootBuffer.loadFromFile("Resources/sfx_laser1.ogg");
     missileShootBuffer.loadFromFile("Resources/sfx_laser2.ogg");
     shieldOnSound.loadFromFile("Resources/sfx_shieldUp.ogg");
     shieldOffSound.loadFromFile("Resources/sfx_shieldDown.ogg");
-    
-
-
-
 
     powerUp p1(missile);
     powerUp p2(shieldd);
@@ -108,6 +108,7 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
             blinkAnimationCounter--;
         }
         frameCounter = 0;
+
     }
 
 
@@ -203,11 +204,15 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
     SOwnSpaceShip.move(velocity * (time/30));
 
+    //update effect sprite
+    effectSprite.setPosition(SOwnSpaceShip.getPosition());
 
 }
 
 void MainSpaceShip::render(RenderWindow &window) {
+    window.draw(effectSprite);
     window.draw(SOwnSpaceShip);
+
 }
 
 void MainSpaceShip::usePowerUp() {
@@ -216,10 +221,12 @@ void MainSpaceShip::usePowerUp() {
         if(powerToUse == 0){
             cout <<"Misiles"<<endl;
             missiles_On=true;
+            updateEffect(1);
         }
         else if(powerToUse == 1){
             if(!shieldActivated) shield();
             cout <<"Escudo"<<endl;
+            updateEffect(2);
         }
         else if(powerToUse == 2){
             cout <<"Laser"<<endl;
@@ -227,6 +234,8 @@ void MainSpaceShip::usePowerUp() {
         }
     }else{
         cout <<"No hay power ups"<<endl;
+        updateEffect(0);
+
     }
 }
 
@@ -264,12 +273,29 @@ void MainSpaceShip::setTexturesAmount(int value)
 
 }
 
+Sprite MainSpaceShip::getEffectSprite() const
+{
+    return effectSprite;
+}
+
+void MainSpaceShip::setEffectSprite(const Sprite &value)
+{
+    effectSprite = value;
+}
+
 void MainSpaceShip::updateTexture(int value)
 {
-
-
+    
+    
     int rectX = (TOwnSpaceShip.getSize().x/texturesAmount), rectY = TOwnSpaceShip.getSize().y;
     SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*value,0 , rectX, rectY ));
+}
+
+void MainSpaceShip::updateEffect(int value)
+{
+    value += 4;
+    int rectX = (TOwnSpaceShip.getSize().x/texturesAmount), rectY = TOwnSpaceShip.getSize().y;
+    effectSprite.setTextureRect(sf::IntRect(rectX*value,0 , rectX, rectY ));
 }
 
 
