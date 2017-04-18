@@ -50,7 +50,12 @@ void CollisionManager::checkCollisions()
     while(i<enemyBulletList->size()){
         //player vs enemies
         if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
+
+            getPlayerShip()->doDamageAnimation();
+
+
             //attack player
+
             deleteBullet(enemyBulletList, i);
             //delete bullet
             i--;
