@@ -136,12 +136,12 @@ int Game::run(RenderWindow &window, Texture &tex) {
             {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
-                return(0);
+                return(3);
             }
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
-                return (0);
+                return (3);
 
             }
 
@@ -188,7 +188,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
         updateAll(window);
         if(collisionManager.checkCollisions()){
-           // return 2;
+           return 2;
         }
 
 
