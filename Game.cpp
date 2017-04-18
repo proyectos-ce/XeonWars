@@ -80,7 +80,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShip2->setSpeed(0);
 
     enemyShip2->setPosition(sf::Vector2f(100,0));
-    enemyShip2->setTrigger(120);
+    enemyShip2->setTrigger(50);
 
     enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
     enemyShipCannon->setBulletDamage(30);
@@ -99,7 +99,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon->setBulletSpeed(3);
     enemyShipTexture.loadFromFile("Resources/MissileTower.png");
     Enemy *enemyShip;
-    for (int i = 0; i < 0; ++i) {
+    for (int i = 0; i < 3; ++i) {
         enemyShipMotion = MotionFactory::createSimpleMotion();
         enemyShipCannon = CannonFactory::createSimpleCannon();
         enemyShipCannon->setBulletDamage(30);
