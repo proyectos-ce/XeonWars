@@ -136,8 +136,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipTexture.loadFromFile("Resources/enemy3.png");
     Enemy *enemyShip;
     for (int i = 0; i < 5; ++i) {
-        Enemy *newEnemy = EnemyFactory::createJet(1,&enemyList,&enemyBulletList);
-        newEnemy->setCenterPosition(sf::Vector2f(300*i,300));
+        Enemy *newEnemy = EnemyFactory::createJet(i,&enemyList,&enemyBulletList);
+        newEnemy->setCenterPosition(sf::Vector2f(200*i,300));
         /*
         enemyShipMotion = MotionFactory::createSimpleMotion();
         enemyShipCannon = CannonFactory::createSimpleCannon();

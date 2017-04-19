@@ -168,6 +168,7 @@ Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet 
     Enemy *newEnemy = createEnemy(level,  texture,  enemyMotion, enemyList,  enemyCannon, bulletList);
 
     newEnemy->setTexturesAmount(4);
+    newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
     //
     newEnemy->setSpeed(2);
