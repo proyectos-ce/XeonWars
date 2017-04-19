@@ -18,8 +18,8 @@ void Game::pauseGame() {
 
 void Game::updateAll(RenderWindow &window)
 {
-    background.update(window, time.asMilliseconds());
-    background.render(window);
+   background.update(window, time.asMilliseconds());
+   background.render(window);
 
     for (int i = 0; i < enemyBulletList.size(); ++i) {
         enemyBulletList[i]->update(window, time.asMilliseconds());
@@ -56,6 +56,10 @@ void Game::updateAll(RenderWindow &window)
 
     ownSpaceShip.update(window, time.asMilliseconds());
     ownSpaceShip.render(window);
+
+
+
+
 }
 
 void Game::eraseAll()
@@ -166,13 +170,14 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
                 eraseAll();
-                return(0);
+                return(3);
             }
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
                 eraseAll();
-                return (0);
+                return (3);
+
 
             }
 
@@ -194,14 +199,24 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
         }
 
-        time = clock.getElapsedTime();
+       time = clock.getElapsedTime();
+//        ownSpaceShip.score.scoreRender(window);
+//        ownSpaceShip.score.add_score(1);
+
 
         window.clear();
 
 
 
-        ownSpaceShip.score.scoreRender(window);
-        ownSpaceShip.score.add_score(1);
+
+
+        updateAll(window);
+        if(collisionManager.checkCollisions()){
+            return 2;
+        }
+
+
+        clock.restart().asMilliseconds();
 
         ownSpaceShip.score.BossTimeCheck();
 
@@ -211,21 +226,18 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 ownSpaceShip.score.setBossOn();
                 ownSpaceShip.score.createbossOff();
             }
+            ownSpaceShip.score.Boss.lifeRender(window);
             if(ownSpaceShip.score.Boss.isdead()){
                 ownSpaceShip.score.BossTime=false;
                 ownSpaceShip.score.nextlevelReached();
             }
         }
 
-        updateAll(window);
-        if(collisionManager.checkCollisions()){
-            eraseAll();
-            return 2;
+        ownSpaceShip.score.scoreRender(window);
+        if(shootClock.getElapsedTime().asMilliseconds()>500) {
+            ownSpaceShip.score.add_score(1);
+            shootClock.restart().asMilliseconds();
         }
-
-
-        clock.restart().asMilliseconds();
-
 
         window.display();
 

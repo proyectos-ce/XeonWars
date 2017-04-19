@@ -27,6 +27,7 @@ MainSpaceShip::MainSpaceShip() {
 
     normalShootBuffer.loadFromFile("Resources/sfx_laser1.ogg");
     missileShootBuffer.loadFromFile("Resources/sfx_laser2.ogg");
+
     shieldOnSound.loadFromFile("Resources/sfx_shieldUp.ogg");
     shieldOffSound.loadFromFile("Resources/sfx_shieldDown.ogg");
 
