@@ -59,6 +59,7 @@ private:
     Texture TOwnSpaceShip;
     SoundBuffer normalShootBuffer;
     SoundBuffer missileShootBuffer;
+    Sound shootSound;
     SoundBuffer shieldOnSound;
     SoundBuffer shieldOffSound;
 

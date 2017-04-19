@@ -12,16 +12,16 @@ ScoreManager::ScoreManager(){
     BossTime = false;
     createBoss = false;
     currentLevel = 1;
-    nextBoss_score=5000;
-    if (!font.loadFromFile("Resources/menu/verdana.ttf"))
+    nextBoss_score=400;
+    if (!font.loadFromFile("Resources/menu/8bit.ttf"))
     {
         cout << "error with the font" << endl;
     }
-    text.setPosition(20,10);
+    text.setPosition(20,0);
 // select the font
     text.setFont(font);
 // set the character size
-    text.setCharacterSize(30); // in pixels, not points!
+    text.setCharacterSize(50); // in pixels, not points!
 // set the color
     text.setColor(sf::Color::White);
 // set the text style
@@ -63,6 +63,7 @@ void ScoreManager::nextlevelReached() {
     currentLevel+=1;
 }
 void ScoreManager::scoreRender(sf::RenderWindow &window){
+    //cout << "show score render" << endl;
     text.setString("Score: "+to_string(GeneralScore));
     window.draw(text);
 }
