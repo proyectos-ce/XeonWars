@@ -156,13 +156,13 @@ Enemy *createEnemy(int level, std::string textureFilename, Motion *enemyMotion,s
 
 Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
 {
-    Motion *enemyMotion = MotionFactory::createLinearMotion(45);
-
+    level-=1;
+    Motion *enemyMotion = MotionFactory::createSimpleMotion();
 
 
     Cannon *enemyCannon = CannonFactory::createSimpleCannon();
-    enemyCannon->setBulletDamage(10*level);
-    enemyCannon->setBulletSpeed(5);
+    enemyCannon->setBulletDamage(10*(level+1));
+    enemyCannon->setBulletSpeed(4*(level+1));
 
     std::string texture = "Resources/Jet.png";
     Enemy *newEnemy = createEnemy(level,  texture,  enemyMotion, enemyList,  enemyCannon, bulletList);
@@ -171,8 +171,10 @@ Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet 
     newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
     //
-    newEnemy->setSpeed(2);
+    newEnemy->setSpeed(0.6*(level+1));
     newEnemy->setTrigger(20);
+    newEnemy->setLife(4*(level+1));
+
     return newEnemy;
 
 }
