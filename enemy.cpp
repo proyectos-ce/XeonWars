@@ -4,7 +4,7 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(sf::Texture texture)
+Enemy::Enemy(sf::Texture *texture)
 {
     setBulletList(NULL);
     setTexture(texture);
@@ -13,7 +13,7 @@ Enemy::Enemy(sf::Texture texture)
 
 }
 
-Enemy::Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
+Enemy::Enemy(sf::Texture *texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
 {
     setTexture(texture);
     setBulletList(bulletList);
@@ -127,25 +127,14 @@ void Enemy::setEnemy_score(int score) {
 
 
 
-/*
-Jets: alta movilidad, ataque bajo, resistencia baja
-Bombarderos: movilidad media, ataque alto y resistencia media
-Torres: no se mueven, están fijas en posiciones aleatorias en la pantalla y siempre apuntan al avión del jugador. Su ataque es medio
-Torres de misiles: igual que las torres pero de ataque alto.
-Jets Kamikaze: no disparan, se mueven rápido y buscan chocar el avión del jugador.
-Definido por el estudiante
-Definido por el estudiante
 
-*/
 
 namespace EnemyFactory {
 
-Enemy *createEnemy(int level, std::string textureFilename, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
+
+
+Enemy *createEnemy(int level, sf::Texture *texture, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
 {
-
-    sf::Texture texture;
-    texture.loadFromFile(textureFilename);
-
     Enemy *enemyShip = new Enemy(texture, enemyList, bulletList);
     enemyShip->updateTexture(level);
     enemyShip->setMotion(enemyMotion);
@@ -153,53 +142,71 @@ Enemy *createEnemy(int level, std::string textureFilename, Motion *enemyMotion,s
     return enemyShip;
 
 }
+//Jets: alta movilidad, ataque bajo, resistencia baja
 
 Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
 {
     level-=1;
     Motion *enemyMotion = MotionFactory::createSimpleMotion();
-
-
     Cannon *enemyCannon = CannonFactory::createSimpleCannon();
     enemyCannon->setBulletDamage(10*(level+1));
     enemyCannon->setBulletSpeed(4*(level+1));
+    SpritesManager *spritesManager =SpritesManager::getInstance(); //= SpritesManager.getInstance();
 
-    std::string texture = "Resources/Jet.png";
-    Enemy *newEnemy = createEnemy(level,  texture,  enemyMotion, enemyList,  enemyCannon, bulletList);
-
+    Enemy *newEnemy = createEnemy(level,  spritesManager->getJetTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
     newEnemy->setTexturesAmount(4);
     newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
-    //
     newEnemy->setSpeed(0.6*(level+1));
     newEnemy->setTrigger(20);
-    newEnemy->setLife(4*(level+1));
+    newEnemy->setLife(1);
+    //newEnemy->setLife(4*(level+1));
+    return newEnemy;
 
+}
+
+//Bombarderos: movilidad media, ataque alto y resistencia media
+Enemy *createBomber(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
+{
+    level-=1;
+    Motion *enemyMotion = MotionFactory::createSinMotion(150);
+    Cannon *enemyCannon = CannonFactory::createSprayCannon(15,level+1);
+    enemyCannon->setBulletDamage(10*(level+1));
+    enemyCannon->setBulletTexture(SpritesManager::getInstance()->getEnemyBulletTexture());
+    //enemyCannon->setBulletTextureFilename("Resources/Bomber.png");
+    //enemyCannon->setBulletSpeed(4*(level+1));
+    enemyCannon->setBulletSpeed(4);
+    SpritesManager *spritesManager; //= SpritesManager.getInstance();
+    spritesManager = SpritesManager::getInstance();
+    Enemy *newEnemy = createEnemy(level,  spritesManager->getBomberTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
+    newEnemy->setTexturesAmount(4);
+    newEnemy->updateTexture(level);
+    newEnemy->setScale(0.1+(0.01*level));
+    newEnemy->setSpeed(0.6*(level+1));
+    newEnemy->setTrigger(20);
+    newEnemy->setLife(1);
+    //newEnemy->setLife(4*(level+1));
     return newEnemy;
 
 }
 
 
-Enemy *createBomber(int level)
-{
-    //create texture
-    //create motion
-    //motion things
 
+//Torres: no se mueven, están fijas en posiciones aleatorias en la pantalla y siempre apuntan al avión del jugador. Su ataque es medio
 
-}
-
-Enemy *createTower(int level)
+Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
 {
 
 }
 
-Enemy *createMissileTower(int level)
+//Torres de misiles: igual que las torres pero de ataque alto.
+Enemy *createMissileTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
 {
 
 }
+//Jets Kamikaze: no disparan, se mueven rápido y buscan chocar el avión del jugador.
 
-Enemy *createKamikazeJet(int level)
+Enemy *createKamikazeJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
 {
 
 }

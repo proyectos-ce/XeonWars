@@ -15,8 +15,7 @@ public:
     ~Cannon();
 
     virtual void shoot();
-    std::string getBulletTextureFilename() const;
-    void setBulletTextureFilename(const std::string &value);
+
     std::vector<Bullet *> *getBulletList() const;
     void setBulletList(std::vector<Bullet *> *value);
     int getBulletDamage() const;
@@ -34,11 +33,14 @@ public:
     int getTexturesAmount() const;
     void setTexturesAmount(int value);
 
+    sf::Texture *getBulletTexture() const;
+    void setBulletTexture(sf::Texture *value);
+
 protected:
     int bulletDamage;
     int bulletSpeed;
     virtual void shootBullet(int speed, Motion *bulletMotion, float angle=0);
-    std::string bulletTextureFilename="Resources/EnemyBullets.png";
+    sf::Texture *bulletTexture;
     int texturesAmount=2;
     sf::Sprite *ownerSprite;
     std::vector<Bullet *> *bulletList;

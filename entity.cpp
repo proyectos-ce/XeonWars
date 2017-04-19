@@ -48,19 +48,15 @@ void Entity::setMotion(Motion *value)
 }
 
 
-sf::Texture Entity::getTexture() const
-{
-    return texture;
-}
 
-void Entity::setTexture(sf::Texture value)
+/*void Entity::setTexture(sf::Texture value)
 {
     texture = value;
     texture.setSmooth(true);
     sprite.setTexture(texture);
     updateTexture(0);
 }
-
+*/
 sf::Sprite Entity::getSprite() const
 {
     return sprite;
@@ -90,7 +86,7 @@ void Entity::updateTexture(int value)
     else{
         currentTexture=0;
     }
-    int rectX = (texture.getSize().x/texturesAmount), rectY = texture.getSize().y;
+    int rectX = (texture->getSize().x/texturesAmount), rectY = texture->getSize().y;
     sprite.setTextureRect(sf::IntRect(rectX*currentTexture,0 , rectX, rectY ));
 }
 
@@ -102,6 +98,18 @@ void Entity::rotate(float angle)
 sf::Sprite *Entity::getSpriteReference()
 {
     return &sprite;
+}
+
+sf::Texture *Entity::getTexture() const
+{
+    return texture;
+}
+
+void Entity::setTexture(sf::Texture *value)
+{
+    texture = value;
+    sprite.setTexture(*texture);
+    updateTexture(0);
 }
 
 
@@ -137,8 +145,8 @@ sf::Vector2f Entity::getPosition()
 sf::Vector2f Entity::getCenterPosition()
 {
     sf::Vector2f position = sprite.getPosition();
-    position.x+=(texture.getSize().x/texturesAmount/2);
-    position.y+=(texture.getSize().y/texturesAmount/2);
+    position.x+=(texture->getSize().x/texturesAmount/2);
+    position.y+=(texture->getSize().y/texturesAmount/2);
     return position;
 
 }
@@ -152,4 +160,59 @@ void Entity::setScale(float scale)
 
 
 
+SpritesManager *SpritesManager::instance =NULL;
 
+
+SpritesManager *SpritesManager::getInstance()
+{
+    if(!instance){
+        instance = new SpritesManager;
+    }
+    return instance;
+}
+
+sf::Texture *SpritesManager::getJetTexture(){
+    return &jetTexture;
+}
+sf::Texture *SpritesManager::getBomberTexture(){
+    return &bomberTexture;
+}
+sf::Texture *SpritesManager::getTowerTexture(){
+    return &towerTexture;
+}
+sf::Texture *SpritesManager::getMissileTowerTexture(){
+    return &missileTowerTexture;
+}
+sf::Texture *SpritesManager::getKamikazeTexture(){
+    return &kamikazeTexture;
+}
+
+
+sf::Texture *SpritesManager::getPlayerBulletTexture(){
+    return &playerBulletTexture;
+}
+
+sf::Texture *SpritesManager::getFollowerBulletTexture(){
+    return &followerBulletTexture;
+}
+sf::Texture *SpritesManager::getMissileTexture(){
+    return &missileTexture;
+}
+sf::Texture *SpritesManager::getEnemyBulletTexture(){
+    return &enemyBulletTexture;
+}
+
+
+
+SpritesManager::SpritesManager()
+{
+    jetTexture.loadFromFile("Resources/Jet.png");
+    bomberTexture.loadFromFile("Resources/Bomber.png");
+    towerTexture.loadFromFile("Resources/Tower.png");
+    missileTowerTexture.loadFromFile("Resources/MissileTower.png");
+    kamikazeTexture.loadFromFile("Resources/Kamikaze.png");
+    playerBulletTexture.loadFromFile("Resources/Bullets.png");
+    followerBulletTexture.loadFromFile("Resources/FollowerBullet.png");
+    missileTexture.loadFromFile("Resources/Missiles.png");
+    enemyBulletTexture.loadFromFile("Resources/EnemyBullets.png");
+}

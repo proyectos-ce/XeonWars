@@ -82,7 +82,9 @@ private:
     int scoreForLifes;
     Queue<powerUp> powerUpsQueue;
     Cannon *shipCannon;
+    Texture shipCannonTexture;
     Cannon *missileCannon;
+    Texture missileCannonTexture;
     Cannon *laserCannon;
     Clock shieldClock;
     std::vector<Bullet *> *bulletList;

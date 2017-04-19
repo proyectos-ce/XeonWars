@@ -89,12 +89,14 @@ void Game::eraseAll()
 
 int Game::run(RenderWindow &window, Texture &tex) {
 
-    Texture enemyShipTexture;
+    Texture *enemyShipTexture = new Texture ;
+    //Sprite testSprite;
+    //testSprite.setTexture(&enemyShipTexture);
     ownSpaceShip.setbulletList(&playerbulletList);
     Motion *enemyShipMotion = MotionFactory::createLinearMotion(45);
     Cannon *enemyShipCannon = CannonFactory::createSimpleCannon();
     //enemyShipTexture.loadFromFile("Resources/MissileTower.png");
-    enemyShipTexture.loadFromFile("Resources/Boss1.png");
+    enemyShipTexture->loadFromFile("Resources/Boss1.png");
 
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
@@ -114,12 +116,13 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShip2->setSpeed(0);
 
     enemyShip2->setPosition(sf::Vector2f(500,0));
-    enemyShip2->setTrigger(80);
+    enemyShip2->setTrigger(40);
 
     enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
     enemyShipCannon->setBulletDamage(3);
     enemyShipCannon->setBulletSpeed(3);
-    enemyShipCannon->setBulletTextureFilename("Resources/FollowerBullet.png");
+    enemyShipCannon->setBulletTexture(SpritesManager::getInstance()->getFollowerBulletTexture());
+    //enemyShipCannon->setBulletTextureFilename("Resources/FollowerBullet.png");
     enemyShip2->setCannon(enemyShipCannon);
 
 
@@ -134,10 +137,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon->setBulletDamage(30);
     enemyShipCannon->setBulletSpeed(3);
     //enemyShipTexture.loadFromFile("Resources/MissileTower.png");
-    enemyShipTexture.loadFromFile("Resources/enemy3.png");
     Enemy *enemyShip;
     for (int i = 1; i < 5; ++i) {
-        Enemy *newEnemy = EnemyFactory::createJet(i,&enemyList,&enemyBulletList);
+        //Enemy *newEnemy = EnemyFactory::createJet(i,&enemyList,&enemyBulletList);
+        Enemy *newEnemy = EnemyFactory::createBomber(i,&enemyList,&enemyBulletList);
         newEnemy->setCenterPosition(sf::Vector2f(200*i,50));
         /*
         enemyShipMotion = MotionFactory::createSimpleMotion();
