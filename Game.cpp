@@ -110,7 +110,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
     enemyShipMotion = MotionFactory::createSimpleMotion();
-    enemyShip2->setTexturesAmount(4);
+    enemyShip2->setTexturesAmount(1);
     enemyShip2->setLife(80);
     enemyShip2->setMotion(enemyShipMotion);
     enemyShip2->setSpeed(0);
