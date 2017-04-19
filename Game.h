@@ -35,12 +35,14 @@ private:
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
+
     bool running = true;
     Time time;
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
     void updateAll(RenderWindow &window);
+    void eraseAll();
 
 };
 

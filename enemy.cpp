@@ -117,6 +117,13 @@ void Enemy::setLife(int value)
     life = value;
 }
 
+int Enemy::getEnemy_score() {
+    return enemy_score;
+}
+
+void Enemy::setEnemy_score(int score) {
+    enemy_score = score;
+}
 
 
 

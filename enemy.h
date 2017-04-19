@@ -23,6 +23,8 @@ public:
     void setCannon(Cannon *value);
     int getLife() const;
     void setLife(int value);
+    int getEnemy_score();
+    void setEnemy_score(int score);
 
 protected:
     int life = 20;
@@ -33,6 +35,7 @@ protected:
     int getMoves() const;
     void setMoves(int value);
     Cannon *cannon;
+    int enemy_score;
 };
 
 namespace EnemyFactory {
