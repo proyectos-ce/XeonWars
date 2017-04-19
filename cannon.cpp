@@ -237,7 +237,7 @@ void FollowerCannon::shootBullet(int speed)
 
     newBullet->setTexturesAmount(texturesAmount);
     newBullet->setPosition(getCenterPosition());
-    newBullet->setScale(0.2);
+    newBullet->setScale(1);
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }

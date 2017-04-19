@@ -53,6 +53,7 @@ sf::Texture Entity::getTexture() const
 void Entity::setTexture(sf::Texture value)
 {
     texture = value;
+    texture.setSmooth(true);
     sprite.setTexture(texture);
     updateTexture(0);
 }
