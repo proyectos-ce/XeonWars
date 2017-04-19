@@ -27,7 +27,6 @@ void Game::updateAll(RenderWindow &window)
         if( enemyBulletList[i]->getPosition().y >= 3000 | enemyBulletList[i]->getPosition().x >= 2000 | enemyBulletList[i]->getPosition().x <= -500){
             delete enemyBulletList.operator[](i);
             enemyBulletList.erase(enemyBulletList.begin()+i);
-            i--;
         }
 
     }
@@ -38,8 +37,6 @@ void Game::updateAll(RenderWindow &window)
         if( enemyList[i]->getPosition().y >= 3000 | enemyList[i]->getPosition().x >= 2000 | enemyList[i]->getPosition().x <= -500){
             delete enemyList.operator[](i);
             enemyList.erase(enemyList.begin()+i);
-            i--;
-
         }
     }
 
@@ -49,8 +46,6 @@ void Game::updateAll(RenderWindow &window)
         if( playerbulletList[i]->getPosition().y <= 0 | playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
             delete playerbulletList.operator[](i);
             playerbulletList.erase(playerbulletList.begin()+i);
-            i--;
-
         }
     }
 
@@ -62,29 +57,6 @@ void Game::updateAll(RenderWindow &window)
 
 }
 
-void Game::eraseAll()
-{
-    for (int i = 0; i < enemyBulletList.size(); ++i) {
-            delete enemyBulletList.operator[](i);
-            //enemyBulletList.erase(enemyBulletList.begin()+i);
-    }
-    enemyBulletList.clear();
-
-    for (int i = 0; i < enemyList.size(); ++i) {
-            delete enemyList.operator[](i);
-            //enemyList.erase(enemyList.begin()+i);
-
-    }
-    enemyList.clear();
-
-    for (int i = 0; i < playerbulletList.size(); ++i) {
-            delete playerbulletList.operator[](i);
-            //playerbulletList.erase(playerbulletList.begin()+i);
-
-    }
-    playerbulletList.clear();
-}
-
 
 
 int Game::run(RenderWindow &window, Texture &tex) {
@@ -93,8 +65,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     ownSpaceShip.setbulletList(&playerbulletList);
     Motion *enemyShipMotion = MotionFactory::createLinearMotion(45);
     Cannon *enemyShipCannon = CannonFactory::createSimpleCannon();
-    //enemyShipTexture.loadFromFile("Resources/MissileTower.png");
-    enemyShipTexture.loadFromFile("Resources/Boss1.png");
+    enemyShipTexture.loadFromFile("Resources/MissileTower.png");
 
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
@@ -108,22 +79,20 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
     enemyShipMotion = MotionFactory::createSimpleMotion();
-    enemyShip2->setTexturesAmount(1);
+    enemyShip2->setTexturesAmount(4);
     enemyShip2->setMotion(enemyShipMotion);
     enemyShip2->setSpeed(0);
 
-    enemyShip2->setPosition(sf::Vector2f(500,0));
-    enemyShip2->setTrigger(80);
+    enemyShip2->setPosition(sf::Vector2f(100,0));
+    enemyShip2->setTrigger(120);
 
     enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
-    enemyShipCannon->setBulletDamage(3);
+    enemyShipCannon->setBulletDamage(30);
     enemyShipCannon->setBulletSpeed(3);
     enemyShipCannon->setBulletTextureFilename("Resources/FollowerBullet.png");
     enemyShip2->setCannon(enemyShipCannon);
 
-
     enemyShip2->setScale(0.3);
-
 
 
 
@@ -134,10 +103,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon->setBulletSpeed(3);
     enemyShipTexture.loadFromFile("Resources/MissileTower.png");
     Enemy *enemyShip;
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 0; ++i) {
         enemyShipMotion = MotionFactory::createSimpleMotion();
         enemyShipCannon = CannonFactory::createSimpleCannon();
-        enemyShipCannon->setBulletDamage(10);
+        enemyShipCannon->setBulletDamage(30);
         enemyShipCannon->setBulletSpeed(5);
 
         enemyShip = new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
@@ -169,15 +138,12 @@ int Game::run(RenderWindow &window, Texture &tex) {
             {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
-                eraseAll();
-                return(3);
+                return(0);
             }
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
-                eraseAll();
-                return (3);
-
+                return (0);
 
             }
 
@@ -237,17 +203,11 @@ int Game::run(RenderWindow &window, Texture &tex) {
         if(shootClock.getElapsedTime().asMilliseconds()>500) {
             ownSpaceShip.score.add_score(1);
             shootClock.restart().asMilliseconds();
-
-        updateAll(window);
-        if(collisionManager.checkCollisions()){
-            eraseAll();
-            return 2;
-
         }
         window.display();
 
     }
-    eraseAll();
+
     return (-1);
 }
 

@@ -23,7 +23,6 @@ public:
     bool gameOver();
     void shield();
     void playerShoot();
-    void checkShieldTimer();
     void lifeManager(int);
     ScoreManager score;
 
@@ -34,8 +33,6 @@ public:
     //const Sprite &getSprite();
     bool attack(int damage);
     int getLifeLevel() const;
-    int getLifes() const;
-    void setLifes(int numLifes);
     void setLifeLevel(int value);
     sf::Sprite *getSpriteReference();
     Sprite getSprite() const;
@@ -44,26 +41,15 @@ public:
     void doDamageAnimation();
 
 
-    int getTexturesAmount() const;
-    void setTexturesAmount(int value);
-
-    Sprite getEffectSprite() const;
-    void setEffectSprite(const Sprite &value);
-
 private:
     bool missiles_On;
     bool laser_On;
     bool isWhite = false;
     Sprite SOwnSpaceShip;
-    Sprite effectSprite;
     Texture TOwnSpaceShip;
     SoundBuffer normalShootBuffer;
     SoundBuffer missileShootBuffer;
     Sound shootSound;
-    SoundBuffer shieldOnSound;
-    SoundBuffer shieldOffSound;
-
-    Sound sound;
 
     int missileShootCounter;
     int lifes;
@@ -77,13 +63,8 @@ private:
     Cannon *shipCannon;
     Cannon *missileCannon;
     Cannon *laserCannon;
-    Clock shieldClock;
     std::vector<Bullet *> *bulletList;
 
-    int texturesAmount=7;
-    int defaultTexture=1;
-    void updateTexture(int value);
-    void updateEffect(int value);
 
 
     const float speed = 6;

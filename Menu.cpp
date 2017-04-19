@@ -36,6 +36,12 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
         return (-1);
     }
 
+    if (!verdana.loadFromFile("Resources/menu/verdana.ttf"))
+    {
+        std::cerr << "Error loading verdanab.ttf" << std::endl;
+        return (-1);
+    }
+
     if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
     {
         std::cerr << "Error loading 8bit.ttf" << std::endl;
@@ -65,6 +71,11 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     exitLabel.setString("Exit");
     exitLabel.setPosition({ 300.f, 450.f });
 
+    continueLabel.setFont(classicFont);
+    continueLabel.setCharacterSize(40);
+    continueLabel.setString("Continue");
+    continueLabel.setPosition({ 280.f, 160.f });
+
     logo.setFont(classicFont);
     logo.setCharacterSize(200);
     logo.setString("XeonWars");
@@ -84,6 +95,11 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
 
 
 
+    if (playing)
+    {
+        alpha = alpha_max;
+    }
+
     while (running)
     {
         //Verifying events
@@ -102,8 +118,6 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
             {
                 switch (event.key.code)
                 {
-                    case sf::Keyboard::Escape:
-                        return -1;
                     case sf::Keyboard::Up:
                         menu--;
                         if (menu<0)
@@ -115,13 +129,20 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
                             menu = 2;
                         break;
                     case sf::Keyboard::Return:
-                        if (menu == 0) {
+                        if (menu == 0)
+                        {
+                            //Let's get play !
+                            playing = true;
                             return (1);
                         } if (menu == 1) {
                             return(2);
-                        } else  {
+                        }
+                        else
+                        {
+                            //Let's get work...
                             return (-1);
                         }
+                        break;
                     default:
                         break;
                 }
@@ -138,18 +159,21 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
             playLabel.setColor(sf::Color(255, 0, 0, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
+            continueLabel.setColor(sf::Color(255, 0, 0, 255));
         }
         else if (menu == 1)
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 0, 0, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
+            continueLabel.setColor(sf::Color(255, 0, 0, 255));
         }
         else
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 0, 0, 255));
+            continueLabel.setColor(sf::Color(255, 255, 255, 255));
         }
 
         //Clearing screen
@@ -159,10 +183,19 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
         if (alpha >= alpha_max)
             alpha = alpha_max;
         {
-            window.draw(playLabel);
-            window.draw(copyLabel);
-            window.draw(logo);
-            window.draw(optionsLabel);
+            if (playing)
+            {
+                bg.setTexture(pauseTexture);
+                alpha = 150;
+                window.draw(continueLabel);
+            }
+            else
+            {
+                window.draw(playLabel);
+                window.draw(copyLabel);
+                window.draw(logo);
+                window.draw(optionsLabel);
+            }
             window.draw(exitLabel);
         }
         window.display();
