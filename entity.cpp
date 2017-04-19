@@ -31,7 +31,10 @@ void Entity::render(sf::RenderWindow &window)
 
 void Entity::kill()
 {
-    //setLife(0);
+    //if(lifeFlag!=NULL)
+    //{
+    //    lifeFlag = false;
+   // }
 }
 
 Motion *Entity::getMotion() const
@@ -102,12 +105,12 @@ sf::Sprite *Entity::getSpriteReference()
 }
 
 
-int Entity::getSpeed() const
+float Entity::getSpeed() const
 {
     return speed;
 }
 
-void Entity::setSpeed(int value)
+void Entity::setSpeed(float value)
 {
     speed = value;
 }

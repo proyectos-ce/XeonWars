@@ -22,8 +22,8 @@ public:
     void setSprite(const sf::Sprite &value);
     int getTexturesAmount() const;
     void setTexturesAmount(int value);
-    int getSpeed() const;
-    void setSpeed(int value);
+    float getSpeed() const;
+    void setSpeed(float value);
     void setPosition(sf::Vector2f postion);
     sf::Vector2f getPosition();
     sf::Vector2f getCenterPosition();
@@ -33,7 +33,8 @@ public:
     sf::Sprite *getSpriteReference();
 
 protected:
-    int speed=10;
+    //bool *lifeFlag = NULL;
+    float speed=10;
     int texturesAmount=2;
     Motion *motion;
     sf::Sprite sprite;

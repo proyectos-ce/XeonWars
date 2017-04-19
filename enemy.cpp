@@ -127,5 +127,66 @@ void Enemy::setEnemy_score(int score) {
 
 
 
+/*
+Jets: alta movilidad, ataque bajo, resistencia baja
+Bombarderos: movilidad media, ataque alto y resistencia media
+Torres: no se mueven, están fijas en posiciones aleatorias en la pantalla y siempre apuntan al avión del jugador. Su ataque es medio
+Torres de misiles: igual que las torres pero de ataque alto.
+Jets Kamikaze: no disparan, se mueven rápido y buscan chocar el avión del jugador.
+Definido por el estudiante
+Definido por el estudiante
+
+*/
+
+namespace EnemyFactory {
+
+Enemy *createEnemy(int level, sf::Texture texture, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
+{
+    //enemyCannon->setBulletDamage(10);
+    //enemyCannon->setBulletSpeed(5);
+    //texture.loadFromFile("Resources/MissileTower.png");
+    Enemy *enemyShip;
+    enemyShip = new Enemy(texture, enemyList, bulletList);
+    enemyShip->setTexturesAmount(4);
+    enemyShip->updateTexture(level);
+    enemyShip->setMotion(enemyMotion);
+    //enemyShip->setSpeed(minSpeed*level);
+    //enemyShip->setTrigger(60);
+    enemyShip->setCannon(enemyCannon);
+    enemyShip->setScale(0.2+(0.05*level));
+    return enemyShip;
+
+}
 
 
+
+Enemy *createBomber(int level)
+{
+    //create texture
+    //create motion
+    //motion things
+
+
+}
+
+Enemy *createTower(int level)
+{
+
+}
+
+Enemy *createMissileTower(int level)
+{
+
+}
+
+Enemy *createKamikazeJet(int level)
+{
+
+}
+
+Enemy *createJet(int level, std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
+{
+
+}
+
+}//endNameSpace

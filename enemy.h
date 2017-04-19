@@ -40,7 +40,8 @@ protected:
 
 namespace EnemyFactory {
 
-    Enemy *createJet(int level);
+    Enemy *createEnemy(int level,int speed, sf::Texture texture,Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList);
+    Enemy *createJet(int level, std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList);
     Enemy *createBomber(int level);
     Enemy *createTower(int level);
     Enemy *createMissileTower(int level);
