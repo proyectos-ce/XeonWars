@@ -237,13 +237,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
         if(shootClock.getElapsedTime().asMilliseconds()>500) {
             ownSpaceShip.score.add_score(1);
             shootClock.restart().asMilliseconds();
-
-        updateAll(window);
-        if(collisionManager.checkCollisions()){
-            eraseAll();
-            return 2;
-
         }
+
         window.display();
 
     }

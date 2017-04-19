@@ -52,13 +52,10 @@ int main(){
             game->pauseGame();
         if (screen == 0) {
             Game* game = new (gameMemory) Game();
-            std::cout << &game << " creado" << std::endl;
         }
         screen = screens[screen]->run(window, pauseTexture);
     }
 
-
-    delete(gameMemory);
 
     return EXIT_SUCCESS;
 
