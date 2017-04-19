@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 
 set(SOURCE_FILES main.cpp Background.h Background.cpp MainSpaceShip.h MainSpaceShip.cpp List.h Node.h List.cpp Node.cpp Game.h Game.cpp Collision.cpp Collision.h Queue.cpp Queue.h Screen.h Screens.h Menu.cpp Menu.h Utils.cpp Utils.h powerUp.h enemy.h enemy.cpp  entity.h entity.cpp motion.h motion.cpp
-     bullet.h bullet.cpp cannon.h cannon.cpp collisionmanager.h collisionmanager.cpp ScoreManager.cpp ScoreManager.h BossManager.cpp BossManager.h GameOverScreen.cpp GameOverScreen.h PauseScreen.cpp PauseScreen.h)
+     bullet.h bullet.cpp cannon.h cannon.cpp collisionmanager.h collisionmanager.cpp ScoreManager.cpp ScoreManager.h BossManager.cpp BossManager.h GameOverScreen.cpp GameOverScreen.h PauseScreen.cpp PauseScreen.h enemyReader.h)
 
 set(EXECUTABLE_NAME "XeonWars")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
