@@ -9,7 +9,6 @@ MainSpaceShip::MainSpaceShip() {
     lifes = 3;
     scoreForLifes = 0;
     globalScore = 0;
-    shieldActivated = false;
 
     TOwnSpaceShip.loadFromFile("Resources/PlayerShip.png");
     TOwnSpaceShip.setSmooth(true);
@@ -54,14 +53,9 @@ MainSpaceShip::MainSpaceShip() {
     shipCannon->setBulletTextureFilename("Resources/Bullets.png");
 
     missileCannon = CannonFactory::createSprayCannon(10,7);
-
     missileCannon->setOwnerSprite(&SOwnSpaceShip);
     missileCannon->setBulletDamage(30);
     missileCannon->setBulletSpeed(-6);
-
-    missiles_On=false;
-    laser_On= false;
-    missileShootCounter=0;
 
 }
 
@@ -221,15 +215,14 @@ void MainSpaceShip::usePowerUp() {
         int powerToUse = powerUpsQueue.dequeue().getType();
         if(powerToUse == 0){
             cout <<"Misiles"<<endl;
-            missiles_On=true;
-            updateEffect(2);
+            setMissiles_On(true);
         }
         else if(powerToUse == 1){
             if(!shieldActivated) {
                 shield();
             }
             cout <<"Escudo"<<endl;
-            updateEffect(1);
+
         }
         else if(powerToUse == 2){
             cout <<"Laser"<<endl;
@@ -244,13 +237,16 @@ void MainSpaceShip::usePowerUp() {
 
 void MainSpaceShip::shield() {
     if(shieldActivated == false){
-        shieldActivated = true;
+        setShieldActivated(true);
         shieldClock.restart();
         sound.setBuffer(shieldOnSound);
         cout<<"Escudo activado"<<endl;
-    }else{
-        shieldActivated =false;
+    }
+    else{
+        setShieldActivated(false);
         sound.setBuffer(shieldOffSound);
+        cout<<"Escudo desactivado"<<endl;
+
     }
     sound.play();
 }
@@ -286,6 +282,39 @@ void MainSpaceShip::setEffectSprite(const Sprite &value)
     effectSprite = value;
 }
 
+bool MainSpaceShip::getMissiles_On() const
+{
+    return missiles_On;
+}
+
+void MainSpaceShip::setMissiles_On(bool value)
+{
+    missiles_On = value;
+    if(missiles_On){
+        updateEffect(2);
+
+    }
+    else{
+        updateEffect(0);
+    }
+}
+
+bool MainSpaceShip::getShieldActivated() const
+{
+    return shieldActivated;
+}
+
+void MainSpaceShip::setShieldActivated(bool value)
+{
+    shieldActivated = value;
+    if(shieldActivated){
+        updateEffect(1);
+    }
+    else{
+        updateEffect(0);
+    }
+}
+
 void MainSpaceShip::updateTexture(int value)
 {
     
@@ -310,11 +339,14 @@ void MainSpaceShip::playerShoot() {
             missileCannon->shoot();
             sound.setBuffer(missileShootBuffer);
             cout << "disparo misil" << endl;
+            //updateEffect(0);
+
         }else{
             missiles_On= false;
             missileShootCounter=0;
             sound.setBuffer(normalShootBuffer);
             shipCannon->shoot();
+            updateEffect(0);
         }
     } else if (laser_On){
         cout << "disparo laser" << endl;
@@ -329,13 +361,20 @@ void MainSpaceShip::playerShoot() {
 }
 bool MainSpaceShip::attack(int damage)
 {
-    bool result = false;
-    lifeLevel-=damage;
     std::cout<<lifeLevel<<endl;
-    if(lifeLevel<=0){
-        lifes-=1;
-        lifeLevel=100;
-        result = true;
+    bool result = false;
+    if(shieldActivated){
+        shieldActivated=false;
+        updateEffect(0);
+    }
+    else{
+        lifeLevel-=damage;
+        if(lifeLevel<=0){
+            lifes-=1;
+            lifeLevel=100;
+            result = true;
+        }
+
     }
     return result;
 
@@ -372,6 +411,7 @@ void MainSpaceShip::checkShieldTimer() {
     if(shieldClock.getElapsedTime().asMilliseconds()>10000 && shieldActivated==true) {
         shield();
     }
+    //else()
 }
 
 int MainSpaceShip::getLifes() const {
