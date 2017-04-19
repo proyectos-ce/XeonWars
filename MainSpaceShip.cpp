@@ -43,7 +43,8 @@ MainSpaceShip::MainSpaceShip() {
     powerUpsQueue.enqueue(p4);
 
 
-
+    shipCannonTexture.loadFromFile("Resources/Bullets.png");
+    missileCannonTexture.loadFromFile("Resources/Missiles.png");
 
     shipCannon = CannonFactory::createSprayCannon(3,1);
 
@@ -51,14 +52,16 @@ MainSpaceShip::MainSpaceShip() {
     shipCannon->setBulletDamage(14);
     shipCannon->setBulletSpeed(8);
     shipCannon->setReverseDirection(1);
-    shipCannon->setBulletTextureFilename("Resources/Bullets.png");
+    shipCannon->setBulletTexture(&shipCannonTexture);
+    //shipCannon->setBulletTextureFilename("Resources/Bullets.png");
 
     missileCannon = CannonFactory::createSprayCannon(10,7);
     missileCannon->setOwnerSprite(&SOwnSpaceShip);
     missileCannon->setBulletDamage(30);
     missileCannon->setBulletSpeed(6);
     missileCannon->setReverseDirection(true);
-    missileCannon->setBulletTextureFilename("Resources/Missiles.png");
+    missileCannon->setBulletTexture(&missileCannonTexture);
+    //missileCannon->setBulletTextureFilename("Resources/Missiles.png");
     //missileCannon->setBulletTextureFilename("Resources/Bullets.png");
 }
 
