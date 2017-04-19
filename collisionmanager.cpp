@@ -25,7 +25,9 @@ bool CollisionManager::checkCollisions()
             collisionSound.play();
             deleteEnemy(enemyList,i);
             i--;
+            if(playerShip->attack(1000)){
             return true;
+            }
         }
 
         else{
@@ -68,14 +70,11 @@ bool CollisionManager::checkCollisions()
             //playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
             if(playerShip->attack(enemyBulletList->operator[](i)->getDamage())){
             //if(playerShip->getLifeLevel() <=0){
-                if(playerShip->getLifes() <=0){
+                //if(playerShip->getLifes() <=0){
                     collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
                     collisionSound.play();
                     return true;
-                }else{
-                    //playerShip->setLifes(playerShip->getLifes()-1);
-                    //playerShip->setLifeLevel(100);
-                }
+                //}
             }
 
             i--;

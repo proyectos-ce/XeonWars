@@ -214,18 +214,18 @@ void MainSpaceShip::usePowerUp() {
     if(!powerUpsQueue.isEmpty()) {
         int powerToUse = powerUpsQueue.dequeue().getType();
         if(powerToUse == 0){
-            cout <<"Misiles"<<endl;
+            //cout <<"Misiles"<<endl;
             setMissiles_On(true);
         }
         else if(powerToUse == 1){
             if(!shieldActivated) {
                 shield();
             }
-            cout <<"Escudo"<<endl;
+            //cout <<"Escudo"<<endl;
 
         }
         else if(powerToUse == 2){
-            cout <<"Laser"<<endl;
+            //cout <<"Laser"<<endl;
             laser_On;            
         }
     }else{
@@ -240,12 +240,12 @@ void MainSpaceShip::shield() {
         setShieldActivated(true);
         shieldClock.restart();
         sound.setBuffer(shieldOnSound);
-        cout<<"Escudo activado"<<endl;
+        //cout<<"Escudo activado"<<endl;
     }
     else{
         setShieldActivated(false);
         sound.setBuffer(shieldOffSound);
-        cout<<"Escudo desactivado"<<endl;
+        //cout<<"Escudo desactivado"<<endl;
 
     }
     sound.play();
@@ -338,7 +338,7 @@ void MainSpaceShip::playerShoot() {
             missileShootCounter++;
             missileCannon->shoot();
             sound.setBuffer(missileShootBuffer);
-            cout << "disparo misil" << endl;
+            //cout << "disparo misil" << endl;
             //updateEffect(0);
 
         }else{
@@ -355,7 +355,7 @@ void MainSpaceShip::playerShoot() {
         shipCannon->shoot();
         sound.setBuffer(normalShootBuffer);
         //std::cout<< shipCannon->getBulletDamage()<<endl;
-        cout << "disparo simple" << endl;
+        //cout << "disparo simple" << endl;
     }
     sound.play();
 }
@@ -372,7 +372,9 @@ bool MainSpaceShip::attack(int damage)
         if(lifeLevel<=0){
             lifes-=1;
             lifeLevel=100;
+            if(lifes<=0){
             result = true;
+            }
         }
 
     }
