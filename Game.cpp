@@ -140,7 +140,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     Enemy *enemyShip;
     for (int i = 1; i < 5; ++i) {
         //Enemy *newEnemy = EnemyFactory::createJet(i,&enemyList,&enemyBulletList);
-        Enemy *newEnemy = EnemyFactory::createBomber(i,&enemyList,&enemyBulletList);
+        Enemy *newEnemy = EnemyFactory::createJet(i,&enemyList,&enemyBulletList);
         newEnemy->setCenterPosition(sf::Vector2f(200*i,50));
         /*
         enemyShipMotion = MotionFactory::createSimpleMotion();
