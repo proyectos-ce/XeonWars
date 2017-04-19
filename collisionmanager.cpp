@@ -64,15 +64,17 @@ bool CollisionManager::checkCollisions()
 
             deleteBullet(enemyBulletList, i);
             //delete bullet
-            playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
-            if(playerShip->getLifeLevel() <=0){
+            //playerShip->attack(enemyBulletList->operator[](i)->getDamage());
+            //playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
+            if(playerShip->attack(enemyBulletList->operator[](i)->getDamage())){
+            //if(playerShip->getLifeLevel() <=0){
                 if(playerShip->getLifes() <=0){
                     collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
                     collisionSound.play();
                     return true;
                 }else{
-                    playerShip->setLifes(playerShip->getLifes()-1);
-                    playerShip->setLifeLevel(100);
+                    //playerShip->setLifes(playerShip->getLifes()-1);
+                    //playerShip->setLifeLevel(100);
                 }
             }
 

@@ -222,12 +222,14 @@ void MainSpaceShip::usePowerUp() {
         if(powerToUse == 0){
             cout <<"Misiles"<<endl;
             missiles_On=true;
-            updateEffect(1);
+            updateEffect(2);
         }
         else if(powerToUse == 1){
-            if(!shieldActivated) shield();
+            if(!shieldActivated) {
+                shield();
+            }
             cout <<"Escudo"<<endl;
-            updateEffect(2);
+            updateEffect(1);
         }
         else if(powerToUse == 2){
             cout <<"Laser"<<endl;
@@ -327,6 +329,15 @@ void MainSpaceShip::playerShoot() {
 }
 bool MainSpaceShip::attack(int damage)
 {
+    bool result = false;
+    lifeLevel-=damage;
+    std::cout<<lifeLevel<<endl;
+    if(lifeLevel<=0){
+        lifes-=1;
+        lifeLevel=100;
+        result = true;
+    }
+    return result;
 
 }
 

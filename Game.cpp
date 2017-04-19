@@ -89,7 +89,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
     ownSpaceShip.setbulletList(&playerbulletList);
     Motion *enemyShipMotion = MotionFactory::createLinearMotion(45);
     Cannon *enemyShipCannon = CannonFactory::createSimpleCannon();
-    enemyShipTexture.loadFromFile("Resources/MissileTower.png");
+    //enemyShipTexture.loadFromFile("Resources/MissileTower.png");
+    enemyShipTexture.loadFromFile("Resources/Boss1.png");
 
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
@@ -103,12 +104,12 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     Enemy *enemyShip2= new Enemy(enemyShipTexture, &enemyList, &enemyBulletList);
     enemyShipMotion = MotionFactory::createSimpleMotion();
-    enemyShip2->setTexturesAmount(4);
+    enemyShip2->setTexturesAmount(1);
     enemyShip2->setMotion(enemyShipMotion);
     enemyShip2->setSpeed(0);
 
-    enemyShip2->setPosition(sf::Vector2f(100,0));
-    enemyShip2->setTrigger(10);
+    enemyShip2->setPosition(sf::Vector2f(500,0));
+    enemyShip2->setTrigger(80);
 
     enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
     enemyShipCannon->setBulletDamage(3);
@@ -117,7 +118,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShip2->setCannon(enemyShipCannon);
 
 
-    enemyShip2->setScale(0.2);
+    enemyShip2->setScale(0.3);
 
 
 
