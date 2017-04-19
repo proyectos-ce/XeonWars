@@ -49,14 +49,14 @@ int Game::run(RenderWindow &window, Texture &tex) {
     //enemyShipMotion->setReverseDirection(true);
     enemyShip2->setTexturesAmount(4);
     enemyShip2->setMotion(enemyShipMotion);
-    enemyShip2->setSpeed(2);
+    enemyShip2->setSpeed(0);
     enemyShip2->setPosition(sf::Vector2f(100,0));
-    enemyShip2->setTrigger(40);
+    enemyShip2->setTrigger(1);
 
     enemyShipCannon = CannonFactory::createFollowerCannon(enemyShip2->getSpriteReference(),ownSpaceShip.getSpriteReference());
     enemyShipCannon->setBulletDamage(30);
     enemyShipCannon->setBulletSpeed(5);
-    enemyShipCannon->setBulletTextureFilename("Resources/FollowerBullet.png");
+    enemyShipCannon->setBulletTextureFilename("Resources/Bomber.png");
     enemyShip2->setCannon(enemyShipCannon);
 
     enemyShip2->setScale(0.2);
