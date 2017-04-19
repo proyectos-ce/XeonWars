@@ -140,24 +140,41 @@ Definido por el estudiante
 
 namespace EnemyFactory {
 
-Enemy *createEnemy(int level, sf::Texture texture, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
+Enemy *createEnemy(int level, std::string textureFilename, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
 {
-    //enemyCannon->setBulletDamage(10);
-    //enemyCannon->setBulletSpeed(5);
-    //texture.loadFromFile("Resources/MissileTower.png");
-    Enemy *enemyShip;
-    enemyShip = new Enemy(texture, enemyList, bulletList);
-    enemyShip->setTexturesAmount(4);
+
+    sf::Texture texture;
+    texture.loadFromFile(textureFilename);
+
+    Enemy *enemyShip = new Enemy(texture, enemyList, bulletList);
     enemyShip->updateTexture(level);
     enemyShip->setMotion(enemyMotion);
-    //enemyShip->setSpeed(minSpeed*level);
-    //enemyShip->setTrigger(60);
     enemyShip->setCannon(enemyCannon);
-    enemyShip->setScale(0.2+(0.05*level));
     return enemyShip;
 
 }
 
+Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
+{
+    Motion *enemyMotion = MotionFactory::createLinearMotion(45);
+
+
+
+    Cannon *enemyCannon = CannonFactory::createSimpleCannon();
+    enemyCannon->setBulletDamage(10*level);
+    enemyCannon->setBulletSpeed(5);
+
+    std::string texture = "Resources/Jet.png";
+    Enemy *newEnemy = createEnemy(level,  texture,  enemyMotion, enemyList,  enemyCannon, bulletList);
+
+    newEnemy->setTexturesAmount(4);
+    newEnemy->setScale(0.1+(0.01*level));
+    //
+    newEnemy->setSpeed(2);
+    newEnemy->setTrigger(20);
+    return newEnemy;
+
+}
 
 
 Enemy *createBomber(int level)
@@ -184,9 +201,6 @@ Enemy *createKamikazeJet(int level)
 
 }
 
-Enemy *createJet(int level, std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
-{
 
-}
 
 }//endNameSpace

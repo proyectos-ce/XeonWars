@@ -24,7 +24,8 @@ public:
     void setTexturesAmount(int value);
     float getSpeed() const;
     void setSpeed(float value);
-    void setPosition(sf::Vector2f postion);
+    void setPosition(sf::Vector2f position);
+    void setCenterPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
     sf::Vector2f getCenterPosition();
     void setScale(float scale);

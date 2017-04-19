@@ -45,6 +45,7 @@ protected:
     sf::Vector2f getCenterPosition();
     bool reverseDirection=false;
     int getDirection();
+    //sf::Vector2f ;
 
 
 };

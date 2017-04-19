@@ -22,9 +22,9 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
     bulletMotion->setReverseDirection(reverseDirection);
     Bullet *newBullet = new Bullet(bulletTexture, bulletMotion, bulletDamage, speed);
     newBullet->setTexturesAmount(texturesAmount);
-    newBullet->setPosition(getCenterPosition());
     //BulletList->size();
     newBullet->setScale(0.2);
+    newBullet->setCenterPosition(getCenterPosition());
     newBullet->rotate(angle*getDirection()+(180*reverseDirection));
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;

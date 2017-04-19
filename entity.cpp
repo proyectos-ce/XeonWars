@@ -115,9 +115,18 @@ void Entity::setSpeed(float value)
     speed = value;
 }
 
-void Entity::setPosition(sf::Vector2f postion)
+void Entity::setPosition(sf::Vector2f position)
 {
-    sprite.setPosition(postion);
+    sprite.setPosition(position);
+}
+
+void Entity::setCenterPosition(sf::Vector2f position)
+{
+    sf::Vector2f centerPos;
+    centerPos.x = sprite.getGlobalBounds().width/2+position.x;
+    centerPos.y = sprite.getGlobalBounds().height/2+position.y;
+    sprite.setPosition(centerPos);
+
 }
 
 sf::Vector2f Entity::getPosition()

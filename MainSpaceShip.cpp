@@ -56,8 +56,10 @@ MainSpaceShip::MainSpaceShip() {
     missileCannon = CannonFactory::createSprayCannon(10,7);
     missileCannon->setOwnerSprite(&SOwnSpaceShip);
     missileCannon->setBulletDamage(30);
-    missileCannon->setBulletSpeed(-6);
-
+    missileCannon->setBulletSpeed(6);
+    missileCannon->setReverseDirection(true);
+    missileCannon->setBulletTextureFilename("Resources/Missiles.png");
+    //missileCannon->setBulletTextureFilename("Resources/Bullets.png");
 }
 
 

@@ -132,9 +132,13 @@ int Game::run(RenderWindow &window, Texture &tex) {
     enemyShipCannon = CannonFactory::createSprayCannon(2,3);
     enemyShipCannon->setBulletDamage(30);
     enemyShipCannon->setBulletSpeed(3);
-    enemyShipTexture.loadFromFile("Resources/MissileTower.png");
+    //enemyShipTexture.loadFromFile("Resources/MissileTower.png");
+    enemyShipTexture.loadFromFile("Resources/enemy3.png");
     Enemy *enemyShip;
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 5; ++i) {
+        Enemy *newEnemy = EnemyFactory::createJet(1,&enemyList,&enemyBulletList);
+        newEnemy->setCenterPosition(sf::Vector2f(300*i,300));
+        /*
         enemyShipMotion = MotionFactory::createSimpleMotion();
         enemyShipCannon = CannonFactory::createSimpleCannon();
         enemyShipCannon->setBulletDamage(10);
@@ -148,7 +152,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
         enemyShip->setPosition(sf::Vector2f(300*i,0));
         enemyShip->setTrigger(60);
         enemyShip->setCannon(enemyShipCannon);
-        enemyShip->setScale(0.2);
+        enemyShip->setScale(0.1+(0.01*i));
+        */
     }
 
 
