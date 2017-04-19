@@ -102,7 +102,7 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
                 SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
                 isWhite = false;
             } else {
-                SOwnSpaceShip.setColor(sf::Color(255,255,255,0));
+                SOwnSpaceShip.setColor(sf::Color(200,50,0,255));
                 isWhite = true;
             }
             blinkAnimationCounter--;
@@ -216,6 +216,7 @@ void MainSpaceShip::render(RenderWindow &window) {
 }
 
 void MainSpaceShip::usePowerUp() {
+    updateEffect(0);
     if(!powerUpsQueue.isEmpty()) {
         int powerToUse = powerUpsQueue.dequeue().getType();
         if(powerToUse == 0){
@@ -230,7 +231,7 @@ void MainSpaceShip::usePowerUp() {
         }
         else if(powerToUse == 2){
             cout <<"Laser"<<endl;
-            laser_On;
+            laser_On;            
         }
     }else{
         cout <<"No hay power ups"<<endl;
