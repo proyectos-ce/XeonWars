@@ -4,14 +4,14 @@
 #include <iostream>
 #include "Screens.h"
 #include <time.h>
-
+#include "enemyReader.h"
 
 
 using namespace sf;
 
 
 int main(){
-
+/*
     std::vector<Screen*> screens;
     int screen = 0;
 
@@ -55,8 +55,10 @@ int main(){
         }
         screen = screens[screen]->run(window, pauseTexture);
     }
+*/
 
-
+    enemyReader e;
+    e.readEnemyFile();
     return EXIT_SUCCESS;
 
 }

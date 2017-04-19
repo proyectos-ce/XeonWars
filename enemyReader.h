@@ -8,7 +8,8 @@
 
 #include <fstream>
 #include <iostream>
-
+#include <vector>
+#include "enemyParameters.h"
 
 
 
@@ -20,10 +21,11 @@ private:
 public:
     enemyReader();
     int getCurrentLevel();
-
+    std::vector<enemyParameters> enemyParametersVector;
 
     void setCurrentLevel(int numLevel);
     void readEnemyFile();
+
 };
 
 
