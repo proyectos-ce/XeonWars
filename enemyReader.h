@@ -5,17 +5,25 @@
 #ifndef XEONWARS_ENEMYREADER_H
 #define XEONWARS_ENEMYREADER_H
 
-#include <SFML/System/Clock.hpp>
-using namespace sf;
+
+#include <fstream>
+#include <iostream>
+
+
 
 
 class enemyReader{
 private:
     int currentLevel;
     int quantityOfEnemiesToRead;
-    const levelTime;
-    Clock levelClock;
 
+public:
+    enemyReader();
+    int getCurrentLevel();
+
+
+    void setCurrentLevel(int numLevel);
+    void readEnemyFile();
 };
 
 

@@ -1,0 +1,4 @@
+nivel/tipo/ubicaciónX/ubicacionY/movimiento
+1/bomber/450/200/100
+2/bomber/300/500/200
+
