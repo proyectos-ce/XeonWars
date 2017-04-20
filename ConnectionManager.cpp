@@ -4,85 +4,46 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <zconf.h>
 #include "ConnectionManager.h"
-#define CLIENTID "XeonWars"
-#define QOS 2
 
-//ConnectionManager* ConnectionManager::getInstance() {
-//    if (instance == NULL){
-//        instance = new ConnectionManager;
-//    }
-//    return instance;
 
-//}
-
-void ConnectionManager::receiveMessage() {
-
+void connect_callback(struct mosquitto *mosq, void *obj, int result)
+{
+    printf("connect callback, rc=%d\n", result);
 }
 
-volatile MQTTClient_deliveryToken deliveredtoken;
-
-void delivered(void *context, MQTTClient_deliveryToken dt)
+void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message)
 {
-    printf("Message with token value %d delivery confirmed\n", dt);
-    deliveredtoken = dt;
-}
+    bool match = 0;
+    printf("got message '%.*s' for topic '%s'\n", message->payloadlen, (char*) message->payload, message->topic);
 
-int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
-{
-    int i;
-    char* payloadptr;
-
-    printf("Message arrived\n");
-    printf("     topic: %s\n", topicName);
-    printf("   message: ");
-
-    payloadptr = (char*) message->payload;
-    for(i=0; i<message->payloadlen; i++)
-    {
-        putchar(*payloadptr++);
+    mosquitto_topic_matches_sub("/XeonDataFrom/Phone", message->topic, &match);
+    if (match) {
+        printf("got message for ADC topic\n");
     }
-    putchar('\n');
-    MQTTClient_freeMessage(&message);
-    MQTTClient_free(topicName);
-    return 1;
-}
 
-void connlost(void *context, char *cause)
-{
-    printf("\nConnection lost\n");
-    printf("     cause: %s\n", cause);
 }
 
 ConnectionManager::ConnectionManager() {
+    struct mosquitto *mosq;
 
-    gameClient = new MQTTClient();
-    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
-    int rc;
-    int ch;
+    mosquitto_lib_init();
 
-    MQTTClient_create(gameClient, "tcp://iot.eclipse.org:1883", CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
-    conn_opts.keepAliveInterval = 20;
-    conn_opts.cleansession = 1;
+    char clientid[9] = "XeonWars";
 
-    MQTTClient_setCallbacks(gameClient, NULL, connlost, msgarrvd, delivered);
+    memset(clientid, 0, 24);
+    snprintf(clientid, 23, "mysql_log_%d", getpid());
+    mosq = mosquitto_new(clientid, true, 0);
 
-    if ((rc = MQTTClient_connect(gameClient, &conn_opts)) != MQTTCLIENT_SUCCESS)
-    {
-        printf("Failed to connect, return code %d\n", rc);
-        exit(-1);
+    if(mosq) {
+        mosquitto_connect_callback_set(mosq, connect_callback);
+        mosquitto_message_callback_set(mosq, message_callback);
+
+        mosquitto_connect(mosq, mqtt_host, mqtt_port, 60);
+
+        mosquitto_subscribe(mosq, NULL, "/XeonDataFrom/Phone", 0);
+
+        mosquitto_loop_forever(mosq, -1, 1);
     }
-    printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n Press Q<Enter> to quit\n\n", "/XeonDataFrom/Phone", CLIENTID, QOS);
-    MQTTClient_subscribe(gameClient, "/XeonDataFrom/Phone", QOS);
-
-    do
-    {
-        ch = getchar();
-    } while(ch!='Q' && ch != 'q');
-
-    MQTTClient_disconnect(gameClient, 10000);
-    MQTTClient_destroy(gameClient);
-    std::cout << rc << std::endl;
 }
-
-
