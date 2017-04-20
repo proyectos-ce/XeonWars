@@ -218,24 +218,25 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
         clock.restart().asMilliseconds();
 
-        ownSpaceShip.score.BossTimeCheck();
+        score.BossTimeCheck();
 
-        if(ownSpaceShip.score.isBossTime()){
-            if(ownSpaceShip.score.getcreateBoss()){
+        if(score.isBossTime()){
+            if(score.getcreateBoss()){
                 cout << "viene el boss" << endl;
-                ownSpaceShip.score.setBossOn();
-                ownSpaceShip.score.createbossOff();
+                Boss.BossInit(score.getLevel(),&enemyList,&enemyBulletList);
+                score.createbossOff();
             }
-            ownSpaceShip.score.Boss.lifeRender(window);
-            if(ownSpaceShip.score.Boss.isdead()){
-                ownSpaceShip.score.BossTime=false;
-                ownSpaceShip.score.nextlevelReached();
+            Boss.life_refresh();
+            Boss.lifeRender(window);
+            if(Boss.isdead()){
+                score.BossTime=false;
+                score.nextlevelReached();
             }
         }
 
-        ownSpaceShip.score.scoreRender(window);
+        score.scoreRender(window);
         if(scoreClock.getElapsedTime().asMilliseconds()>500) {
-            ownSpaceShip.score.add_score(1);
+            score.add_score(1);
             scoreClock.restart().asMilliseconds();
         }
 

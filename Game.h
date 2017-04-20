@@ -29,19 +29,20 @@ public:
     int run(RenderWindow &window, Texture &tex);
     void pauseGame();
 private:
-    int score = 0;
     Clock clock;
     Clock shootClock;
     Clock scoreClock;
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
+    ScoreManager score;
 
     bool running = true;
     Time time;
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
+    BossManager Boss;
     void updateAll(RenderWindow &window);
     void eraseAll();
 

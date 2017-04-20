@@ -310,7 +310,6 @@ void MainSpaceShip::playerShoot() {
             missileShootCounter++;
             missileCannon->shoot();
             sound.setBuffer(missileShootBuffer);
-            cout << "disparo misil" << endl;
         }else{
             missiles_On= false;
             missileShootCounter=0;
@@ -318,13 +317,11 @@ void MainSpaceShip::playerShoot() {
             shipCannon->shoot();
         }
     } else if (laser_On){
-        cout << "disparo laser" << endl;
     } else {
 
         shipCannon->shoot();
         sound.setBuffer(normalShootBuffer);
         //std::cout<< shipCannon->getBulletDamage()<<endl;
-        cout << "disparo simple" << endl;
     }
     sound.play();
 }

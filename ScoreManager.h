@@ -14,7 +14,6 @@
 class ScoreManager {
     public:
     ScoreManager();
-    BossManager Boss;
     float get_score();
     void add_score(int);
     bool isBossTime();

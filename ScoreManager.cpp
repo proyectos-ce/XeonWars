@@ -4,6 +4,7 @@
 
 
 #include "ScoreManager.h"
+#include "Game.h"
 #include <iostream>
 using namespace std;
 
@@ -54,7 +55,7 @@ void ScoreManager::BossTimeCheck(){
     }
 }
 void ScoreManager::setBossOn(){
-    Boss.BossInit(getLevel());
+    //Boss.BossInit(getLevel());
 }
 int ScoreManager::getLevel() {
     return currentLevel;

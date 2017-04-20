@@ -9,6 +9,7 @@
 #include "BossManager.h"
 using namespace std;
 BossManager::BossManager(){
+
     if (!font.loadFromFile("Resources/menu/8bit.ttf"))
     {
         cout << "error with the font" << endl;
@@ -30,9 +31,9 @@ BossManager::BossManager(){
     sprite.setScale(0.125,0.125);
     sprite.setPosition(950,23);
 };
-void BossManager::BossInit(int level) {
+void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector<Bullet *> *enemyBulletList) {
     BossLevel=level;
-    Bosslife=level*100;
+    Bosslife=level*5000;
     initialBosslife=Bosslife;
 
 
@@ -46,16 +47,27 @@ void BossManager::BossInit(int level) {
     BossCannon->setBulletDamage(30);
     BossCannon->setBulletSpeed(3);
     Enemy *Boss;
-//
-//    Boss = new Enemy(BossTexture, &enemyList, &enemyBulletList);
-//    Boss->setTexturesAmount(4);
-//    Boss->updateTexture(4);
-//    Boss->setMotion(BossMotion);
-//    Boss->setSpeed(1);
-//    Boss->setPosition(sf::Vector2f(300,0));
-//    Boss->setTrigger(60);
-//    Boss->setCannon(BossCannon);
-//    Boss->setScale(0.2);
+    Boss = new Enemy(BossTexture, enemyList, enemyBulletList);
+    BossPTR= Boss;
+    Boss->setTexturesAmount(1);
+    Boss->setLife(Bosslife);
+    cout<<"BOSS set life to : "<<Boss->getLife()<<endl;
+
+    //Boss->updateTexture(4);
+    Boss->setMotion(BossMotion);
+    Boss->setSpeed(0.1);
+    Boss->setPosition(sf::Vector2f(600,-100));
+    Boss->setTrigger(60);
+    Boss->setCannon(BossCannon);
+    Boss->setScale(0.2);
+
+}
+
+void BossManager::life_refresh() {
+    if (BossPTR != NULL) {
+        Bosslife = BossPTR->getLife();
+        cout<<"BOSS: "+ to_string(Bosslife) + " / "+to_string(BossPTR->getLife())<<endl;
+    }
 
 }
 bool BossManager::isdead() {
@@ -66,9 +78,11 @@ bool BossManager::isdead() {
     return result;
 }
 void BossManager::lifeRender(sf::RenderWindow &window){
-    text.setString("Boss Lvl. "+to_string(BossLevel));
-    text2.setString("Life: "+to_string(Bosslife)+"/"+to_string(initialBosslife));
-    window.draw(text);
-    window.draw(text2);
-    window.draw(sprite);
+
+        text.setString("Boss Lvl. " + to_string(BossLevel));
+        text2.setString("Life: " + to_string(Bosslife) + "/" + to_string(initialBosslife));
+        window.draw(text);
+        window.draw(text2);
+        window.draw(sprite);
+
 }

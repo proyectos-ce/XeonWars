@@ -25,7 +25,7 @@ public:
     void playerShoot();
     void checkShieldTimer();
     void lifeManager(int);
-    ScoreManager score;
+
 
     std::vector<Bullet *> *getbulletList() const;
     void setbulletList(std::vector<Bullet *> *value);
