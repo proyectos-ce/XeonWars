@@ -193,8 +193,25 @@ Enemy *createBomber(int level, std::vector<Enemy *> *enemyList, std::vector<Bull
 
 //Torres: no se mueven, están fijas en posiciones aleatorias en la pantalla y siempre apuntan al avión del jugador. Su ataque es medio
 
-Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
+Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, int )
 {
+    level-=1;
+    Motion *enemyMotion = MotionFactory::createSinMotion(150);
+    Cannon *enemyCannon = CannonFactory::createSprayCannon(15,level+1);
+    enemyCannon->setBulletDamage(10*(level+1));
+    enemyCannon->setBulletTexture(SpritesManager::getInstance()->getEnemyBulletTexture());
+    //enemyCannon->setBulletTextureFilename("Resources/Bomber.png");
+    //enemyCannon->setBulletSpeed(4*(level+1));
+    enemyCannon->setBulletSpeed(4);
+    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getBomberTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
+    newEnemy->setTexturesAmount(4);
+    newEnemy->updateTexture(level);
+    newEnemy->setScale(0.1+(0.01*level));
+    newEnemy->setSpeed(0.6*(level+1));
+    newEnemy->setTrigger(20);
+    newEnemy->setLife(1);
+    //newEnemy->setLife(4*(level+1));
+    return newEnemy;
 
 }
 
