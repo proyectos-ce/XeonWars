@@ -12,7 +12,7 @@ ScoreManager::ScoreManager(){
     BossTime = false;
     createBoss = false;
     currentLevel = 1;
-    nextBoss_score=400;
+    nextBoss_score=50;
     if (!font.loadFromFile("Resources/menu/8bit.ttf"))
     {
         cout << "error with the font" << endl;

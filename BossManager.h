@@ -8,7 +8,7 @@
 #include "enemy.h"
 #include <SFML/Graphics/Sprite.hpp>
 
-class BossManager : public Enemy
+class BossManager
 {
 public:
     BossManager();
@@ -18,6 +18,7 @@ public:
     bool isdead();
     int initialBosslife;
     void lifeRender(sf::RenderWindow &window);
+    sf::Texture BossTexture;
 private:
     sf::Text text;
     sf::Text text2;
