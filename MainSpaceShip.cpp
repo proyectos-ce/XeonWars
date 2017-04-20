@@ -127,19 +127,6 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
             velocity.x = 0;
     }
 
-    // Modifica el vector segun las teclas presionadas
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        velocity.y -= speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        velocity.y += speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        velocity.x -= speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        velocity.x += speed;
-   // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-     //   playerShoot();
-
-
 
     // Air friction
     if (velocity.y > 0)
@@ -430,4 +417,21 @@ int MainSpaceShip::getLifes() const {
 void MainSpaceShip::setLifes(int numLifes){
     lifes =  numLifes;
 }
+
+void MainSpaceShip::setDirectionUp(){
+    velocity.y -= speed;
+}
+
+void MainSpaceShip::setDirectionDown(){
+    velocity.y += speed;
+}
+
+void MainSpaceShip::setDirectionLeft(){
+    velocity.x -= speed;
+}
+
+void MainSpaceShip::setDirectionRight(){
+    velocity.x += speed;
+}
+
 

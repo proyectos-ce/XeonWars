@@ -130,6 +130,17 @@ int Game::run(RenderWindow &window, Texture &tex) {
     clock.restart().asMilliseconds();
 
     while (running) {
+
+        // Modifica el vector segun las teclas presionadas
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || phoneDirection==UP)
+            ownSpaceShip.setDirectionUp();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || phoneDirection==DOWN)
+            ownSpaceShip.setDirectionDown();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || phoneDirection==LEFT)
+            ownSpaceShip.setDirectionLeft();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || phoneDirection==RIGHT)
+            ownSpaceShip.setDirectionRight();
+
         Event event;
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
@@ -144,7 +155,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 tex.loadFromImage(img);
                 eraseAll();
                 return (3);
-
 
             }
 
@@ -163,7 +173,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
                     shootClock.restart().asMilliseconds();
                 }
             }
-
         }
 
         time = clock.getElapsedTime();
@@ -211,6 +220,24 @@ int Game::run(RenderWindow &window, Texture &tex) {
     }
     eraseAll();
     return (-1);
+}
+
+void Game::setPhoneDirection(string direction) {
+    if(direction.compare("L") == 0){
+        phoneDirection = LEFT;
+    }
+    else if(direction.compare("R") ==0){
+        phoneDirection = RIGHT;
+    }
+    else if(direction.compare("U") ==0){
+        phoneDirection = UP;
+    }
+    else if(direction.compare("D") ==0){
+        phoneDirection = DOWN;
+    }
+    else if(direction.compare("C") ==0){
+        phoneDirection = CENTER;
+    }
 }
 
 
