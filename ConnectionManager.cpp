@@ -6,6 +6,8 @@
 #include <iostream>
 #include <zconf.h>
 #include "ConnectionManager.h"
+#include <mosquitto.h>
+
 
 
 void connect_callback(struct mosquitto *mosq, void *obj, int result)
