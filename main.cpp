@@ -16,7 +16,7 @@ int main(){
     int screen = 0;
 
 
-    RenderWindow window(VideoMode(1366,768), "XeonWars");
+    RenderWindow window(VideoMode(1366,768), "XeonWars", sf::Style::Titlebar | sf::Style::Close);
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
     window.setMouseCursorVisible(false);
