@@ -20,7 +20,7 @@ int main(){
     std::vector<Screen*> screens;
     int screen = 0;
 
-    ConnectionManager* myConnectionManager = new ConnectionManager();
+    //ConnectionManager* myConnectionManager = new ConnectionManager();
     RenderWindow window(VideoMode(1366,768), "XeonWars", sf::Style::Close | sf::Style::Titlebar);
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
