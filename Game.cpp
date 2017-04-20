@@ -230,7 +230,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
             Boss.lifeRender(window);
             if(Boss.isdead()){
                 score.BossTime=false;
+                cout << "boss ha muerto"<<endl;
                 score.nextlevelReached();
+                cout << "ahora esta en el nivel: "<< score.getLevel()<< endl;
+                cout << "proximo boss al score de: "<< score.nextBoss_score;
             }
         }
 

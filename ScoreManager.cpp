@@ -51,7 +51,7 @@ void ScoreManager::BossTimeCheck(){
     if (get_score()>=nextBoss_score) {
         BossTime = true;
         createBoss = true;
-        nextBoss_score += 10000;
+        nextBoss_score += 50;
     }
 }
 void ScoreManager::setBossOn(){

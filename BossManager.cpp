@@ -33,7 +33,7 @@ BossManager::BossManager(){
 };
 void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector<Bullet *> *enemyBulletList) {
     BossLevel=level;
-    Bosslife=level*5000;
+    Bosslife=level*150;
     initialBosslife=Bosslife;
 
 
@@ -57,7 +57,7 @@ void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector
     Boss->setMotion(BossMotion);
     Boss->setSpeed(0.1);
     Boss->setPosition(sf::Vector2f(600,-100));
-    Boss->setTrigger(60);
+    Boss->setTrigger(200);
     Boss->setCannon(BossCannon);
     Boss->setScale(0.2);
 
