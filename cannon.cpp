@@ -232,7 +232,6 @@ void FollowerCannon::shootBullet(int speed)
     Motion *bulletMotion = MotionFactory::createFollowerMotion(newBullet->getSpriteReference(),target);
     bulletMotion->setReverseDirection(reverseDirection);
     newBullet->setMotion(bulletMotion);
-
     newBullet->setTexturesAmount(texturesAmount);
     newBullet->setPosition(getCenterPosition());
     newBullet->setScale(1);

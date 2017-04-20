@@ -91,10 +91,7 @@ void Game::eraseAll()
 
 int Game::run(RenderWindow &window, Texture &tex) {
 
-    Texture *enemyShipTexture = new Texture ;
-    //Sprite testSprite;
-    //testSprite.setTexture(&enemyShipTexture);
-    //enemyShipTexture.loadFromFile("Resources/MissileTower.png");
+
 
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
@@ -103,7 +100,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
     collisionManager.setEnemyBulletList(&enemyBulletList);
 
 
-    //enemyShipMotion = motionFactory.createSimpleMotion();
 
     Enemy *newEnemy;
     newEnemy = EnemyFactory::createJet(2,&enemyList,&enemyBulletList);
@@ -117,7 +113,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     newEnemy = EnemyFactory::createMissileTower(2,&enemyList,&enemyBulletList, ownSpaceShip.getSpriteReference(),2);
     newEnemy->setCenterPosition(sf::Vector2f(200*4,-100));
-
 
     newEnemy = EnemyFactory::createKamikaze(2,&enemyList,&enemyBulletList, ownSpaceShip.getSpriteReference());
     newEnemy->setCenterPosition(sf::Vector2f(200*5,-100));

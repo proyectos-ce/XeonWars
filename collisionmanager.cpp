@@ -59,7 +59,8 @@ bool CollisionManager::checkCollisions()
         //player vs enemies
         if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
 
-
+            collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+            collisionSound.play();
 
             //attack player
 

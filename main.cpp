@@ -4,13 +4,15 @@
 #include <iostream>
 #include "Screens.h"
 #include <time.h>
-
+#include "enemyReader.h"
 
 
 using namespace sf;
 
 
 int main(){
+    enemyReader e;
+    e.readEnemyFile();
 
     std::vector<Screen*> screens;
     int screen = 0;
@@ -55,6 +57,7 @@ int main(){
         }
         screen = screens[screen]->run(window, pauseTexture);
     }
+
 
 
     return EXIT_SUCCESS;
