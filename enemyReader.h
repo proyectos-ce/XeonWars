@@ -9,9 +9,32 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "enemyParameters.h"
+//#include "enemyParameters.h"
 
+class enemyParameters{
+public:
+    int getLevel() const;
+    void setLevel(int value);
 
+    std::string getType() const;
+    void setType(const std::string &value);
+
+    int getXPosition() const;
+    void setXPosition(int value);
+
+    int getYPosition() const;
+    void setYPosition(int value);
+
+    float getMovement() const;
+    void setMovement(float value);
+
+private:
+    int level;
+    std::string type;
+    int xPosition;
+    int yPosition;
+    float movement;
+};
 
 class enemyReader{
 private:

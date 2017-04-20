@@ -42,9 +42,9 @@ namespace EnemyFactory {
 Enemy *createEnemy(int level, std::string textureFilename, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList);
 Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
 Enemy *createBomber(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
-Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
-Enemy *createMissileTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
-Enemy *createKamikazeJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
+Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, int backgroundSpeed=2);
+Enemy *createMissileTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, sf::Sprite *target, int backgroundSpeed=2);
+Enemy *createKamikaze(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, sf::Sprite *target);
 //Enemy *createMeteor(int level);
 }
 

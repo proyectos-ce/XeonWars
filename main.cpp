@@ -12,6 +12,10 @@ using namespace sf;
 
 int main(){
 
+    enemyReader e;
+    e.readEnemyFile();
+
+
     std::vector<Screen*> screens;
     int screen = 0;
 
@@ -57,8 +61,7 @@ int main(){
     }
 
 
-   // enemyReader e;
-    //e.readEnemyFile();
+
     return EXIT_SUCCESS;
 
 }
