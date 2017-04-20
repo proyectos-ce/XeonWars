@@ -135,11 +135,12 @@ namespace EnemyFactory {
 
 Enemy *createEnemy(int level, sf::Texture *texture, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
 {
-    Enemy *enemyShip = new Enemy(texture, enemyList, bulletList);
-    enemyShip->updateTexture(level);
-    enemyShip->setMotion(enemyMotion);
-    enemyShip->setCannon(enemyCannon);
-    return enemyShip;
+    Enemy *newEnemy = new Enemy(texture, enemyList, bulletList);
+    newEnemy->updateTexture(level);
+    newEnemy->setMotion(enemyMotion);
+    newEnemy->setCannon(enemyCannon);
+    newEnemy->setTexturesAmount(4);
+    return newEnemy;
 
 }
 //Jets: alta movilidad, ataque bajo, resistencia baja
@@ -150,11 +151,11 @@ Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet 
     Motion *enemyMotion = MotionFactory::createSimpleMotion();
     Cannon *enemyCannon = CannonFactory::createSimpleCannon();
     enemyCannon->setBulletDamage(10*(level+1));
-    enemyCannon->setBulletSpeed(4*(level+1));
-    SpritesManager *spritesManager =SpritesManager::getInstance(); //= SpritesManager.getInstance();
+    enemyCannon->setBulletTexture(SpritesManager::getInstance()->getEnemyBulletTexture());
 
-    Enemy *newEnemy = createEnemy(level,  spritesManager->getJetTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
-    newEnemy->setTexturesAmount(4);
+    enemyCannon->setBulletDamage(10*(level+1));
+    enemyCannon->setBulletSpeed(4*(level+1));
+    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getJetTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
     newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
     newEnemy->setSpeed(0.6*(level+1));
@@ -176,9 +177,7 @@ Enemy *createBomber(int level, std::vector<Enemy *> *enemyList, std::vector<Bull
     //enemyCannon->setBulletTextureFilename("Resources/Bomber.png");
     //enemyCannon->setBulletSpeed(4*(level+1));
     enemyCannon->setBulletSpeed(4);
-    SpritesManager *spritesManager; //= SpritesManager.getInstance();
-    spritesManager = SpritesManager::getInstance();
-    Enemy *newEnemy = createEnemy(level,  spritesManager->getBomberTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
+    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getBomberTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
     newEnemy->setTexturesAmount(4);
     newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
