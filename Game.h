@@ -35,7 +35,7 @@ private:
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
-    Direction phoneDirection;
+    Direction phoneDirection = CENTER;
 
     bool running = true;
     Time time;
