@@ -234,9 +234,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
         }
 
         ownSpaceShip.score.scoreRender(window);
-        if(shootClock2.getElapsedTime().asMilliseconds()>500) {
+        if(scoreClock.getElapsedTime().asMilliseconds()>500) {
             ownSpaceShip.score.add_score(1);
-            shootClock2.restart().asMilliseconds();
+            scoreClock.restart().asMilliseconds();
         }
 
         window.display();

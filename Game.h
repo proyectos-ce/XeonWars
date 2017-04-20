@@ -32,7 +32,7 @@ private:
     int score = 0;
     Clock clock;
     Clock shootClock;
-    Clock shootClock2;
+    Clock scoreClock;
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
