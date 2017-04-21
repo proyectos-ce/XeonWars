@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include "Game.h"
 
 
 #define QOS 2
@@ -21,11 +22,10 @@
 class ConnectionManager {
 
 public:
-    ConnectionManager();
-    void receiveMessage();
-
+    ConnectionManager(Game* gamecito);
+    static Game* mainGame;
+    static void setPhoneDirection(string);
 private:
-
 
 
 };

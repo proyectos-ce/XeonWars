@@ -34,7 +34,7 @@ MainSpaceShip::MainSpaceShip() {
     powerUp p1(missile);
     powerUp p2(shieldd);
     powerUp p3(missile);
-    //0powerUp p4(laser);
+    //powerUp p4(laser);
 
 
     powerUpsQueue.enqueue(p1);
@@ -203,7 +203,6 @@ void MainSpaceShip::render(RenderWindow &window) {
 }
 
 void MainSpaceShip::usePowerUp() {
-    cout <<powerUpOn<<endl;
     if(powerUpOn == false) {
         updateEffect(0);
         if (!powerUpsQueue.isEmpty()) {
@@ -240,9 +239,7 @@ void MainSpaceShip::shield() {
     else{
         setShieldActivated(false);
         sound.setBuffer(shieldOffSound);
-        cout <<"power up " <<powerUpOn<<endl;
         powerUpOn = false;
-        cout <<"power up " <<powerUpOn<<endl;
         //cout<<"Escudo desactivado"<<endl;
 
     }

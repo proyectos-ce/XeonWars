@@ -6,9 +6,12 @@
 #include <iostream>
 #include <zconf.h>
 #include "ConnectionManager.h"
+
+
 #include <mosquitto.h>
 
 
+Game* ConnectionManager::mainGame;
 
 void connect_callback(struct mosquitto *mosq, void *obj, int result)
 {
@@ -18,11 +21,21 @@ void connect_callback(struct mosquitto *mosq, void *obj, int result)
 void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message)
 {
 
-    printf("%.*s\n", message->payloadlen, (char*) message->payload);
-
+    string dir ((char*)message->payload);
+    ConnectionManager::setPhoneDirection(dir);
 }
 
-ConnectionManager::ConnectionManager() {
+
+void ConnectionManager::setPhoneDirection(string direction){
+    ConnectionManager::mainGame->setPhoneDirection(direction);
+}
+
+
+
+
+ConnectionManager::ConnectionManager(Game *gamecito) {
+    ConnectionManager::mainGame = gamecito;
+
     struct mosquitto *mosq;
 
     mosquitto_lib_init();
@@ -41,6 +54,6 @@ ConnectionManager::ConnectionManager() {
 
         mosquitto_subscribe(mosq, NULL, "/XeonDataFrom/Phone", 0);
 
-        mosquitto_loop_forever(mosq, -1, 1);
+        mosquitto_loop_start(mosq);
     }
 }

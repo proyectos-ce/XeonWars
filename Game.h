@@ -28,6 +28,7 @@ public:
     Game();
     int run(RenderWindow &window, Texture &tex);
     void pauseGame();
+    void setPhoneDirection(string direction);
 private:
     int score = 0;
     Clock clock;
@@ -45,7 +46,7 @@ private:
     std::vector<Bullet *> playerbulletList;
     void updateAll(RenderWindow &window);
     void eraseAll();
-    void setPhoneDirection(string direction);
+
 
 };
 

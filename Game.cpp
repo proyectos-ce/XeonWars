@@ -6,6 +6,7 @@
 
 
 #include "Utils.h"
+#include "ConnectionManager.h"
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;
@@ -91,6 +92,8 @@ void Game::eraseAll()
 
 int Game::run(RenderWindow &window, Texture &tex) {
 
+    Game* caca = this;
+    ConnectionManager* myConnectionManager = new ConnectionManager(caca);
 
 
     CollisionManager collisionManager;
