@@ -52,6 +52,8 @@ int main(){
     screens.push_back(&gameOverScreen);
     PauseScreen pauseScreen;
     screens.push_back(&pauseScreen);
+    OptionsScreen optionsScreen;
+    screens.push_back(&optionsScreen);
 
     Texture pauseTexture;
 

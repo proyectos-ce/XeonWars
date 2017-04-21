@@ -31,9 +31,9 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
     sf::Text copyLabel;
     int menu = 0;
 
-    if (!bgTexture.loadFromFile("Resources/menu/presentation.gif"))
+    if (!bgTexture.loadFromFile("Resources/menu/presentation.jpg"))
     {
-        std::cerr << "Error loading presentation.gif" << std::endl;
+        std::cerr << "Error loading presentation.jpg" << std::endl;
         return (-1);
     }
 
@@ -124,7 +124,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
                         if (menu == 0) {
                             return (1);
                         } if (menu == 1) {
-                            return(2);
+                            return(4);
                         } else  {
                             return (-1);
                         }

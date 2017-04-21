@@ -22,7 +22,7 @@ void Game::pauseGame() {
     std::cout << running << std::endl;
 }
 
-void Game::updateAll(RenderWindow &window)
+void Game::updateAll(RenderWindow &window, Options* gameOptions)
 {
     background.update(window, time.asMilliseconds());
     background.render(window);
@@ -68,7 +68,10 @@ void Game::updateAll(RenderWindow &window)
 
 
     stats.setString("Memoria: " + std::to_string(getCurrentRSS() / 1024 /1024) + "MB \nTiempo: " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + " S");
-    window.draw(stats);
+
+    if (gameOptions->showStats) {
+        window.draw(stats);
+    }
 
 
 
@@ -209,7 +212,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
 
 
-        updateAll(window);
+        updateAll(window, gameOptions);
         if(collisionManager.checkCollisions()){
             return 2;
         }

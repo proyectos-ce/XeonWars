@@ -13,5 +13,6 @@
 #include "Menu.h"
 #include "GameOverScreen.h"
 #include "PauseScreen.h"
+#include "OptionsScreen.h"
 
 #endif //XEONWARS_SCREENS_H

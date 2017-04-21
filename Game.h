@@ -48,7 +48,6 @@ private:
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
-    void updateAll(RenderWindow &window);
     void eraseAll();
 
     string statsTxt;
@@ -56,6 +55,7 @@ private:
     sf::Text stats;
 
 
+    void updateAll(RenderWindow &window, Options *gameOptions);
 };
 
 
