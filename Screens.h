@@ -3,7 +3,7 @@
 //
 
 #ifndef XEONWARS_SCREENS_H
-#define XEONWARS_SCREENS_
+#define XEONWARS_SCREENS_H
 
 //Basic Screen Class
 #include "Screen.h"
