@@ -26,6 +26,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     sf::Text playLabel;
     sf::Text exitLabel;
     sf::Text optionsLabel;
+    sf::Text creditsLabel;
     sf::Text continueLabel;
     sf::Text copyLabel;
     int menu = 0;
@@ -51,13 +52,18 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     playLabel.setFont(classicFont);
     playLabel.setCharacterSize(40);
     playLabel.setString("Play");
-    playLabel.setPosition({ 300.f, 350.f });
+    playLabel.setPosition({ 300.f, 300.f });
 
 
     optionsLabel.setFont(classicFont);
     optionsLabel.setCharacterSize(40);
     optionsLabel.setString("Options");
     optionsLabel.setPosition({ 300.f, 400.f });
+
+    creditsLabel.setFont(classicFont);
+    creditsLabel.setCharacterSize(40);
+    creditsLabel.setString("Credits");
+    creditsLabel.setPosition({ 300.f, 450.f });
 
 
     exitLabel.setFont(classicFont);
@@ -111,8 +117,8 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
                         break;
                     case sf::Keyboard::Down:
                         menu++;
-                        if (menu>2)
-                            menu = 2;
+                        if (menu>3)
+                            menu = 3;
                         break;
                     case sf::Keyboard::Return:
                         if (menu == 0) {
@@ -145,6 +151,13 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
             optionsLabel.setColor(sf::Color(255, 0, 0, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
+        else if (menu == 2)
+        {
+            playLabel.setColor(sf::Color(255, 255, 255, 255));
+            optionsLabel.setColor(sf::Color(255, 0, 0, 255));
+            creditsLabel.setColor(sf::Color(255, 0, 0, 255));
+            exitLabel.setColor(sf::Color(255, 255, 255, 255));
+        }
         else
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
@@ -163,6 +176,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
             window.draw(copyLabel);
             window.draw(logo);
             window.draw(optionsLabel);
+            window.draw(creditsLabel);
             window.draw(exitLabel);
         }
         window.display();
