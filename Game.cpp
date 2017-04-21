@@ -12,36 +12,42 @@ Game::Game() {
     ownSpaceShip.setbulletList(&playerbulletList);
     backgroundMusic.openFromFile("Resources/music2.ogg");
     backgroundMusic.setLoop(true);
+    backgroundMusic.setVolume(20);
+    //backgroundMusic.play();
     collisionManager.setEnemyList(&enemyList);
     collisionManager.setPlayerShip(&ownSpaceShip);
     collisionManager.setPlayerBulletList(&playerbulletList);
     collisionManager.setEnemyBulletList(&enemyBulletList);
-
+    /*
     Enemy *newEnemy;
 
-    newEnemy = EnemyFactory::createJet(2,&enemyBulletList);
+    newEnemy = EnemyFactory::createJet(2,45);
     newEnemy->setCenterPosition(sf::Vector2f(100,-100));
+    newEnemy->setBulletList(&enemyBulletList);
     enemyList.push_back(newEnemy);
 
-    newEnemy = EnemyFactory::createBomber(2,&enemyBulletList);
+    newEnemy = EnemyFactory::createBomber(2,200);
     newEnemy->setCenterPosition(sf::Vector2f(200*2,-100));
+    newEnemy->setBulletList(&enemyBulletList);
+
     enemyList.push_back(newEnemy);
 
-    newEnemy = EnemyFactory::createTower(2,&enemyBulletList, 2);
+    newEnemy = EnemyFactory::createTower(2, 2);
     newEnemy->setCenterPosition(sf::Vector2f(200*3,-100));
+    newEnemy->setBulletList(&enemyBulletList);
     enemyList.push_back(newEnemy);
 
-    newEnemy = EnemyFactory::createMissileTower(2,&enemyBulletList, ownSpaceShip.getSpriteReference(),2);
+    newEnemy = EnemyFactory::createMissileTower(2, ownSpaceShip.getSpriteReference(),2);
     newEnemy->setCenterPosition(sf::Vector2f(200*4,-100));
+    newEnemy->setBulletList(&enemyBulletList);
     enemyList.push_back(newEnemy);
 
-    newEnemy = EnemyFactory::createKamikaze(2,&enemyBulletList, ownSpaceShip.getSpriteReference());
+    newEnemy = EnemyFactory::createKamikaze(2, ownSpaceShip.getSpriteReference());
     newEnemy->setCenterPosition(sf::Vector2f(200*5,-100));
+    newEnemy->setBulletList(&enemyBulletList);
     enemyList.push_back(newEnemy);
-
-
-
-
+    */
+    enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
 }
 
 void Game::pauseGame() {
@@ -119,27 +125,21 @@ void Game::eraseAll()
 }
 
 
-
 int Game::run(RenderWindow &window, Texture &tex) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //backgroundMusic.play();
+    backgroundMusic.play();
     std::cout << running << std::endl;
 
     running = true;
     clock.restart().asMilliseconds();
+    std::cout<<"testastast"<<std::endl;
+    std::vector<Enemy *> newEnemySet = enemyReader.getNextEnemySet();
+    for (int i = 0; i < newEnemySet.size(); ++i) {
+        newEnemySet[i]->setBulletList(&enemyBulletList);
+        enemyList.push_back(newEnemySet[i]);
+        //newEnemySet[i]->setCenterPosition(sf::Vector2f(500,-100));
+    }
+
 
     while (running) {
         Event event;

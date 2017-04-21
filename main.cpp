@@ -5,14 +5,13 @@
 #include "Screens.h"
 #include <time.h>
 #include "enemyReader.h"
-
-
 using namespace sf;
 
 
 int main(){
-    enemyReader e;
-    e.readEnemyFile();
+    //EnemyReader e;
+    //e.getCurrentLevel();
+    //e.getNextEnemySet();
 
     std::vector<Screen*> screens;
     int screen = 0;

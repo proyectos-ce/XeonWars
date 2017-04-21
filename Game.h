@@ -19,6 +19,7 @@
 #include "cannon.h"
 #include "Utils.h"
 #include "collisionmanager.h"
+#include "enemyReader.h"
 
 class Game : public Screen {
 
@@ -44,6 +45,7 @@ private:
     std::vector<Bullet *> playerbulletList;
     void updateAll(RenderWindow &window);
     void eraseAll();
+    EnemyReader enemyReader;
 
 };
 

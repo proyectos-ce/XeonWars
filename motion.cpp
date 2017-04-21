@@ -41,7 +41,7 @@ bool Motion::reverseDirection() const
 
 
 
-LinearMotion::LinearMotion(double angle)
+LinearMotion::LinearMotion(float angle)
 {
     this->angle=(angle*PI/180.0);
 }
@@ -141,7 +141,7 @@ Motion *createSimpleMotion()
     return new SimpleMotion();
 }
 
-Motion *createLinearMotion(double angle)
+Motion *createLinearMotion(float angle)
 {
     return new LinearMotion(angle);
 
