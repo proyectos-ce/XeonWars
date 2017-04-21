@@ -15,13 +15,8 @@ void connect_callback(struct mosquitto *mosq, void *obj, int result)
 
 void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message)
 {
-    bool match = 0;
-    printf("got message '%.*s' for topic '%s'\n", message->payloadlen, (char*) message->payload, message->topic);
 
-    mosquitto_topic_matches_sub("/XeonDataFrom/Phone", message->topic, &match);
-    if (match) {
-        printf("got message for ADC topic\n");
-    }
+    printf("%.*s\n", message->payloadlen, (char*) message->payload);
 
 }
 
