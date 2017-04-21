@@ -91,7 +91,7 @@ void Game::eraseAll()
 
 
 int Game::run(RenderWindow &window, Texture &tex) {
-    
+
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
     collisionManager.setPlayerShip(&ownSpaceShip);

@@ -375,6 +375,7 @@ bool MainSpaceShip::attack(int damage)
         doDamageAnimation();
         if(lifeLevel<=0){
             lifes-=1;
+            powerUpsQueue.dequeueAll();
             lifeLevel=100;
             if(lifes<=0){
             result = true;

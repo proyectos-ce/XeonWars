@@ -16,6 +16,7 @@ public:
     Queue<T>();
     T dequeue();
     void enqueue(T data);
+    void dequeueAll();
     void printQueue();
     bool isEmpty();
 
