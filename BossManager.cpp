@@ -53,7 +53,6 @@ void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector
     Boss->setLife(Bosslife);
     cout<<"BOSS set life to : "<<Boss->getLife()<<endl;
 
-    //Boss->updateTexture(4);
     Boss->setMotion(BossMotion);
     Boss->setSpeed(0.1);
     Boss->setPosition(sf::Vector2f(600,-100));

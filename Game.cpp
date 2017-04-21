@@ -245,7 +245,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 cout << "proximo boss al score de: "<< score.nextBoss_score;
             }
         }
-
+    
         score.scoreRender(window);
         if(scoreClock.getElapsedTime().asMilliseconds()>500) {
             score.add_score(1);

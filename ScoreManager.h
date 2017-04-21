@@ -20,7 +20,6 @@ class ScoreManager {
     int getLevel();
     void nextlevelReached();
     void scoreRender(sf::RenderWindow &window);
-    void setBossOn();
     bool createBoss;
     bool getcreateBoss();
     void createbossOff();
