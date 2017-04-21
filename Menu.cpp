@@ -52,7 +52,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     playLabel.setFont(classicFont);
     playLabel.setCharacterSize(40);
     playLabel.setString("Play");
-    playLabel.setPosition({ 300.f, 300.f });
+    playLabel.setPosition({ 300.f, 350.f });
 
 
     optionsLabel.setFont(classicFont);
@@ -69,7 +69,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     exitLabel.setFont(classicFont);
     exitLabel.setCharacterSize(40);
     exitLabel.setString("Exit");
-    exitLabel.setPosition({ 300.f, 450.f });
+    exitLabel.setPosition({ 300.f, 500.f });
 
     logo.setFont(classicFont);
     logo.setCharacterSize(200);
@@ -143,12 +143,14 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
         {
             playLabel.setColor(sf::Color(255, 0, 0, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
         else if (menu == 1)
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 0, 0, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
         else if (menu == 2)
@@ -162,6 +164,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 0, 0, 255));
         }
 
