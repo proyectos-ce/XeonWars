@@ -236,6 +236,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
             Boss.life_refresh();
             Boss.lifeRender(window);
             if(Boss.isdead()){
+                score.add_score(1000);
                 bossMusic.stop();
                 backgroundMusic.play();
                 score.BossTime=false;
@@ -245,11 +246,16 @@ int Game::run(RenderWindow &window, Texture &tex) {
                 cout << "proximo boss al score de: "<< score.nextBoss_score;
             }
         }
-    
+
         score.scoreRender(window);
         if(scoreClock.getElapsedTime().asMilliseconds()>500) {
             score.add_score(1);
             scoreClock.restart().asMilliseconds();
+        }
+
+        if (score.checklifes %1000 >=1){
+            score.checklifes =0;
+            ownSpaceShip.addlife();
         }
 
         window.display();

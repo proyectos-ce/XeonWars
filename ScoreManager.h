@@ -26,6 +26,7 @@ class ScoreManager {
     bool BossTime;
     int nextBoss_score;
     void BossTimeCheck();
+    int checklifes;
 
 private:
     int GeneralScore;

@@ -379,4 +379,7 @@ int MainSpaceShip::getLifes() const {
 void MainSpaceShip::setLifes(int numLifes){
     lifes =  numLifes;
 }
+void MainSpaceShip::addlife() {
+    lifes+=1;
+}
 

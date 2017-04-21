@@ -37,6 +37,7 @@ public:
     int getLifes() const;
     void setLifes(int numLifes);
     void setLifeLevel(int value);
+    void addlife();
     sf::Sprite *getSpriteReference();
     Sprite getSprite() const;
     //void setSOwnSpaceShip(const Sprite &value);
@@ -84,6 +85,7 @@ private:
     int defaultTexture=1;
     void updateTexture(int value);
     void updateEffect(int value);
+
 
 
     const float speed = 6;
