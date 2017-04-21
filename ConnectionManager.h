@@ -5,7 +5,17 @@
 #ifndef XEONWARS_CONNECTIONMANAGER_H
 #define XEONWARS_CONNECTIONMANAGER_H
 
-#include "MQTTClient.h"
+#include <mosquitto.h>
+
+#include <signal.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+
+
+#define QOS 2
+#define mqtt_host "localhost"
+#define mqtt_port 1883
 
 
 class ConnectionManager {
@@ -15,7 +25,6 @@ public:
     void receiveMessage();
 
 private:
-    MQTTClient* gameClient;
 
 
 
