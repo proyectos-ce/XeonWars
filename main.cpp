@@ -6,6 +6,7 @@
 #include "ConnectionManager.h"
 #include <time.h>
 #include "enemyReader.h"
+#include "options.h"
 
 
 using namespace sf;
@@ -29,6 +30,10 @@ int main(){
     //icon.loadFromFile("Resources/menu/icon.png");
     //window.setIcon(256,256,icon.getPixelsPtr());
     //window.requestFocus();
+
+
+    Options* gameOptions = new Options();
+
 
     //Screens preparations
     Menu menu;
@@ -59,7 +64,7 @@ int main(){
         if (screen == 0) {
             Game* game = new (gameMemory) Game();
         }
-        screen = screens[screen]->run(window, pauseTexture);
+        screen = screens[screen]->run(window, pauseTexture, gameOptions);
     }
 
     return EXIT_SUCCESS;

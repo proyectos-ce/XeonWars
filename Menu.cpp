@@ -13,7 +13,7 @@ Menu::Menu()
     playing = false;
 }
 
-int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
+int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* gameOptions)
 {
     sf::Event event;
     bool running = true;

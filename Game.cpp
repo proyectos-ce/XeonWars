@@ -7,10 +7,13 @@
 
 #include "Utils.h"
 #include "ConnectionManager.h"
+#include "memory.h"
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;
     ownSpaceShip.setbulletList(&playerbulletList);
+
+    gameClock.restart().asSeconds();
 
 }
 
@@ -57,9 +60,15 @@ void Game::updateAll(RenderWindow &window)
         }
     }
 
+
+
     ownSpaceShip.update(window, time.asMilliseconds());
     ownSpaceShip.render(window);
 
+
+
+    stats.setString("Memoria: " + std::to_string(getCurrentRSS() / 1024 /1024) + "MB \nTiempo: " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + " S");
+    window.draw(stats);
 
 
 
@@ -90,7 +99,22 @@ void Game::eraseAll()
 
 
 
-int Game::run(RenderWindow &window, Texture &tex) {
+int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
+
+    sf::Font classicFont;
+
+    if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
+    {
+        std::cerr << "Error loading 8bit.ttf" << std::endl;
+        return (-1);
+    }
+
+    stats.setFont(classicFont);
+    stats.setCharacterSize(20);
+    stats.setColor(sf::Color::White);
+    stats.setPosition(25, 55 );
+
+
     
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
@@ -189,6 +213,10 @@ int Game::run(RenderWindow &window, Texture &tex) {
         if(collisionManager.checkCollisions()){
             return 2;
         }
+
+
+
+
 
 
         clock.restart().asMilliseconds();

@@ -19,6 +19,8 @@
 #include "cannon.h"
 #include "Utils.h"
 #include "collisionmanager.h"
+
+
 enum Direction {LEFT, RIGHT, UP, DOWN, CENTER};
 
 class Game : public Screen {
@@ -26,7 +28,7 @@ class Game : public Screen {
 
 public:
     Game();
-    int run(RenderWindow &window, Texture &tex);
+    int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
     void setPhoneDirection(string direction);
 private:
@@ -34,6 +36,8 @@ private:
     Clock clock;
     Clock shootClock;
     Clock scoreClock;
+    Clock gameClock;
+
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
@@ -46,6 +50,10 @@ private:
     std::vector<Bullet *> playerbulletList;
     void updateAll(RenderWindow &window);
     void eraseAll();
+
+    string statsTxt;
+    size_t currentRss;
+    sf::Text stats;
 
 
 };
