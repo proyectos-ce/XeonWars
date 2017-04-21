@@ -33,14 +33,14 @@ MainSpaceShip::MainSpaceShip() {
 
     powerUp p1(missile);
     powerUp p2(shieldd);
-    powerUp p3(laser);
-    powerUp p4(missile);
+    powerUp p3(missile);
+    //0powerUp p4(laser);
 
 
     powerUpsQueue.enqueue(p1);
     powerUpsQueue.enqueue(p2);
     powerUpsQueue.enqueue(p3);
-    powerUpsQueue.enqueue(p4);
+    //powerUpsQueue.enqueue(p4);
 
 
     shipCannonTexture.loadFromFile("Resources/Bullets.png");
@@ -203,34 +203,36 @@ void MainSpaceShip::render(RenderWindow &window) {
 }
 
 void MainSpaceShip::usePowerUp() {
-    updateEffect(0);
-    if(!powerUpsQueue.isEmpty()) {
-        int powerToUse = powerUpsQueue.dequeue().getType();
-        if(powerToUse == 0){
-            //cout <<"Misiles"<<endl;
-            setMissiles_On(true);
-        }
-        else if(powerToUse == 1){
-            if(!shieldActivated) {
-                shield();
-            }
-            //cout <<"Escudo"<<endl;
-
-        }
-        else if(powerToUse == 2){
-            //cout <<"Laser"<<endl;
-            laser_On;            
-        }
-    }else{
-        cout <<"No hay power ups"<<endl;
+    cout <<powerUpOn<<endl;
+    if(powerUpOn == false) {
         updateEffect(0);
+        if (!powerUpsQueue.isEmpty()) {
+            int powerToUse = powerUpsQueue.dequeue().getType();
+            if (powerToUse == 0) {
+                //cout <<"Misiles"<<endl;
+                setMissiles_On(true);
+            } else if (powerToUse == 1) {
+                if (!shieldActivated) {
+                    shield();
+                }
+                //cout <<"Escudo"<<endl;
 
+            } else if (powerToUse == 2) {
+                //cout <<"Laser"<<endl;
+                laser_On;
+            }
+        } else {
+            cout << "No hay power ups" << endl;
+            updateEffect(0);
+
+        }
     }
 }
 
 void MainSpaceShip::shield() {
     if(shieldActivated == false){
         setShieldActivated(true);
+        powerUpOn = true;
         shieldClock.restart();
         sound.setBuffer(shieldOnSound);
         //cout<<"Escudo activado"<<endl;
@@ -238,6 +240,9 @@ void MainSpaceShip::shield() {
     else{
         setShieldActivated(false);
         sound.setBuffer(shieldOffSound);
+        cout <<"power up " <<powerUpOn<<endl;
+        powerUpOn = false;
+        cout <<"power up " <<powerUpOn<<endl;
         //cout<<"Escudo desactivado"<<endl;
 
     }
@@ -283,12 +288,15 @@ bool MainSpaceShip::getMissiles_On() const
 void MainSpaceShip::setMissiles_On(bool value)
 {
     missiles_On = value;
+
     if(missiles_On){
+        powerUpOn = true;
         updateEffect(2);
 
     }
     else{
         updateEffect(0);
+        powerUpOn = false;
     }
 }
 
@@ -301,10 +309,13 @@ void MainSpaceShip::setShieldActivated(bool value)
 {
     shieldActivated = value;
     if(shieldActivated){
+
         updateEffect(1);
+
     }
     else{
         updateEffect(0);
+
     }
 }
 
@@ -339,6 +350,7 @@ void MainSpaceShip::playerShoot() {
             missileShootCounter=0;
             sound.setBuffer(normalShootBuffer);
             shipCannon->shoot();
+            powerUpOn= false;
             updateEffect(0);
         }
     } else if (laser_On){
@@ -358,6 +370,7 @@ bool MainSpaceShip::attack(int damage)
     bool result = false;
     if(shieldActivated){
         shieldActivated=false;
+        powerUpOn = false;
         updateEffect(0);
     }
     else{

@@ -66,6 +66,7 @@ private:
     bool laser_On= false;
     bool isWhite = false;
     bool shieldActivated = false;
+    bool powerUpOn = false;
 
     Sprite SOwnSpaceShip;
     Sprite effectSprite;
