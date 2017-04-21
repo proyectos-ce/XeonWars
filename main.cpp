@@ -34,8 +34,6 @@ int main(){
     Menu menu;
     screens.push_back(&menu);
 
-    Game game;
-
     Game* gameMemory = (Game*) malloc(sizeof(Game));
     Game* game = new (gameMemory) Game();
   
