@@ -34,6 +34,8 @@ int main(){
     Menu menu;
     screens.push_back(&menu);
     Game game;
+
+    ConnectionManager* myConnectionManager = new ConnectionManager(&game);
     screens.push_back(&game);
     GameOverScreen gameOverScreen;
     screens.push_back(&gameOverScreen);

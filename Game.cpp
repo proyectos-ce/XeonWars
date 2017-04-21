@@ -91,11 +91,7 @@ void Game::eraseAll()
 
 
 int Game::run(RenderWindow &window, Texture &tex) {
-
-    Game* caca = this;
-    ConnectionManager* myConnectionManager = new ConnectionManager(caca);
-
-
+    
     CollisionManager collisionManager;
     collisionManager.setEnemyList(&enemyList);
     collisionManager.setPlayerShip(&ownSpaceShip);
