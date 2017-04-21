@@ -16,7 +16,7 @@ int main(){
     std::vector<Screen*> screens;
     int screen = 0;
 
-    ConnectionManager* myConnectionManager = new ConnectionManager();
+    //ConnectionManager* myConnectionManager = new ConnectionManager();
     RenderWindow window(VideoMode(1366,768), "XeonWars", sf::Style::Close | sf::Style::Titlebar);
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
@@ -29,19 +29,28 @@ int main(){
     //Screens preparations
     Menu menu;
     screens.push_back(&menu);
-    Game game;
-    screens.push_back(&game);
+
+    Game* gameMemory = (Game*) malloc(sizeof(Game));
+    Game* game = new (gameMemory) Game();
+
+    screens.push_back(std::move(gameMemory));
+
     GameOverScreen gameOverScreen;
     screens.push_back(&gameOverScreen);
-
+    PauseScreen pauseScreen;
+    screens.push_back(&pauseScreen);
 
     Texture pauseTexture;
+
 
     //Main loop
     while (screen >= 0)
     {
-        if (screen == 0)
-            game.pauseGame();
+        if (screen == 3)
+            game->pauseGame();
+        if (screen == 0) {
+            Game* game = new (gameMemory) Game();
+        }
         screen = screens[screen]->run(window, pauseTexture);
     }
 
