@@ -10,6 +10,37 @@
 Game::Game() {
     cout<<"Juego Creado"<<endl;
     ownSpaceShip.setbulletList(&playerbulletList);
+    backgroundMusic.openFromFile("Resources/music2.ogg");
+    backgroundMusic.setLoop(true);
+    collisionManager.setEnemyList(&enemyList);
+    collisionManager.setPlayerShip(&ownSpaceShip);
+    collisionManager.setPlayerBulletList(&playerbulletList);
+    collisionManager.setEnemyBulletList(&enemyBulletList);
+
+    Enemy *newEnemy;
+
+    newEnemy = EnemyFactory::createJet(2,&enemyBulletList);
+    newEnemy->setCenterPosition(sf::Vector2f(100,-100));
+    enemyList.push_back(newEnemy);
+
+    newEnemy = EnemyFactory::createBomber(2,&enemyBulletList);
+    newEnemy->setCenterPosition(sf::Vector2f(200*2,-100));
+    enemyList.push_back(newEnemy);
+
+    newEnemy = EnemyFactory::createTower(2,&enemyBulletList, 2);
+    newEnemy->setCenterPosition(sf::Vector2f(200*3,-100));
+    enemyList.push_back(newEnemy);
+
+    newEnemy = EnemyFactory::createMissileTower(2,&enemyBulletList, ownSpaceShip.getSpriteReference(),2);
+    newEnemy->setCenterPosition(sf::Vector2f(200*4,-100));
+    enemyList.push_back(newEnemy);
+
+    newEnemy = EnemyFactory::createKamikaze(2,&enemyBulletList, ownSpaceShip.getSpriteReference());
+    newEnemy->setCenterPosition(sf::Vector2f(200*5,-100));
+    enemyList.push_back(newEnemy);
+
+
+
 
 }
 
@@ -93,36 +124,17 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
 
-    CollisionManager collisionManager;
-    collisionManager.setEnemyList(&enemyList);
-    collisionManager.setPlayerShip(&ownSpaceShip);
-    collisionManager.setPlayerBulletList(&playerbulletList);
-    collisionManager.setEnemyBulletList(&enemyBulletList);
-
-
-
-    Enemy *newEnemy;
-    newEnemy = EnemyFactory::createJet(2,&enemyList,&enemyBulletList);
-    newEnemy->setCenterPosition(sf::Vector2f(100,-100));
-
-    newEnemy = EnemyFactory::createBomber(2,&enemyList,&enemyBulletList);
-    newEnemy->setCenterPosition(sf::Vector2f(200*2,-100));
-
-    newEnemy = EnemyFactory::createTower(2,&enemyList,&enemyBulletList, 2);
-    newEnemy->setCenterPosition(sf::Vector2f(200*3,-100));
-
-    newEnemy = EnemyFactory::createMissileTower(2,&enemyList,&enemyBulletList, ownSpaceShip.getSpriteReference(),2);
-    newEnemy->setCenterPosition(sf::Vector2f(200*4,-100));
-
-    newEnemy = EnemyFactory::createKamikaze(2,&enemyList,&enemyBulletList, ownSpaceShip.getSpriteReference());
-    newEnemy->setCenterPosition(sf::Vector2f(200*5,-100));
 
 
 
 
 
-    backgroundMusic.openFromFile("Resources/music2.ogg");
-    backgroundMusic.setLoop(true);
+
+
+
+
+
+
     //backgroundMusic.play();
     std::cout << running << std::endl;
 
@@ -142,9 +154,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
-                eraseAll();
+                //eraseAll();
                 return (3);
-
 
             }
 

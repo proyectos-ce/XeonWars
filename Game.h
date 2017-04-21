@@ -38,6 +38,7 @@ private:
 
     bool running = true;
     Time time;
+    CollisionManager collisionManager;
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;

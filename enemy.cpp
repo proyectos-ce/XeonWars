@@ -13,11 +13,11 @@ Enemy::Enemy(sf::Texture *texture)
 
 }
 
-Enemy::Enemy(sf::Texture *texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
+Enemy::Enemy(sf::Texture *texture, std::vector<Bullet *> *bulletList)
 {
     setTexture(texture);
     setBulletList(bulletList);
-    enemyList->push_back(this);
+    //enemyList->push_back(this);
 }
 Enemy::~Enemy()
 {
@@ -133,9 +133,9 @@ namespace EnemyFactory {
 
 
 
-Enemy *createEnemy(int level, sf::Texture *texture, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
+Enemy *createEnemy(int level, sf::Texture *texture, Motion *enemyMotion, Cannon *enemyCannon, std::vector<Bullet *> *bulletList)
 {
-    Enemy *newEnemy = new Enemy(texture, enemyList, bulletList);
+    Enemy *newEnemy = new Enemy(texture, bulletList);
     newEnemy->updateTexture(level);
     if(enemyCannon!=NULL){
     newEnemy->setCannon(enemyCannon);
@@ -149,7 +149,7 @@ Enemy *createEnemy(int level, sf::Texture *texture, Motion *enemyMotion,std::vec
 }
 //Jets: alta movilidad, ataque bajo, resistencia baja
 
-Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
+Enemy *createJet(int level, std::vector<Bullet *> *bulletList)
 {
     Motion *enemyMotion = MotionFactory::createSimpleMotion();
     Cannon *enemyCannon = CannonFactory::createSimpleCannon();
@@ -158,7 +158,7 @@ Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet 
 
     enemyCannon->setBulletDamage(10*level);
     enemyCannon->setBulletSpeed(4*level);
-    Enemy *newEnemy = createEnemy(level-1,  SpritesManager::getInstance()->getJetTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
+    Enemy *newEnemy = createEnemy(level-1,  SpritesManager::getInstance()->getJetTexture(),  enemyMotion,  enemyCannon, bulletList);
     newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
     newEnemy->setSpeed(level+1);
@@ -172,7 +172,7 @@ Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet 
 }
 
 //Bombarderos: movilidad media, ataque alto y resistencia media
-Enemy *createBomber(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList)
+Enemy *createBomber(int level, std::vector<Bullet *> *bulletList)
 {
     Motion *enemyMotion = MotionFactory::createSinMotion(150);
     Cannon *enemyCannon = CannonFactory::createSprayCannon(15,level);
@@ -181,7 +181,7 @@ Enemy *createBomber(int level, std::vector<Enemy *> *enemyList, std::vector<Bull
     //enemyCannon->setBulletTextureFilename("Resources/Bomber.png");
     //enemyCannon->setBulletSpeed(4*(level+1));
     enemyCannon->setBulletSpeed(4);
-    Enemy *newEnemy = createEnemy(level-1,  SpritesManager::getInstance()->getBomberTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
+    Enemy *newEnemy = createEnemy(level-1,  SpritesManager::getInstance()->getBomberTexture(),  enemyMotion,  enemyCannon, bulletList);
     newEnemy->setTexturesAmount(4);
     newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
@@ -197,7 +197,7 @@ Enemy *createBomber(int level, std::vector<Enemy *> *enemyList, std::vector<Bull
 
 //Torres: no se mueven, están fijas en posiciones aleatorias en la pantalla y siempre apuntan al avión del jugador. Su ataque es medio
 
-Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, int backgroundSpeed)
+Enemy *createTower(int level, std::vector<Bullet *> *bulletList, int backgroundSpeed)
 {
     Motion *enemyMotion = MotionFactory::createSimpleMotion();
     Cannon *enemyCannon = CannonFactory::createSprayCannon(360/(3+level) , 3+level);
@@ -207,7 +207,7 @@ Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bulle
     //enemyCannon->setBulletSpeed(4*(level+1));
     enemyCannon->setBulletSpeed(backgroundSpeed+1+level/2);
     enemyCannon->setBulletDamage(3*level);
-    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getTowerTexture(),  enemyMotion, enemyList,  enemyCannon, bulletList);
+    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getTowerTexture(),  enemyMotion,  enemyCannon, bulletList);
     newEnemy->setTexturesAmount(4);
     newEnemy->updateTexture(level-1);
     newEnemy->setScale(0.1+(0.01*level));
@@ -220,10 +220,10 @@ Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bulle
 }
 
 //Torres de misiles: igual que las torres pero de ataque alto.
-Enemy *createMissileTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, sf::Sprite *target, int backgroundSpeed)
+Enemy *createMissileTower(int level, std::vector<Bullet *> *bulletList, sf::Sprite *target, int backgroundSpeed)
 {
     Motion *enemyMotion = MotionFactory::createSimpleMotion();
-    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getMissileTowerTexture(),  enemyMotion, enemyList,  NULL, bulletList);
+    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getMissileTowerTexture(),  enemyMotion,  NULL, bulletList);
     Cannon *enemyCannon = CannonFactory::createFollowerCannon(newEnemy->getSpriteReference(), target);
     enemyCannon->setBulletDamage(10*level);
     enemyCannon->setBulletTexture(SpritesManager::getInstance()->getFollowerBulletTexture());
@@ -240,7 +240,7 @@ Enemy *createMissileTower(int level, std::vector<Enemy *> *enemyList, std::vecto
 }
 //Jets Kamikaze: no disparan, se mueven rápido y buscan chocar el avión del jugador.
 
-Enemy *createKamikaze(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, sf::Sprite *target)
+Enemy *createKamikaze(int level, std::vector<Bullet *> *bulletList, sf::Sprite *target)
 {
     Cannon *enemyCannon = CannonFactory::createSimpleCannon();
     enemyCannon->setBulletDamage(10*level);
@@ -248,7 +248,7 @@ Enemy *createKamikaze(int level, std::vector<Enemy *> *enemyList, std::vector<Bu
     enemyCannon->setBulletSpeed(20);
     enemyCannon->setBulletDamage(3*level);
 
-    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getKamikazeTexture(),  NULL, enemyList,  enemyCannon, bulletList);
+    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getKamikazeTexture(),  NULL,  enemyCannon, bulletList);
     Motion *enemyMotion = MotionFactory::createFollowerMotion(newEnemy->getSpriteReference(), target);
     newEnemy->setMotion(enemyMotion);
     newEnemy->setTexturesAmount(4);
