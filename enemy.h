@@ -34,7 +34,7 @@ protected:
     int getMoves() const;
     void setMoves(int value);
     Cannon *cannon = NULL;
-    int enemy_score;
+    int enemy_score=50;
 };
 
 namespace EnemyFactory {
