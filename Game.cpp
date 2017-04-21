@@ -156,7 +156,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
     backgroundMusic.openFromFile("Resources/music2.ogg");
     backgroundMusic.setLoop(true);
-    //backgroundMusic.play();
+    backgroundMusic.play();
+
+
     std::cout << running << std::endl;
 
     running = true;
@@ -222,6 +224,11 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
         if(score.isBossTime()){
             if(score.getcreateBoss()){
+                backgroundMusic.stop();
+                bossMusic.openFromFile("Resources/BackgroundMusic.ogg");
+                bossMusic.setLoop(true);
+                bossMusic.play();
+
                 cout << "viene el boss" << endl;
                 Boss.BossInit(score.getLevel(),&enemyList,&enemyBulletList);
                 score.createbossOff();
@@ -229,6 +236,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
             Boss.life_refresh();
             Boss.lifeRender(window);
             if(Boss.isdead()){
+                bossMusic.stop();
+                backgroundMusic.play();
                 score.BossTime=false;
                 cout << "boss ha muerto"<<endl;
                 score.nextlevelReached();

@@ -39,6 +39,7 @@ bool ScoreManager::getcreateBoss() {
 void ScoreManager::createbossOff(){
     createBoss=false;
 }
+
 void ScoreManager::add_score(int score) {
     GeneralScore+=score;
 }

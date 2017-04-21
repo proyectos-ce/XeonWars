@@ -35,6 +35,7 @@ private:
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
+    Music bossMusic;
     ScoreManager score;
 
     bool running = true;
