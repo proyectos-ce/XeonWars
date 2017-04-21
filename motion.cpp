@@ -7,12 +7,12 @@ Motion::Motion()
     x=0;
 }
 
-int Motion::getX() const
+float Motion::getX() const
 {
     return x;
 }
 
-void Motion::setX(int value)
+void Motion::setX(float value)
 {
     x = value;
 }
@@ -46,7 +46,7 @@ LinearMotion::LinearMotion(double angle)
     this->angle=(angle*PI/180.0);
 }
 
-sf::Vector2f LinearMotion::getNext(int speed)
+sf::Vector2f LinearMotion::getNext(float speed)
 {
     sf::Vector2f newPos;
     newPos.x= speed*sin(angle);
@@ -62,7 +62,7 @@ SinMotion::SinMotion(int scale)
     x=0.01;
 }
 
-sf::Vector2f SinMotion::getNext(int speed)
+sf::Vector2f SinMotion::getNext(float speed)
 {
     sf::Vector2f newPos;
     double sin1 =sin((x+1)/15.0), sin2 = sin(x/15.0);
@@ -77,7 +77,7 @@ SimpleMotion::SimpleMotion()
 {
 }
 
-sf::Vector2f SimpleMotion::getNext(int speed)
+sf::Vector2f SimpleMotion::getNext(float speed)
 {
     x+=speed;
     sf::Vector2f newPos;
@@ -93,7 +93,7 @@ FollowerMotion::FollowerMotion(sf::Sprite *owner,sf::Sprite *target)
     setTarget(target);
 }
 
-sf::Vector2f FollowerMotion::getNext(int speed)
+sf::Vector2f FollowerMotion::getNext(float speed)
 {
     sf::Vector2f next(0,speed*direction);
     //std::cout<< target->getGlobalBounds().width <<std::endl;

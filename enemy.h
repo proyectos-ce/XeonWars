@@ -9,8 +9,8 @@ class Enemy : public Entity
 {
 public:
     Enemy();
-    Enemy(sf::Texture texture);
-    Enemy(sf::Texture texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
+    Enemy(sf::Texture *texture);
+    Enemy(sf::Texture *texture, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
     ~Enemy();
     std::vector<Bullet *> *getBulletList() const;
     void setBulletList(std::vector<Bullet *> *value);
@@ -39,13 +39,15 @@ protected:
 };
 
 namespace EnemyFactory {
-
-    Enemy *createJet(int level);
-    Enemy *createBomber(int level);
-    Enemy *createTower(int level);
-    Enemy *createMissileTower(int level);
-    Enemy *createKamikazeJet(int level);
-    //Enemy *createMeteor(int level);
+Enemy *createEnemy(int level, std::string textureFilename, Motion *enemyMotion,std::vector<Enemy *> *enemyList, Cannon *enemyCannon, std::vector<Bullet *> *bulletList);
+Enemy *createJet(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
+Enemy *createBomber(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList);
+Enemy *createTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, int backgroundSpeed=2);
+Enemy *createMissileTower(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, sf::Sprite *target, int backgroundSpeed=2);
+Enemy *createKamikaze(int level, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *bulletList, sf::Sprite *target);
+//Enemy *createMeteor(int level);
 }
+
+
 
 #endif // ENEMY_H

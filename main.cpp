@@ -5,7 +5,7 @@
 #include "Screens.h"
 #include "ConnectionManager.h"
 #include <time.h>
-
+#include "enemyReader.h"
 
 
 using namespace sf;
@@ -13,10 +13,14 @@ using namespace sf;
 
 int main(){
 
+    enemyReader e;
+    e.readEnemyFile();
+
+
     std::vector<Screen*> screens;
     int screen = 0;
 
-    //ConnectionManager* myConnectionManager = new ConnectionManager();
+
     RenderWindow window(VideoMode(1366,768), "XeonWars", sf::Style::Close | sf::Style::Titlebar);
     window.setView(Utils::calcView(window.getSize(), Utils::designedsize));
     window.setFramerateLimit(60);
@@ -30,10 +34,16 @@ int main(){
     Menu menu;
     screens.push_back(&menu);
 
+    Game game;
+
     Game* gameMemory = (Game*) malloc(sizeof(Game));
     Game* game = new (gameMemory) Game();
+  
+    ConnectionManager* myConnectionManager = new ConnectionManager(game);
+
 
     screens.push_back(std::move(gameMemory));
+
 
     GameOverScreen gameOverScreen;
     screens.push_back(&gameOverScreen);

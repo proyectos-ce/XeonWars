@@ -17,14 +17,12 @@ void Cannon::shoot()
 
 void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
 {
-    sf::Texture bulletTexture;
-    bulletTexture.loadFromFile(bulletTextureFilename);
     bulletMotion->setReverseDirection(reverseDirection);
     Bullet *newBullet = new Bullet(bulletTexture, bulletMotion, bulletDamage, speed);
     newBullet->setTexturesAmount(texturesAmount);
-    newBullet->setPosition(getCenterPosition());
     //BulletList->size();
     newBullet->setScale(0.2);
+    newBullet->setCenterPosition(getCenterPosition());
     newBullet->rotate(angle*getDirection()+(180*reverseDirection));
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
@@ -33,6 +31,16 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
         bulletList->push_back(newBullet);
     }
     //std::cout<<bulletList->size()<<std::endl;
+}
+
+sf::Texture *Cannon::getBulletTexture() const
+{
+    return bulletTexture;
+}
+
+void Cannon::setBulletTexture(sf::Texture *value)
+{
+    bulletTexture = value;
 }
 
 int Cannon::getTexturesAmount() const
@@ -113,15 +121,6 @@ void Cannon::setBulletSpeed(int value)
     bulletSpeed = value;
 }
 
-std::string Cannon::getBulletTextureFilename() const
-{
-    return bulletTextureFilename;
-}
-
-void Cannon::setBulletTextureFilename(const std::string &value)
-{
-    bulletTextureFilename = value;
-}
 
 SimpleCannon::SimpleCannon()
 {
@@ -227,14 +226,12 @@ void FollowerCannon::setTarget(sf::Sprite *value)
 
 void FollowerCannon::shootBullet(int speed)
 {
-    sf::Texture bulletTexture;
-    bulletTexture.loadFromFile(bulletTextureFilename);
+
     Bullet *newBullet = new Bullet(bulletTexture, NULL, bulletDamage, speed);
     //newBullet->updateTexture(1);
     Motion *bulletMotion = MotionFactory::createFollowerMotion(newBullet->getSpriteReference(),target);
     bulletMotion->setReverseDirection(reverseDirection);
     newBullet->setMotion(bulletMotion);
-
     newBullet->setTexturesAmount(texturesAmount);
     newBullet->setPosition(getCenterPosition());
     newBullet->setScale(1);
