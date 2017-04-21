@@ -192,6 +192,8 @@ int Game::run(RenderWindow &window, Texture &tex) {
         if(collisionManager.checkCollisions()){
             return 2;
         }
+        //update score         collisionManager.getLastScore();
+
 
 
         clock.restart().asMilliseconds();
