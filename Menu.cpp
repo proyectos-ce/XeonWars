@@ -156,7 +156,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
         else if (menu == 2)
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
-            optionsLabel.setColor(sf::Color(255, 0, 0, 255));
+            optionsLabel.setColor(sf::Color(255, 255, 255, 255));
             creditsLabel.setColor(sf::Color(255, 0, 0, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
