@@ -71,7 +71,6 @@ ConnectionManager *ConnectionManager::getInstance() {
 }
 
 void ConnectionManager::send(string toSend) {
-    cout << toSend << endl;
     char* cToSend = new char[toSend.length()+1];
     std::strcpy (cToSend, toSend.c_str());
     mosquitto_publish(mosq, NULL, "/XeonDataFrom/PC", toSend.length()+1, cToSend, 0, true);

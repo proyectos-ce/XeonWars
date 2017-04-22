@@ -120,6 +120,7 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
 
     checkShieldTimer();
+    checkLaserTimer();
 
     frameCounter++;
 
@@ -388,8 +389,8 @@ void MainSpaceShip::playerShoot() {
             updateEffect(0);
         }
     } else if (laser_On){
-        missileCannon->shoot();
         sound.setBuffer(missileShootBuffer);
+        missileCannon->shoot();
     } else {
 
         shipCannon->shoot();
@@ -470,7 +471,7 @@ void MainSpaceShip::checkShieldTimer() {
     }
 }
 void MainSpaceShip::checkLaserTimer() {
-    if(laserClock.getElapsedTime().asMicroseconds()>5000 && laser_On == true)
+    if(laserClock.getElapsedTime().asMilliseconds()>5000 && laser_On == true)
         laser();
 }
 
