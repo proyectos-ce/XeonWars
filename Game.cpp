@@ -39,7 +39,7 @@ Game::Game() {
     powerUpIconTexture.loadFromFile("Resources/MiniPowerUps.png");
     setUpPowerUpIcon();
     powerUpIcon.setTexture(powerUpIconTexture);
-    powerUpIcon.setPosition(30, 150);
+    powerUpIcon.setPosition(30, 170);
 
 
 
