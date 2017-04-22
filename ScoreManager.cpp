@@ -13,7 +13,7 @@ ScoreManager::ScoreManager(){
     BossTime = false;
     createBoss = false;
     currentLevel = 1;
-    nextBoss_score=100;
+    nextBoss_score=1500;
     checklifes=0;
     if (!font.loadFromFile("Resources/menu/8bit.ttf"))
     {
