@@ -313,11 +313,15 @@ void MainSpaceShip::laser(){
     //setLaser_On(true);
     if(laser_On ==false){
            laser_On=true;
+           updateEffect(3);
            powerUpOn = true;
            laserClock.restart();
        }else{
            laser_On=false;
            powerUpOn= false;
+           updateEffect(0);
+           ///updateTexture(3);
+
    }
 }
 
