@@ -41,7 +41,8 @@ private:
     Clock shootClock;
     Clock scoreClock;
     Clock gameClock;
-
+    Clock levelupClock;
+    bool levelflag;
     MainSpaceShip ownSpaceShip;
     Background background = Background(1,0.1);
     Background backstars = Background(0,0.05);
