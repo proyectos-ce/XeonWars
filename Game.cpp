@@ -20,7 +20,7 @@ Game::Game() {
     ownSpaceShip.setbulletList(&playerbulletList);
     backgroundMusic.openFromFile("Resources/TameImpala.ogg");
     backgroundMusic.setLoop(true);
-    backgroundMusic.setVolume(60);
+    backgroundMusic.setVolume(90);
     bossMusic.openFromFile("Resources/boss.ogg");
     bossMusic.setLoop(true);
     //backgroundMusic.play();
