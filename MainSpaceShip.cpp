@@ -18,10 +18,10 @@ MainSpaceShip::MainSpaceShip() {
     //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
     //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
-    SOwnSpaceShip.setPosition(550,720);
-    SOwnSpaceShip.setScale(0.4,0.4);
-    effectSprite.setPosition(550,720);
-    effectSprite.setScale(0.4,0.4);
+    SOwnSpaceShip.setPosition(550,620);
+    SOwnSpaceShip.setScale(0.25,0.25);
+    effectSprite.setPosition(550,620);
+    effectSprite.setScale(0.25,0.25);
     updateEffect(0);
 
 

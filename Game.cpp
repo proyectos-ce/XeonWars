@@ -34,6 +34,14 @@ void Game::pauseGame() {
     std::cout << running << std::endl;
 }
 
+void Game::restartGame() {
+    eraseAll();
+    gameClock.restart().asSeconds();
+    backgroundMusic.stop();
+    score.resetScore();
+
+}
+
 void Game::updateAll(RenderWindow &window, Options* gameOptions)
 {
 

@@ -32,6 +32,9 @@ public:
     int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
     void setPhoneDirection(string direction);
+
+    void restartGame();
+
 private:
     int minEnemyQuantity = 3;
     Clock clock;
@@ -65,6 +68,7 @@ private:
 
     void updateAll(RenderWindow &window, Options *gameOptions);
     void loadEnemies();
+
 };
 
 

@@ -28,13 +28,13 @@ class ScoreManager {
     void BossTimeCheck();
     int checklifes;
 
+    void resetScore();
+
 private:
     int GeneralScore;
     int currentLevel;
     sf::Text text;
     sf::Font font;
-
-
 
 
 };
