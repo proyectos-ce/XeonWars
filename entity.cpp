@@ -24,8 +24,6 @@ void Entity::animate(float time)
     if (exploding) {
         updateTexture(currentTexture+1);
 
-        std::cout << "Current texture: " << currentTexture << std::endl;
-
         if (currentTexture == 18) {
             sprite.move(0, 2000);
         }

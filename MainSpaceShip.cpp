@@ -129,8 +129,6 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
         currentExplosionTexture++;
         SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
 
-        std::cout << "CU2: " << currentExplosionTexture << std::endl;
-
         if (currentExplosionTexture == 19) {
             reset();
             if (lifes > 0) {
@@ -429,7 +427,6 @@ bool MainSpaceShip::attack(int damage)
     else{
         if (blinkAnimationCounter == 0) {
             setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
-            std::cout << "LIFELEVEL: " << lifeLevel << std::endl;
 
             if (lifes > 0) {
                 doDamageAnimation();
