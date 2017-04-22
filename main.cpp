@@ -41,7 +41,7 @@ int main(){
 
 
     Game game;
-    ConnectionManager* myConnectionManager = new ConnectionManager(&game);
+    ConnectionManager* myConnectionManager = ConnectionManager::createInstance(&game);
 
 
     screens.push_back(&game);
