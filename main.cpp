@@ -8,14 +8,14 @@
 #include "enemyReader.h"
 #include "options.h"
 
-
 using namespace sf;
 
 
 int main(){
+    //EnemyReader e;
+    //e.getCurrentLevel();
+    //e.getNextEnemySet();
 
-    enemyReader e;
-    e.readEnemyFile();
 
 
     std::vector<Screen*> screens;

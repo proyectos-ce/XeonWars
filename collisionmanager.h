@@ -26,7 +26,13 @@ public:
     std::vector<Bullet *> *getEnemyBulletList() const;
     void setEnemyBulletList(std::vector<Bullet *> *value);
 
+    int getLastScore();
+    void addLastScore(int score);
+
+    void setLastScore(int value);
+
 private:
+    int lastScore=0;
     std::vector<Enemy *> *enemyList;
     std::vector<Bullet *> *playerBulletList;
     std::vector<Bullet *> *enemyBulletList;

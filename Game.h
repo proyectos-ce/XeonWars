@@ -19,6 +19,7 @@
 #include "cannon.h"
 #include "Utils.h"
 #include "collisionmanager.h"
+#include "enemyReader.h"
 
 
 enum Direction {LEFT, RIGHT, UP, DOWN, CENTER};
@@ -45,10 +46,12 @@ private:
 
     bool running = true;
     Time time;
+    CollisionManager collisionManager;
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
     void eraseAll();
+    EnemyReader enemyReader;
 
     string statsTxt;
     size_t currentRss;
