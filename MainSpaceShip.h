@@ -25,6 +25,7 @@ public:
     void playerShoot();
     void checkShieldTimer();
     void lifeManager(int);
+    bool attack(int damage);
 
 
     std::vector<Bullet *> *getbulletList() const;
@@ -32,7 +33,6 @@ public:
 
 
     //const Sprite &getSprite();
-    bool attack(int damage);
     int getLifeLevel() const;
     int getLifes() const;
     void setLifes(int numLifes);

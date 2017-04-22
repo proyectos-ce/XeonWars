@@ -362,7 +362,7 @@ void MainSpaceShip::playerShoot() {
 }
 bool MainSpaceShip::attack(int damage)
 {
-    std::cout<<lifeLevel<<endl;
+    std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
     bool result = false;
     if(shieldActivated){
         shieldActivated=false;
