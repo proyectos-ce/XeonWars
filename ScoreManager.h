@@ -14,20 +14,19 @@
 class ScoreManager {
     public:
     ScoreManager();
-    BossManager Boss;
     float get_score();
     void add_score(int);
     bool isBossTime();
     int getLevel();
     void nextlevelReached();
     void scoreRender(sf::RenderWindow &window);
-    void setBossOn();
     bool createBoss;
     bool getcreateBoss();
     void createbossOff();
     bool BossTime;
     int nextBoss_score;
     void BossTimeCheck();
+    int checklifes;
 
 private:
     int GeneralScore;
