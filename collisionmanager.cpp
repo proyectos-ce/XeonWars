@@ -19,22 +19,22 @@ bool CollisionManager::checkCollisions()
     int i = 0, j=0;
     while(i<enemyList->size()){
         //player vs enemies
-        if(playerShip->getBlinkAnimationCounter() == 0 && !enemyList->operator[](i)->isExploding() && Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())) {
+
+        if(playerShip->getBlinkAnimationCounter() == 0 && Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())) {
             //kill player
             collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
             collisionSound.play();
 
             if (!enemyList->operator[](i)->isBoss()) {
-                //deleteEnemy(enemyList, i);
-                enemyList->operator[](i)->explode();
+                explosionList->push_back(ExplosionFactory::createSimpleExplosion(enemyList->operator[](i)->getPosition()));
+                deleteEnemy(enemyList, i);
+                //enemyList->operator[](i)->explode();
             }
 
             playerShip->loseLife();
-
-
             i--;
-            if (playerShip->attack(0)) {
-                return true;
+            if(playerShip->attack(0)){
+            return true;
             }
         }
 
@@ -48,8 +48,13 @@ bool CollisionManager::checkCollisions()
                     //std::cout<<"bala vs enemigo\n";
                     if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
                         addLastScore(enemyList->operator[](i)->getEnemy_score());
-                        //deleteEnemy(enemyList,i);
-                        enemyList->operator[](i)->explode();
+                        if(enemyList->size()%5==0){
+                        powerUpList->push_back(PowerUpFactory::createPU(enemyBulletList->size()%3, enemyList->operator[](i)->getPosition() ));
+                        }
+                        explosionList->push_back(ExplosionFactory::createSimpleExplosion(enemyList->operator[](i)->getPosition()));
+
+                        deleteEnemy(enemyList,i);
+                        //enemyList->operator[](i)->explode();
                         deleteBullet(playerBulletList, j);
                         i--;
                         break;
@@ -74,7 +79,6 @@ bool CollisionManager::checkCollisions()
 
             //attack player
 
-            deleteBullet(enemyBulletList, i);
             //delete bullet
             //playerShip->attack(enemyBulletList->operator[](i)->getDamage());
             //playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
@@ -86,11 +90,29 @@ bool CollisionManager::checkCollisions()
                     return true;
                 //}
             }
+            deleteBullet(enemyBulletList, i);
+
 
             i--;
         }
         i++;
     }
+
+    //player vs powerUps
+    i=0;
+    while(i<powerUpList->size()){
+        //player vs enemies
+        if(Collision::PixelPerfectTest(playerShip->getSprite(), powerUpList->operator[](i)->getSprite())){
+
+            //collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+            //collisionSound.play();
+            playerPowerUpsQueue->enqueue(powerUpList->operator[](i)->getPowerup());
+            deletePowerUp(powerUpList,i);
+            i--;
+        }
+        i++;
+    }
+
     return false;
 }
 MainSpaceShip *CollisionManager::getPlayerShip() const
@@ -150,6 +172,36 @@ void CollisionManager::setLastScore(int value)
     lastScore = value;
 }
 
+std::vector<FlyingPowerUp *> *CollisionManager::getPowerUpList() const
+{
+    return powerUpList;
+}
+
+void CollisionManager::setPowerUpList(std::vector<FlyingPowerUp *> *value)
+{
+    powerUpList = value;
+}
+
+std::vector<Explosion *> *CollisionManager::getExplosionList() const
+{
+    return explosionList;
+}
+
+void CollisionManager::setExplosionList(std::vector<Explosion *> *value)
+{
+    explosionList = value;
+}
+
+Queue<powerUp> *CollisionManager::getPlayerPowerUpsQueue() const
+{
+    return playerPowerUpsQueue;
+}
+
+void CollisionManager::setPlayerPowerUpsQueue(Queue<powerUp> *value)
+{
+    playerPowerUpsQueue = value;
+}
+
 void CollisionManager::deleteEnemy(std::vector<Enemy *> *list, int index)
 {
     delete (list->operator [](index));
@@ -162,3 +214,12 @@ void CollisionManager::deleteBullet(std::vector<Bullet *> *list, int index)
     list->erase(list->begin()+index);
 
 }
+
+void CollisionManager::deletePowerUp(std::vector<FlyingPowerUp *> *list, int index)
+{
+    delete (list->operator [](index));
+    list->erase(list->begin()+index);
+}
+
+
+

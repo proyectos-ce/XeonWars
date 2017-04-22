@@ -4,7 +4,8 @@
 
 #ifndef XEONWARS_ITEM_H
 #define XEONWARS_ITEM_H
-enum powerUps {missile, shieldd, laser};
+
+enum powerUps {MISSILE, SHIELD, LASER};
 
 class powerUp{
 public:

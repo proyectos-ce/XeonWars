@@ -21,13 +21,14 @@ void Entity::update(sf::RenderWindow &window, float time)
 
 void Entity::animate(float time)
 {
+    /*
     if (exploding) {
         updateTexture(currentTexture+1);
 
         if (currentTexture == 18) {
             sprite.move(0, 2000);
         }
-    }
+    }*/
 }
 
 void Entity::render(sf::RenderWindow &window)
@@ -166,18 +167,7 @@ void Entity::setScale(float scale)
 
 
 
-void Entity::explode() {
-    if (!exploding) {
-        setTexturesAmount(19);
-        setTexture(SpritesManager::getInstance()->getExplosionTexture());
-        exploding = true;
-        setScale(0.6);
-    }
-}
 
-bool Entity::isExploding() const {
-    return exploding;
-}
 
 
 SpritesManager *SpritesManager::instance =NULL;
@@ -232,7 +222,15 @@ sf::Texture *SpritesManager::getExplosionTexture() {
     return &explosionTexture;
 }
 
-
+sf::Texture *SpritesManager::getMissilePowerUpTexture() {
+    return &missilePowerUpTexture;
+}
+sf::Texture *SpritesManager::getLaserPowerUpTexture() {
+    return &laserPowerUpTexture;
+}
+sf::Texture *SpritesManager::getShieldPowerUpTexture() {
+    return &shieldPowerUpTexture;
+}
 
 SpritesManager::SpritesManager()
 {
@@ -241,7 +239,7 @@ SpritesManager::SpritesManager()
     towerTexture.loadFromFile("Resources/Tower.png");
     missileTowerTexture.loadFromFile("Resources/MissileTower.png");
     kamikazeTexture.loadFromFile("Resources/Kamikaze.png");
-    bossTexture.loadFromFile("Resources/Boss1.png");
+    bossTexture.loadFromFile("Resources/Boss.png");
 
 
     playerBulletTexture.loadFromFile("Resources/Bullets.png");
@@ -249,6 +247,10 @@ SpritesManager::SpritesManager()
     missileTexture.loadFromFile("Resources/Missiles.png");
     enemyBulletTexture.loadFromFile("Resources/EnemyBullets.png");
     explosionTexture.loadFromFile("Resources/explosion.png");
+
+    missilePowerUpTexture.loadFromFile("Resources/MissilePowerUp.png");
+    laserPowerUpTexture.loadFromFile("Resources/LaserPowerUp.png");
+    shieldPowerUpTexture.loadFromFile("Resources/ShieldPowerUp.png");
 }
 
 

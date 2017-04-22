@@ -18,9 +18,9 @@ Game::Game() {
     }
 
     ownSpaceShip.setbulletList(&playerbulletList);
-    backgroundMusic.openFromFile("Resources/music2.ogg");
+    backgroundMusic.openFromFile("Resources/TameImpala.ogg");
     backgroundMusic.setLoop(true);
-    backgroundMusic.setVolume(60);
+    backgroundMusic.setVolume(90);
     bossMusic.openFromFile("Resources/boss.ogg");
     bossMusic.setLoop(true);
     //backgroundMusic.play();
@@ -28,21 +28,36 @@ Game::Game() {
     collisionManager.setPlayerShip(&ownSpaceShip);
     collisionManager.setPlayerBulletList(&playerbulletList);
     collisionManager.setEnemyBulletList(&enemyBulletList);
+    collisionManager.setPowerUpList(&powerUpList);
+    collisionManager.setExplosionList(&explosionList);
+    collisionManager.setPlayerPowerUpsQueue(ownSpaceShip.getPowerUpsQueueReference());
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
 
 
     shipIconTexture.loadFromFile("Resources/playerLife.png");
     shipIcon.setTexture(shipIconTexture);
-    shipIcon.setPosition(20, 630);
+    shipIcon.setPosition(20, 700);
     shipIcon.setScale(0.5, 0.5);
 
+    powerUpIconTexture.loadFromFile("Resources/MiniPowerUps.png");
+    setUpPowerUpIcon();
+    powerUpIcon.setTexture(powerUpIconTexture);
+    powerUpIcon.setPosition(30, 170);
+
+
+
     livesLeft.setFont(classicFont);
-    livesLeft.setPosition(80, 630);
+    livesLeft.setPosition(80, 700);
 
 
     levelflag=false;
     gameClock.restart().asSeconds();
 
+
+
+    //powerUpList.push_back(PowerUpFactory::createLaserPU(sf::Vector2f(100,200)));
+    //powerUpList.push_back(PowerUpFactory::createLaserPU(sf:vector(100,200)));
+    //powerUpList.push_back(PowerUpFactory::createLaserPU(sf:vector(100,200)));
 
 }
 
@@ -62,11 +77,31 @@ void Game::restartGame() {
 
 }
 
+std::vector<FlyingPowerUp *> Game::getPowerUpList() const
+{
+    return powerUpList;
+}
+
+void Game::setPowerUpList(const std::vector<FlyingPowerUp *> &value)
+{
+    powerUpList = value;
+}
+
+std::vector<Explosion *> Game::getExplosionList() const
+{
+    return explosionList;
+}
+
+void Game::setExplosionList(const std::vector<Explosion *> &value)
+{
+    explosionList = value;
+}
+
 void Game::updateAll(RenderWindow &window, Options* gameOptions)
 {
 
-   background.update(window, time.asMilliseconds());
-   background.render(window);
+    background.update(window, time.asMilliseconds());
+    background.render(window);
     backstars.update(window,time.asMilliseconds());
     backstars.render(window);
     backasteroids.update(window, time.asMilliseconds());
@@ -98,11 +133,32 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
     for (int i = 0; i < playerbulletList.size(); ++i) {
         playerbulletList[i]->update(window, time.asMilliseconds());
         playerbulletList[i]->render(window);
+        //playerbulletList[i]->getSpriteReference()->scale(1,2);
+
         if( playerbulletList[i]->getPosition().y <= 0 | playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
             delete playerbulletList.operator[](i);
             playerbulletList.erase(playerbulletList.begin()+i);
             i--;
 
+        } 
+    }
+    for (int i = 0; i < powerUpList.size(); ++i) {
+        powerUpList[i]->update(window, time.asMilliseconds());
+        powerUpList[i]->render(window);
+        if( powerUpList[i]->getPosition().y >= 900 | powerUpList[i]->getPosition().x >= 2000 | powerUpList[i]->getPosition().x <= -500){
+            delete powerUpList.operator[](i);
+            powerUpList.erase(powerUpList.begin()+i);
+            i--;
+        }
+
+    }
+    for (int i = 0; i < explosionList.size(); ++i) {
+        explosionList[i]->update(window, time.asMilliseconds());
+        explosionList[i]->render(window);
+        if( explosionList[i]->finished()){
+            delete explosionList.operator[](i);
+            explosionList.erase(explosionList.begin()+i);
+            i--;
         }
     }
 
@@ -113,13 +169,16 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
 
 
 
+
     stats.setString("Memoria: " + std::to_string(getCurrentRSS() / 1024 /1024) + "MB \nTiempo: " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + " S");
+    ConnectionManager::getInstance()->send("{ \"Memoria\": \"" + std::to_string(getCurrentRSS() / 1024 /1024) + "MB\", \"Tiempo\": " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + ", \"Vidas\":" + std::to_string(ownSpaceShip.getLifes())+ ",\"Puntaje\":" + std::to_string(score.get_score()) +"}");
 
     if (gameOptions->showStats) {
         window.draw(stats);
     }
 
     window.draw(shipIcon);
+    window.draw(powerUpIcon);
     livesLeft.setString("x " + std::to_string(ownSpaceShip.getLifes()));
     window.draw(livesLeft);
 
@@ -163,6 +222,7 @@ void Game::eraseAll()
 
 
 
+
 int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
     if (score.isBossTime()) {
@@ -185,7 +245,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
     stats.setFont(classicFont);
     stats.setCharacterSize(20);
     stats.setColor(sf::Color::White);
-    stats.setPosition(25, 105 );
+    stats.setPosition(25, 125 );
 
 
     std::cout << running << std::endl;
@@ -229,12 +289,13 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::X) {
                 ownSpaceShip.usePowerUp();
+                setUpPowerUpIcon();
             }
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z) {
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z ) {
                 if(shootClock.getElapsedTime().asMilliseconds()>150){
 
                     ownSpaceShip.playerShoot();
-
+                    setPhoneShooting(false);
                     shootClock.restart().asMilliseconds();
                 }
             }
@@ -252,6 +313,9 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
 
         updateAll(window, gameOptions);
+        //setPowerUpList();
+        setUpPowerUpIcon();
+
         if(collisionManager.checkCollisions() || ownSpaceShip.getLifes() == 0){
             backgroundMusic.stop();
             bossMusic.stop();
@@ -267,6 +331,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
                     myfile.close();
                 }
             }
+
             return 2;
         }
         
@@ -350,6 +415,34 @@ void Game::setPhoneDirection(string direction) {
     else if(direction.compare("C") ==0){
         phoneDirection = CENTER;
     }
+    else if(direction.compare("S") ==0){
+        ownSpaceShip.playerShoot();
+    }
+    else if(direction.compare("P") == 0){
+        ownSpaceShip.usePowerUp();
+    }
+}
+
+void Game::setPhoneShooting(bool boolean) {
+    phoneShooting = boolean;
+}
+
+void Game::setUpPowerUpIcon() {
+
+    if(ownSpaceShip.powerUpsQueue.getHead() == NULL) {
+        powerUpIcon.setTextureRect(sf::IntRect(0, 0, 93.75, 94));
+    }
+    else if(ownSpaceShip.powerUpsQueue.getHead()->data.getType() == 0){
+        powerUpIcon.setTextureRect(sf::IntRect(187.5, 0, 93.75, 94));
+    }
+    else if(ownSpaceShip.powerUpsQueue.getHead()->data.getType() == 1){
+        powerUpIcon.setTextureRect(sf::IntRect(281.25, 0, 93.75, 94));
+    }
+    else if(ownSpaceShip.powerUpsQueue.getHead()->data.getType() == 2){
+        powerUpIcon.setTextureRect(sf::IntRect(93.75, 0, 93.75, 94));
+    }
+
+
 }
 
 

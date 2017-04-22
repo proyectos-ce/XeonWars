@@ -38,7 +38,6 @@ protected:
     bool boss = false;
 public:
     bool isBoss() const;
-
     void setIsBoss(bool isBoss);
 };
 

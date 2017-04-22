@@ -39,8 +39,21 @@ void Bullet::animate(float passedTime)
 
 void Bullet::update(sf::RenderWindow &window, float time)
 {
+    if(isLaser){
+        sprite.scale(1,1.5);
+    }
     Entity::update(window, time);
     animate(time);
+}
+
+bool Bullet::getIsLaser() const
+{
+    return isLaser;
+}
+
+void Bullet::setIsLaser(bool value)
+{
+    isLaser = value;
 }
 
 

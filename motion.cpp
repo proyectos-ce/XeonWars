@@ -67,7 +67,7 @@ sf::Vector2f SinMotion::getNext(float speed)
     sf::Vector2f newPos;
     double sin1 =sin((x+1)/15.0), sin2 = sin(x/15.0);
     newPos.x = (sin1- sin2)*scale;
-    newPos.y = speed*direction;
+    newPos.y = 2*direction;
     x+=1;
     return newPos;
 

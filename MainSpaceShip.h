@@ -23,8 +23,10 @@ public:
     void usePowerUp();
     bool gameOver();
     void shield();
+    void laser();
     void playerShoot();
     void checkShieldTimer();
+    void checkLaserTimer();
     void lifeManager(int);
     bool attack(int damage);
 
@@ -66,6 +68,8 @@ public:
     void reset();
 
     void loseLife();
+    Queue<powerUp> *getPowerUpsQueueReference();
+
 
 private:
     bool missiles_On =false;
@@ -82,30 +86,30 @@ private:
     Sound shootSound;
     SoundBuffer shieldOnSound;
     SoundBuffer shieldOffSound;
-
     Sound sound;
-
     int missileShootCounter=0;
     int lifes;
     int lifeLevel=100;
     int blinkAnimationCounter = 0;
 public:
     int getBlinkAnimationCounter() const;
+    Queue<powerUp> powerUpsQueue;
+    //Queue<powerUp> getPowerUpsQueue();
 
 private:
     int frameCounter = 0;
     int globalScore;
     int scoreForLifes;
-    Queue<powerUp> powerUpsQueue;
+
     Cannon *shipCannon;
     Texture shipCannonTexture;
     Cannon *missileCannon;
     Texture missileCannonTexture;
     Cannon *laserCannon;
     Clock shieldClock;
+    Clock laserClock;
     std::vector<Bullet *> *bulletList;
-
-    int texturesAmount=7;
+    int texturesAmount=8;
     int defaultTexture=1;
     void updateTexture(int value);
     void updateEffect(int value);
@@ -120,16 +124,17 @@ private:
 
     int rectX, rectY;
 public:
-    Options *getGameOptions() const;
-
+    Options* getGameOptions() const;
     void setGameOptions(Options *gameOptions);
 
+    bool getLaser_On() const;
+    void setLaser_On(bool value);
+
 private:
-
-
     const float speed = 6;
     const float maxSpeed = speed*10;
     sf::Vector2f velocity;
+
 
 };
 

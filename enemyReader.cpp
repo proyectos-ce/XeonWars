@@ -26,7 +26,7 @@ std::vector<EnemyParameters> EnemyReader::readEnemyFile(){
 
             std::getline(txtFile, enemyLine, '\n');
             if(enemyLine.find("#")!=std::string::npos){
-                std::cout<<"linea comentario"<<k<<std::endl;
+                //std::cout<<"linea comentario"<<k<<std::endl;
                 break;
             }
             else{
@@ -67,29 +67,29 @@ Enemy *EnemyReader::createEnemy(EnemyParameters enemyParameters)
     Enemy *enemy;
     //std::cout<<"___"<<enemyParameters.getType()<<"___"<<std::endl;
     if(enemyParameters.getType()=="jet"){
-        std::cout<<"jet"<<std::endl;
+        //std::cout<<"jet"<<std::endl;
         enemy = EnemyFactory::createJet(enemyParameters.getLevel(),enemyParameters.getMovement());
     }
     else if(enemyParameters.getType()=="bomber"){
-        std::cout<<"bomber"<<std::endl;
+        //std::cout<<"bomber"<<std::endl;
         enemy = EnemyFactory::createBomber(enemyParameters.getLevel(),enemyParameters.getMovement());
     }
     else if(enemyParameters.getType()=="tower"){
-        std::cout<<"tower"<<std::endl;
+        //std::cout<<"tower"<<std::endl;
         enemy = EnemyFactory::createTower(enemyParameters.getLevel());
     }
     else if(enemyParameters.getType()=="missileTower"){
-        std::cout<<"missileTower"<<std::endl;
+        //std::cout<<"missileTower"<<std::endl;
          enemy = EnemyFactory::createMissileTower(enemyParameters.getLevel(), playerSprite);
     }
     else if(enemyParameters.getType()=="kamikaze"){
-        std::cout<<"kamikaze"<<std::endl;
+        //std::cout<<"kamikaze"<<std::endl;
         enemy = EnemyFactory::createKamikaze(enemyParameters.getLevel(), playerSprite);
     }
     else{
         enemy = EnemyFactory::createJet(enemyParameters.getLevel(),enemyParameters.getMovement());
     }
-    enemy->setCenterPosition(sf::Vector2f(enemyParameters.getXPosition(),-enemyParameters.getYPosition()));
+    enemy->setCenterPosition(sf::Vector2f(enemyParameters.getXPosition(),-enemyParameters.getYPosition()-200));
     return enemy;
 }
 

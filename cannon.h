@@ -36,6 +36,9 @@ public:
     sf::Texture *getBulletTexture() const;
     void setBulletTexture(sf::Texture *value);
 
+    bool getIsLaser() const;
+    void setIsLaser(bool value);
+
 protected:
     int bulletDamage;
     int bulletSpeed;
@@ -47,6 +50,7 @@ protected:
     sf::Vector2f getCenterPosition();
     bool reverseDirection=false;
     int getDirection();
+    bool isLaser = false;
     //sf::Vector2f ;
 
 
@@ -98,6 +102,7 @@ namespace CannonFactory{
      Cannon *createSimpleCannon();
      Cannon *createSprayCannon(int angle, int bulletsByshoot);
      Cannon *createFollowerCannon(sf::Sprite *owner,sf::Sprite *target);
+     Cannon *createLaserCannon();
 
 }
 

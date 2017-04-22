@@ -5,6 +5,8 @@
 #include "iostream"
 #include "bullet.h"
 #include "enemy.h"
+#include "flyingpowerup.h"
+#include "explosion.h"
 #include"Collision.h"
 class CollisionManager
 {
@@ -31,17 +33,33 @@ public:
 
     void setLastScore(int value);
 
+    std::vector<FlyingPowerUp *> *getPowerUpList() const;
+    void setPowerUpList(std::vector<FlyingPowerUp *> *value);
+
+    std::vector<Explosion *> *getExplosionList() const;
+    void setExplosionList(std::vector<Explosion *> *value);
+
+    Queue<powerUp> *getPlayerPowerUpsQueue() const;
+    void setPlayerPowerUpsQueue(Queue<powerUp> *value);
+
+    void *getUpdatePowerUpsLabel() const;
+    void setUpdatePowerUpsLabel(void *value);
+
 private:
     int lastScore=0;
     std::vector<Enemy *> *enemyList;
     std::vector<Bullet *> *playerBulletList;
     std::vector<Bullet *> *enemyBulletList;
+    std::vector<FlyingPowerUp *> *powerUpList;
+    Queue<powerUp> *playerPowerUpsQueue;
+    std::vector<Explosion *> *explosionList;
     MainSpaceShip *playerShip;
     SoundBuffer collisionSpaceEnemySoundBuffer;
     SoundBuffer collisionBulletEnemySoundBuffer;
     Sound collisionSound;
-    void deleteEnemy(std::vector<Enemy *> *enemyList, int index);
-    void deleteBullet(std::vector<Bullet *> *bulletList, int index);
+    void deleteEnemy(std::vector<Enemy *> *list, int index);
+    void deleteBullet(std::vector<Bullet *> *list, int index);
+    void deletePowerUp(std::vector<FlyingPowerUp *> *list, int index);
 };
 
 #endif // COLLISIONMANAGER_H

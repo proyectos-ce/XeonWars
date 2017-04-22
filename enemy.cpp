@@ -128,13 +128,14 @@ bool Enemy::isBoss() const {
 }
 
 void Enemy::setIsBoss(bool isBoss) {
-    Enemy::boss = isBoss;
+    Enemy::boss=isBoss;
 }
 
 
+
+
+
 namespace EnemyFactory {
-
-
 
 Enemy *createEnemy(int level, sf::Texture *texture, Motion *enemyMotion, Cannon *enemyCannon)
 {
@@ -164,7 +165,7 @@ Enemy *createJet(int level, float angle)
     newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
     newEnemy->setSpeed(level+1);
-    newEnemy->setTrigger(20);
+    newEnemy->setTrigger(40);
     newEnemy->setLife(1);
     newEnemy->setTexturesAmount(4);
 
@@ -188,7 +189,7 @@ Enemy *createBomber(int level, float motionScale)
     newEnemy->updateTexture(level);
     newEnemy->setScale(0.1+(0.01*level));
     newEnemy->setSpeed(0.6*level);
-    newEnemy->setTrigger(20);
+    newEnemy->setTrigger(40);
     newEnemy->setLife(1);
     return newEnemy;
 
@@ -267,54 +268,24 @@ Enemy *createBoss(int level, int scale, int yMovement)
 {
 
     Motion *enemyMotion = MotionFactory::createBossMotion(scale, yMovement);
-    Cannon *enemyCannon = CannonFactory::createSprayCannon(20,level*2);
+    Cannon *enemyCannon = CannonFactory::createSprayCannon(20,level*3);
     enemyCannon->setBulletDamage(10*level);
-    enemyCannon->setBulletTexture(SpritesManager::getInstance()->getEnemyBulletTexture());
+    enemyCannon->setBulletTexture(SpritesManager::getInstance()->getMissileTexture());
     //enemyCannon->setBulletTextureFilename("Resources/Bomber.png");
     //enemyCannon->setBulletSpeed(4*(level+1));
     enemyCannon->setBulletSpeed(3*level);
     enemyCannon->setBulletDamage(3*level);
     Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getBossTexture(),  enemyMotion,  enemyCannon);
-    newEnemy->setTexturesAmount(1);
-    //newEnemy->updateTexture(level-1);
-    newEnemy->setScale(0.1+(0.01*level));
+    newEnemy->setTexturesAmount(3);
+    newEnemy->updateTexture((level-1)%3);
+    newEnemy->setScale(0.7);
     newEnemy->setSpeed(3);
-    newEnemy->setTrigger(80);
-    newEnemy->setLife(150*level);
     newEnemy->setIsBoss(true);
-    //newEnemy->setLife(4*(level+1));
+    newEnemy->setTrigger(80);
+    newEnemy->setLife(300*level);
+    //newEnemy->setLife(300*level);
     return newEnemy;
 
-
-
-    /*
-    //Motion *BossMotion = MotionFactory::createLinearMotion(45);
-    Motion *BossMotion;
-    Cannon *BossCannon;
-    BossTexture.loadFromFile("Resources/Boss1.png");
-
-
-    BossMotion = MotionFactory::createBossMotion(250,100);
-    BossCannon = CannonFactory::createSprayCannon(2,3);
-    BossCannon->setBulletDamage(30);
-    BossCannon->setBulletSpeed(3);
-    Enemy *Boss;
-    //Boss = new Enemy(BossTexture, enemyList, enemyBulletList);
-    Boss = new Enemy(&BossTexture);
-    BossPTR= Boss;
-    Boss->setTexturesAmount(1);
-    Boss->setLife(150*level);
-    cout<<"BOSS set life to : "<<Boss->getLife()<<endl;
-
-    Boss->setMotion(BossMotion);
-    Boss->setSpeed(1);
-    Boss->setPosition(sf::Vector2f(600,-100));
-    Boss->setTrigger(0);
-    Boss->setCannon(BossCannon);
-    Boss->setScale(0.2);
-    Boss->setBulletList(enemyBulletList);
-    enemyList->push_back(Boss);
-    */
 }
 
 

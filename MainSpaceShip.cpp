@@ -5,6 +5,7 @@
 #include "MainSpaceShip.h"
 #include "ScoreManager.h"
 
+
 MainSpaceShip::MainSpaceShip() {
     lifes = 3;
     scoreForLifes = 0;
@@ -18,10 +19,12 @@ MainSpaceShip::MainSpaceShip() {
     //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
     //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
+
     SOwnSpaceShip.setPosition(550,620);
     SOwnSpaceShip.setScale(0.25,0.25);
     effectSprite.setPosition(550,620);
     effectSprite.setScale(0.25,0.25);
+
     updateEffect(0);
 
 
@@ -31,9 +34,10 @@ MainSpaceShip::MainSpaceShip() {
     shieldOnSound.loadFromFile("Resources/sfx_shieldUp.ogg");
     shieldOffSound.loadFromFile("Resources/sfx_shieldDown.ogg");
 
-    powerUp p1(missile);
-    powerUp p2(shieldd);
-    powerUp p3(missile);
+
+    powerUp p1(LASER);
+    powerUp p2(SHIELD);
+    powerUp p3(MISSILE);
     //powerUp p4(laser);
 
 
@@ -61,6 +65,13 @@ MainSpaceShip::MainSpaceShip() {
     missileCannon->setBulletSpeed(6);
     missileCannon->setReverseDirection(true);
     missileCannon->setBulletTexture(&missileCannonTexture);
+
+    laserCannon= CannonFactory::createLaserCannon();
+    laserCannon->setOwnerSprite(&SOwnSpaceShip);
+    laserCannon->setBulletDamage(20);
+    laserCannon->setBulletSpeed(20);
+    laserCannon->setReverseDirection(1);
+    laserCannon->setBulletTexture(&shipCannonTexture);
     //missileCannon->setBulletTextureFilename("Resources/Missiles.png");
     //missileCannon->setBulletTextureFilename("Resources/Bullets.png");
 
@@ -82,6 +93,7 @@ void MainSpaceShip::setbulletList(std::vector<Bullet *> *value)
     bulletList = value;
     shipCannon->setBulletList(bulletList);
     missileCannon->setBulletList(bulletList);
+    laserCannon->setBulletList(bulletList);
 }
 void MainSpaceShip::lifeManager(int damage){
     lifeLevel-=damage;
@@ -100,15 +112,13 @@ void MainSpaceShip::reset() {
     isWhite = false;
     shieldActivated = false;
     exploding = false;
-    currentExplosionTexture = 0;
     powerUpOn = false;
     globalScore = 0;
-    blinkAnimationCounter = 0;
-    frameCounter = 0;
-    missileShootCounter = 0;
+    currentExplosionTexture = 0;
 
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
+    updateTexture(1);
     effectSprite.setTexture(TOwnSpaceShip);
 
     SOwnSpaceShip.setPosition(550,620);
@@ -117,9 +127,11 @@ void MainSpaceShip::reset() {
     effectSprite.setScale(0.25,0.25);
     updateEffect(0);
 
+    blinkAnimationCounter = 0;
+    frameCounter = 0;
+    missileShootCounter = 0;
+
     SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
-
-
 }
 
 
@@ -136,9 +148,14 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
             }
             lifeLevel=100;
         }
+
     } else {
 
-        checkShieldTimer();
+
+
+    checkShieldTimer();
+    checkLaserTimer();
+
 
         frameCounter++;
 
@@ -264,8 +281,7 @@ void MainSpaceShip::usePowerUp() {
                 //cout <<"Escudo"<<endl;
 
             } else if (powerToUse == 2) {
-                //cout <<"Laser"<<endl;
-                laser_On;
+                laser();
             }
         } else {
             cout << "No hay power ups" << endl;
@@ -291,6 +307,20 @@ void MainSpaceShip::shield() {
 
     }
     sound.play();
+}
+
+void MainSpaceShip::laser(){
+    //setLaser_On(true);
+    if(laser_On ==false){
+           laser_On=true;
+           updateEffect(3);
+           powerUpOn = true;
+           laserClock.restart();
+       }else{
+           laser_On=false;
+           powerUpOn= false;
+           updateEffect(0);
+   }
 }
 
 bool MainSpaceShip::gameOver() {
@@ -386,7 +416,7 @@ void MainSpaceShip::playerShoot() {
             missileShootCounter++;
             missileCannon->shoot();
             sound.setBuffer(missileShootBuffer);
-            //cout << "disparo misil" << endl;
+            cout << "disparo misil " <<missileShootCounter<< endl;
             //updateEffect(0);
 
         }else{
@@ -398,26 +428,57 @@ void MainSpaceShip::playerShoot() {
             updateEffect(0);
         }
     } else if (laser_On){
+        sound.setBuffer(missileShootBuffer);
+        laserCannon->shoot();
     } else {
 
         shipCannon->shoot();
         sound.setBuffer(normalShootBuffer);
-        //std::cout<< shipCannon->getBulletDamage()<<endl;
-        //cout << "disparo simple" << endl;
     }
     sound.play();
 }
 
 void MainSpaceShip::loseLife() {
     lifes-=1;
+
     SOwnSpaceShip.setTexture(*explosionTexture);
     SOwnSpaceShip.setScale(0.7, 0.7);
     SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
     exploding = true;
+
+}
+
+Queue<powerUp> *MainSpaceShip::getPowerUpsQueueReference()
+{
+    return &powerUpsQueue;
+}
+
+bool MainSpaceShip::getLaser_On() const
+{
+    return laser_On;
+}
+
+void MainSpaceShip::setLaser_On(bool value)
+{
+    laser_On = value;
+
+    if(laser_On){
+        powerUpOn = true;
+        updateEffect(3);
+
+    }
+    else{
+        updateEffect(0);
+        powerUpOn = false;
+        laserClock.restart();
+
+    }
+
 }
 bool MainSpaceShip::attack(int damage)
 {
     std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
+
     bool result = false;
     if(shieldActivated){
         shieldActivated=false;
@@ -426,7 +487,9 @@ bool MainSpaceShip::attack(int damage)
     }
     else{
         if (blinkAnimationCounter == 0) {
+
             setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
+
 
             if (lifes > 0) {
                 doDamageAnimation();
@@ -475,7 +538,10 @@ void MainSpaceShip::checkShieldTimer() {
     if(shieldClock.getElapsedTime().asMilliseconds()>10000 && shieldActivated==true) {
         shield();
     }
-    //else()
+}
+void MainSpaceShip::checkLaserTimer() {
+    if(laserClock.getElapsedTime().asMilliseconds()>3000 && laser_On == true)
+        laser();
 }
 
 int MainSpaceShip::getLifes() const {
@@ -506,6 +572,7 @@ void MainSpaceShip::setDirectionRight(){
 }
 
 
+
 Options *MainSpaceShip::getGameOptions() const {
     return gameOptions;
 }
@@ -517,5 +584,8 @@ void MainSpaceShip::setGameOptions(Options *gameOptions) {
 int MainSpaceShip::getBlinkAnimationCounter() const {
     return blinkAnimationCounter;
 }
+
+
+
 
 

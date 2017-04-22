@@ -21,6 +21,9 @@
 #include "collisionmanager.h"
 #include "enemyReader.h"
 #include <fstream>
+#include "flyingpowerup.h"
+#include "explosion.h"
+
 
 
 
@@ -34,8 +37,15 @@ public:
     int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
     void setPhoneDirection(string direction);
-
+    void setPhoneShooting(bool boolean);
     void restartGame();
+
+
+    std::vector<FlyingPowerUp *> getPowerUpList() const;
+    void setPowerUpList(const std::vector<FlyingPowerUp *> &value);
+
+    std::vector<Explosion *> getExplosionList() const;
+    void setExplosionList(const std::vector<Explosion *> &value);
 
 private:
     int minEnemyQuantity = 3;
@@ -54,17 +64,22 @@ private:
     ScoreManager score;
     Direction phoneDirection = CENTER;
 
+    bool phoneShooting = false;
     bool running = true;
     Time time;
     CollisionManager collisionManager;
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
+    std::vector<FlyingPowerUp *> powerUpList;
+    std::vector<Explosion *> explosionList;
     BossManager Boss;
     void eraseAll();
     EnemyReader enemyReader;
 
     sf::Sprite shipIcon;
+    sf::Sprite powerUpIcon;
+    sf::Texture powerUpIconTexture;
     sf::Texture shipIconTexture;
     sf::Text livesLeft;
     sf::Font classicFont;
@@ -76,6 +91,7 @@ private:
 
     void updateAll(RenderWindow &window, Options *gameOptions);
     void loadEnemies();
+    void setUpPowerUpIcon();
 
 };
 
