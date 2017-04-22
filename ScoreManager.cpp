@@ -50,7 +50,7 @@ void ScoreManager::resetScore() {
     BossTime = false;
     createBoss = false;
     currentLevel = 1;
-    nextBoss_score=100;
+    nextBoss_score=1000;
     checklifes=0;
 }
 bool ScoreManager::isBossTime(){
@@ -63,7 +63,6 @@ void ScoreManager::BossTimeCheck(){
         BossTime = true;
         createBoss = true;
         nextBoss_score *= 2.5;
-        nextBoss_score += 1000;
     }
 }
 int ScoreManager::getLevel() {
