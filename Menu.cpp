@@ -29,6 +29,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
     sf::Text creditsLabel;
     sf::Text continueLabel;
     sf::Text copyLabel;
+    sf::Text rakingsLabel;
     int menu = 0;
 
     if (!bgTexture.loadFromFile("Resources/menu/presentation.jpg"))
@@ -60,16 +61,21 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
     optionsLabel.setString("Options");
     optionsLabel.setPosition({ 300.f, 400.f });
 
+    rakingsLabel.setFont(classicFont);
+    rakingsLabel.setCharacterSize(40);
+    rakingsLabel.setString("High scores");
+    rakingsLabel.setPosition({ 300.f, 450.f });
+
     creditsLabel.setFont(classicFont);
     creditsLabel.setCharacterSize(40);
     creditsLabel.setString("Credits");
-    creditsLabel.setPosition({ 300.f, 450.f });
+    creditsLabel.setPosition({ 300.f, 500.f });
 
 
     exitLabel.setFont(classicFont);
     exitLabel.setCharacterSize(40);
     exitLabel.setString("Exit");
-    exitLabel.setPosition({ 300.f, 500.f });
+    exitLabel.setPosition({ 300.f, 550.f });
 
     logo.setFont(classicFont);
     logo.setCharacterSize(200);
@@ -117,8 +123,8 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
                         break;
                     case sf::Keyboard::Down:
                         menu++;
-                        if (menu>3)
-                            menu = 3;
+                        if (menu>4)
+                            menu = 4;
                         break;
                     case sf::Keyboard::Return:
                         if (menu == 0) {
@@ -126,6 +132,8 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
                         } else if (menu == 1) {
                             return (4);
                         } else if (menu == 2) {
+                            return (6);
+                        } else if (menu == 3) {
                                 return(5);
                         } else  {
                             return (-1);
@@ -145,6 +153,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
         {
             playLabel.setColor(sf::Color(255, 0, 0, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            rakingsLabel.setColor(sf::Color(255, 255, 255, 255));
             creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
@@ -152,13 +161,21 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 0, 0, 255));
+            rakingsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
+            exitLabel.setColor(sf::Color(255, 255, 255, 255));
+        } else if (menu == 2) {
+            playLabel.setColor(sf::Color(255, 255, 255, 255));
+            optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            rakingsLabel.setColor(sf::Color(255, 0, 0, 255));
             creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
-        else if (menu == 2)
+        else if (menu == 3)
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            rakingsLabel.setColor(sf::Color(255, 255, 255, 255));
             creditsLabel.setColor(sf::Color(255, 0, 0, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
@@ -166,6 +183,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            rakingsLabel.setColor(sf::Color(255, 255, 255, 255));
             creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 0, 0, 255));
         }
@@ -183,6 +201,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
             window.draw(optionsLabel);
             window.draw(creditsLabel);
             window.draw(exitLabel);
+            window.draw(rakingsLabel);
         }
         window.display();
     }
