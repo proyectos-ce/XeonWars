@@ -320,8 +320,6 @@ void MainSpaceShip::laser(){
            laser_On=false;
            powerUpOn= false;
            updateEffect(0);
-           ///updateTexture(3);
-
    }
 }
 
