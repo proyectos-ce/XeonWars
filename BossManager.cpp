@@ -35,6 +35,28 @@ void BossManager::BossInit(int level) {
     Bosslife=level*100;
     initialBosslife=Bosslife;
 
+
+    Motion *BossMotion = MotionFactory::createLinearMotion(45);
+    Cannon *BossCannon = CannonFactory::createSimpleCannon();
+    BossTexture.loadFromFile("Resources/Boss1.png");
+
+
+    BossMotion = MotionFactory::createSimpleMotion();
+    BossCannon = CannonFactory::createSprayCannon(2,3);
+    BossCannon->setBulletDamage(30);
+    BossCannon->setBulletSpeed(3);
+    Enemy *Boss;
+//
+//    Boss = new Enemy(BossTexture, &enemyList, &enemyBulletList);
+//    Boss->setTexturesAmount(4);
+//    Boss->updateTexture(4);
+//    Boss->setMotion(BossMotion);
+//    Boss->setSpeed(1);
+//    Boss->setPosition(sf::Vector2f(300,0));
+//    Boss->setTrigger(60);
+//    Boss->setCannon(BossCannon);
+//    Boss->setScale(0.2);
+
 }
 bool BossManager::isdead() {
     bool result = false;

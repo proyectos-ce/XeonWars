@@ -23,7 +23,7 @@ private:
 public:
     GameOverScreen();
 
-    int run(sf::RenderWindow &window, sf::Texture &Texture);
+    int run(sf::RenderWindow &window, sf::Texture &Texture, Options* gameOptions);
 
     bool elapsedFrames(int frames);
 };

@@ -56,11 +56,17 @@ public:
     bool getShieldActivated() const;
     void setShieldActivated(bool value);
 
+    void setDirectionUp();
+    void setDirectionDown();
+    void setDirectionLeft();
+    void setDirectionRight();
+
 private:
     bool missiles_On =false;
     bool laser_On= false;
     bool isWhite = false;
     bool shieldActivated = false;
+    bool powerUpOn = false;
 
     Sprite SOwnSpaceShip;
     Sprite effectSprite;

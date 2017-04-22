@@ -8,7 +8,7 @@
 
 PauseScreen::PauseScreen() {}
 
-int PauseScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen) {
+int PauseScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options* gameOptions) {
 
     sf::Font classicFont;
 

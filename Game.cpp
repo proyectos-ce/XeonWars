@@ -6,6 +6,8 @@
 
 
 #include "Utils.h"
+#include "ConnectionManager.h"
+#include "memory.h"
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;
@@ -32,6 +34,7 @@ Game::Game() {
 
     enemyList.push_back(newEnemy);
 
+
     newEnemy = EnemyFactory::createTower(2, 2);
     newEnemy->setCenterPosition(sf::Vector2f(200*3,-100));
     newEnemy->setBulletList(&enemyBulletList);
@@ -48,6 +51,10 @@ Game::Game() {
     enemyList.push_back(newEnemy);
     */
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
+
+    gameClock.restart().asSeconds();
+
+
 }
 
 void Game::pauseGame() {
@@ -55,7 +62,7 @@ void Game::pauseGame() {
     std::cout << running << std::endl;
 }
 
-void Game::updateAll(RenderWindow &window)
+void Game::updateAll(RenderWindow &window, Options* gameOptions)
 {
     background.update(window, time.asMilliseconds());
     background.render(window);
@@ -93,9 +100,18 @@ void Game::updateAll(RenderWindow &window)
         }
     }
 
+
+
     ownSpaceShip.update(window, time.asMilliseconds());
     ownSpaceShip.render(window);
 
+
+
+    stats.setString("Memoria: " + std::to_string(getCurrentRSS() / 1024 /1024) + "MB \nTiempo: " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + " S");
+
+    if (gameOptions->showStats) {
+        window.draw(stats);
+    }
 
 
 
@@ -125,9 +141,24 @@ void Game::eraseAll()
 }
 
 
+
 int Game::run(RenderWindow &window, Texture &tex) {
 
     backgroundMusic.play();
+
+    sf::Font classicFont;
+
+    if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
+    {
+        std::cerr << "Error loading 8bit.ttf" << std::endl;
+        return (-1);
+    }
+
+    stats.setFont(classicFont);
+    stats.setCharacterSize(20);
+    stats.setColor(sf::Color::White);
+    stats.setPosition(25, 55 );
+
     std::cout << running << std::endl;
 
     running = true;
@@ -142,6 +173,17 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
     while (running) {
+
+        // Modifica el vector segun las teclas presionadas
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || phoneDirection==UP)
+            ownSpaceShip.setDirectionUp();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || phoneDirection==DOWN)
+            ownSpaceShip.setDirectionDown();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || phoneDirection==LEFT)
+            ownSpaceShip.setDirectionLeft();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || phoneDirection==RIGHT)
+            ownSpaceShip.setDirectionRight();
+
         Event event;
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
@@ -174,7 +216,6 @@ int Game::run(RenderWindow &window, Texture &tex) {
                     shootClock.restart().asMilliseconds();
                 }
             }
-
         }
 
         time = clock.getElapsedTime();
@@ -188,11 +229,15 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
 
-        updateAll(window);
+        updateAll(window, gameOptions);
         if(collisionManager.checkCollisions()){
             return 2;
         }
         //update score         collisionManager.getLastScore();
+
+
+
+
 
 
 
@@ -214,9 +259,9 @@ int Game::run(RenderWindow &window, Texture &tex) {
         }
 
         ownSpaceShip.score.scoreRender(window);
-        if(shootClock.getElapsedTime().asMilliseconds()>500) {
+        if(scoreClock.getElapsedTime().asMilliseconds()>500) {
             ownSpaceShip.score.add_score(1);
-            shootClock.restart().asMilliseconds();
+            scoreClock.restart().asMilliseconds();
         }
 
         window.display();
@@ -224,6 +269,24 @@ int Game::run(RenderWindow &window, Texture &tex) {
     }
     eraseAll();
     return (-1);
+}
+
+void Game::setPhoneDirection(string direction) {
+    if(direction.compare("L") == 0){
+        phoneDirection = LEFT;
+    }
+    else if(direction.compare("R") ==0){
+        phoneDirection = RIGHT;
+    }
+    else if(direction.compare("U") ==0){
+        phoneDirection = UP;
+    }
+    else if(direction.compare("D") ==0){
+        phoneDirection = DOWN;
+    }
+    else if(direction.compare("C") ==0){
+        phoneDirection = CENTER;
+    }
 }
 
 

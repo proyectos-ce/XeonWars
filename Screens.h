@@ -3,7 +3,7 @@
 //
 
 #ifndef XEONWARS_SCREENS_H
-#define XEONWARS_SCREENS_
+#define XEONWARS_SCREENS_H
 
 //Basic Screen Class
 #include "Screen.h"
@@ -13,5 +13,6 @@
 #include "Menu.h"
 #include "GameOverScreen.h"
 #include "PauseScreen.h"
+#include "OptionsScreen.h"
 
 #endif //XEONWARS_SCREENS_H

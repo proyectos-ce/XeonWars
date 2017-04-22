@@ -33,14 +33,14 @@ MainSpaceShip::MainSpaceShip() {
 
     powerUp p1(missile);
     powerUp p2(shieldd);
-    powerUp p3(laser);
-    powerUp p4(missile);
+    powerUp p3(missile);
+    //powerUp p4(laser);
 
 
     powerUpsQueue.enqueue(p1);
     powerUpsQueue.enqueue(p2);
     powerUpsQueue.enqueue(p3);
-    powerUpsQueue.enqueue(p4);
+    //powerUpsQueue.enqueue(p4);
 
 
     shipCannonTexture.loadFromFile("Resources/Bullets.png");
@@ -120,25 +120,12 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
     // Si no hay ninguna tecla presionada la velocidad se pone en 0 si es muy pequeña
     if (!anyKeyPressed) {
-        if (std::fabs(velocity.y) <= speed/2)
+        if (fabs(velocity.y) <= speed/2)
             velocity.y = 0;
 
-        if (std::fabs(velocity.x) <= speed/2)
+        if (fabs(velocity.x) <= speed/2)
             velocity.x = 0;
     }
-
-    // Modifica el vector segun las teclas presionadas
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        velocity.y -= speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        velocity.y += speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        velocity.x -= speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        velocity.x += speed;
-   // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-     //   playerShoot();
-
 
 
     // Air friction
@@ -164,14 +151,14 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
     // Maximum speed
 
-    if (std::fabs(velocity.x) > maxSpeed)
+    if (fabs(velocity.x) > maxSpeed)
     {
         if (velocity.x > 0)
             velocity.x = maxSpeed;
         else
             velocity.x = -maxSpeed;
     }
-    if (std::fabs(velocity.y) > maxSpeed)
+    if (fabs(velocity.y) > maxSpeed)
     {
         if (velocity.y > 0)
             velocity.y = maxSpeed;
@@ -216,34 +203,35 @@ void MainSpaceShip::render(RenderWindow &window) {
 }
 
 void MainSpaceShip::usePowerUp() {
-    updateEffect(0);
-    if(!powerUpsQueue.isEmpty()) {
-        int powerToUse = powerUpsQueue.dequeue().getType();
-        if(powerToUse == 0){
-            //cout <<"Misiles"<<endl;
-            setMissiles_On(true);
-        }
-        else if(powerToUse == 1){
-            if(!shieldActivated) {
-                shield();
-            }
-            //cout <<"Escudo"<<endl;
-
-        }
-        else if(powerToUse == 2){
-            //cout <<"Laser"<<endl;
-            laser_On;            
-        }
-    }else{
-        cout <<"No hay power ups"<<endl;
+    if(powerUpOn == false) {
         updateEffect(0);
+        if (!powerUpsQueue.isEmpty()) {
+            int powerToUse = powerUpsQueue.dequeue().getType();
+            if (powerToUse == 0) {
+                //cout <<"Misiles"<<endl;
+                setMissiles_On(true);
+            } else if (powerToUse == 1) {
+                if (!shieldActivated) {
+                    shield();
+                }
+                //cout <<"Escudo"<<endl;
 
+            } else if (powerToUse == 2) {
+                //cout <<"Laser"<<endl;
+                laser_On;
+            }
+        } else {
+            cout << "No hay power ups" << endl;
+            updateEffect(0);
+
+        }
     }
 }
 
 void MainSpaceShip::shield() {
     if(shieldActivated == false){
         setShieldActivated(true);
+        powerUpOn = true;
         shieldClock.restart();
         sound.setBuffer(shieldOnSound);
         //cout<<"Escudo activado"<<endl;
@@ -251,6 +239,7 @@ void MainSpaceShip::shield() {
     else{
         setShieldActivated(false);
         sound.setBuffer(shieldOffSound);
+        powerUpOn = false;
         //cout<<"Escudo desactivado"<<endl;
 
     }
@@ -296,12 +285,15 @@ bool MainSpaceShip::getMissiles_On() const
 void MainSpaceShip::setMissiles_On(bool value)
 {
     missiles_On = value;
+
     if(missiles_On){
+        powerUpOn = true;
         updateEffect(2);
 
     }
     else{
         updateEffect(0);
+        powerUpOn = false;
     }
 }
 
@@ -314,10 +306,13 @@ void MainSpaceShip::setShieldActivated(bool value)
 {
     shieldActivated = value;
     if(shieldActivated){
+
         updateEffect(1);
+
     }
     else{
         updateEffect(0);
+
     }
 }
 
@@ -352,6 +347,7 @@ void MainSpaceShip::playerShoot() {
             missileShootCounter=0;
             sound.setBuffer(normalShootBuffer);
             shipCannon->shoot();
+            powerUpOn= false;
             updateEffect(0);
         }
     } else if (laser_On){
@@ -371,6 +367,7 @@ bool MainSpaceShip::attack(int damage)
     bool result = false;
     if(shieldActivated){
         shieldActivated=false;
+        powerUpOn = false;
         updateEffect(0);
     }
     else{
@@ -430,4 +427,21 @@ int MainSpaceShip::getLifes() const {
 void MainSpaceShip::setLifes(int numLifes){
     lifes =  numLifes;
 }
+
+void MainSpaceShip::setDirectionUp(){
+    velocity.y -= speed;
+}
+
+void MainSpaceShip::setDirectionDown(){
+    velocity.y += speed;
+}
+
+void MainSpaceShip::setDirectionLeft(){
+    velocity.x -= speed;
+}
+
+void MainSpaceShip::setDirectionRight(){
+    velocity.x += speed;
+}
+
 
