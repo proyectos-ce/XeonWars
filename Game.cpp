@@ -173,6 +173,8 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
         backgroundMusic.play();
     }
 
+    ownSpaceShip.setGameOptions(gameOptions);
+
 
     sf::Font classicFont;
 

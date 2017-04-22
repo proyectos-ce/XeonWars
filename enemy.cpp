@@ -282,6 +282,7 @@ Enemy *createBoss(int level, int scale, int yMovement)
     //newEnemy->updateTexture(level-1);
     newEnemy->setScale(0.1+(0.01*level));
     newEnemy->setSpeed(3);
+    newEnemy->setIsBoss(true);
     newEnemy->setTrigger(80);
     newEnemy->setLife(150*level);
     //newEnemy->setLife(4*(level+1));
