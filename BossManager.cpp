@@ -14,6 +14,8 @@ BossManager::BossManager(){
     {
         cout << "error with the font" << endl;
     }
+
+
     text.setPosition(1050,0);
     text.setFont(font);
     text.setCharacterSize(50); // in pixels, not points!
@@ -39,7 +41,7 @@ void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector
     Boss->setPosition(sf::Vector2f(600,-100));
     initialBosslife=Boss->getLife();
     BossPTR= Boss;
-
+    BossLevel=level;
 
 }
 

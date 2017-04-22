@@ -63,6 +63,11 @@ MainSpaceShip::MainSpaceShip() {
     missileCannon->setBulletTexture(&missileCannonTexture);
     //missileCannon->setBulletTextureFilename("Resources/Missiles.png");
     //missileCannon->setBulletTextureFilename("Resources/Bullets.png");
+
+
+    explosionTexture = SpritesManager::getInstance()->getExplosionTexture();
+    rectX = (explosionTexture->getSize().x/explosionAmount), rectY = explosionTexture->getSize().y;
+
 }
 
 
@@ -89,111 +94,153 @@ void MainSpaceShip::lifeManager(int damage){
     }
 }
 
+void MainSpaceShip::reset() {
+    missiles_On =false;
+    laser_On= false;
+    isWhite = false;
+    shieldActivated = false;
+    exploding = false;
+    currentExplosionTexture = 0;
+    powerUpOn = false;
+    globalScore = 0;
+    blinkAnimationCounter = 0;
+    frameCounter = 0;
+    missileShootCounter = 0;
+
+    TOwnSpaceShip.setSmooth(true);
+    SOwnSpaceShip.setTexture(TOwnSpaceShip);
+    effectSprite.setTexture(TOwnSpaceShip);
+
+    SOwnSpaceShip.setPosition(550,620);
+    SOwnSpaceShip.setScale(0.25,0.25);
+    effectSprite.setPosition(550,620);
+    effectSprite.setScale(0.25,0.25);
+    updateEffect(0);
+
+    SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
+
+
+}
+
+
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
+    if (exploding) {
+        currentExplosionTexture++;
+        SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
 
-    checkShieldTimer();
-
-    frameCounter++;
-
-    if (frameCounter == 4) {
-        if (blinkAnimationCounter > 0) {
-            if (isWhite) {
-                SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
-                isWhite = false;
-            } else {
-                SOwnSpaceShip.setColor(sf::Color(200,50,0,255));
-                isWhite = true;
+        if (currentExplosionTexture == 19) {
+            reset();
+            if (lifes > 0) {
+                blinkAnimationCounter = 16;
             }
-            blinkAnimationCounter--;
+            lifeLevel=100;
         }
-        frameCounter = 0;
-
-    }
-
-
-
-    bool anyKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-
-    // Si no hay ninguna tecla presionada la velocidad se pone en 0 si es muy pequeña
-    if (!anyKeyPressed) {
-        if (fabs(velocity.y) <= speed/2)
-            velocity.y = 0;
-
-        if (fabs(velocity.x) <= speed/2)
-            velocity.x = 0;
-    }
-
-
-    // Air friction
-    if (velocity.y > 0)
-        velocity.y -= speed/2;
-    else if (velocity.y < 0)
-        velocity.y += speed/2;
-
-    if (velocity.x > 0) {
-        //SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
-        updateTexture(2);
-
-        velocity.x -= speed/2;
-    } else if (velocity.x < 0) {
-        //SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
-        updateTexture(0);
-
-        velocity.x += speed/2;
     } else {
-        //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
-        updateTexture(defaultTexture);
-    }
 
-    // Maximum speed
+        checkShieldTimer();
 
-    if (fabs(velocity.x) > maxSpeed)
-    {
-        if (velocity.x > 0)
-            velocity.x = maxSpeed;
-        else
-            velocity.x = -maxSpeed;
-    }
-    if (fabs(velocity.y) > maxSpeed)
-    {
+        frameCounter++;
+
+        if (frameCounter == 4) {
+            if (blinkAnimationCounter > 0) {
+                if (isWhite) {
+                    SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
+                    isWhite = false;
+                } else {
+                    SOwnSpaceShip.setColor(sf::Color(200,50,0,255));
+                    isWhite = true;
+                }
+                blinkAnimationCounter--;
+            }
+            frameCounter = 0;
+
+        }
+
+
+
+        bool anyKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+
+        // Si no hay ninguna tecla presionada la velocidad se pone en 0 si es muy pequeña
+        if (!anyKeyPressed) {
+            if (fabs(velocity.y) <= speed/2)
+                velocity.y = 0;
+
+            if (fabs(velocity.x) <= speed/2)
+                velocity.x = 0;
+        }
+
+
+        // Air friction
         if (velocity.y > 0)
-            velocity.y = maxSpeed;
-        else
-            velocity.y = -maxSpeed;
+            velocity.y -= speed/2;
+        else if (velocity.y < 0)
+            velocity.y += speed/2;
+
+        if (velocity.x > 0) {
+            //SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
+            updateTexture(2);
+
+            velocity.x -= speed/2;
+        } else if (velocity.x < 0) {
+            //SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
+            updateTexture(0);
+
+            velocity.x += speed/2;
+        } else {
+            //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+            updateTexture(defaultTexture);
+        }
+
+        // Maximum speed
+
+        if (fabs(velocity.x) > maxSpeed)
+        {
+            if (velocity.x > 0)
+                velocity.x = maxSpeed;
+            else
+                velocity.x = -maxSpeed;
+        }
+        if (fabs(velocity.y) > maxSpeed)
+        {
+            if (velocity.y > 0)
+                velocity.y = maxSpeed;
+            else
+                velocity.y = -maxSpeed;
+        }
+
+
+        // Limites de la pantalla
+
+        if(SOwnSpaceShip.getPosition().x < 0) {
+            velocity.x = 0;
+            SOwnSpaceShip.setPosition(0, SOwnSpaceShip.getPosition().y);
+        }
+
+        if(SOwnSpaceShip.getPosition().y < 0) {
+            velocity.y = 0;
+            SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, 0);
+        }
+
+        if (SOwnSpaceShip.getPosition().x > window.getSize().x - SOwnSpaceShip.getGlobalBounds().width) {
+            velocity.x = 0;
+            SOwnSpaceShip.setPosition(window.getSize().x - SOwnSpaceShip.getGlobalBounds().width,  SOwnSpaceShip.getPosition().y);
+        }
+
+        if (SOwnSpaceShip.getPosition().y > window.getSize().y - SOwnSpaceShip.getGlobalBounds().height) {
+            velocity.y = 0;
+            SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, window.getSize().y - SOwnSpaceShip.getGlobalBounds().height);
+        }
+
+        SOwnSpaceShip.move(velocity * (time/30));
+
+        //update effect sprite
+        effectSprite.setPosition(SOwnSpaceShip.getPosition());
+
     }
-
-    
-    // Limites de la pantalla
-
-    if(SOwnSpaceShip.getPosition().x < 0) {
-        velocity.x = 0;
-        SOwnSpaceShip.setPosition(0, SOwnSpaceShip.getPosition().y);
-    }
-
-    if(SOwnSpaceShip.getPosition().y < 0) {
-        velocity.y = 0;
-        SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, 0);
-    }
-
-    if (SOwnSpaceShip.getPosition().x > window.getSize().x - SOwnSpaceShip.getGlobalBounds().width) {
-        velocity.x = 0;
-        SOwnSpaceShip.setPosition(window.getSize().x - SOwnSpaceShip.getGlobalBounds().width,  SOwnSpaceShip.getPosition().y);
-    }
-
-    if (SOwnSpaceShip.getPosition().y > window.getSize().y - SOwnSpaceShip.getGlobalBounds().height) {
-        velocity.y = 0;
-        SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, window.getSize().y - SOwnSpaceShip.getGlobalBounds().height);
-    }
-
-    SOwnSpaceShip.move(velocity * (time/30));
-
-    //update effect sprite
-    effectSprite.setPosition(SOwnSpaceShip.getPosition());
-
 }
 
 void MainSpaceShip::render(RenderWindow &window) {
@@ -360,9 +407,17 @@ void MainSpaceShip::playerShoot() {
     }
     sound.play();
 }
+
+void MainSpaceShip::loseLife() {
+    lifes-=1;
+    SOwnSpaceShip.setTexture(*explosionTexture);
+    SOwnSpaceShip.setScale(0.7, 0.7);
+    SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
+    exploding = true;
+}
 bool MainSpaceShip::attack(int damage)
 {
-    std::cout<<lifeLevel<<endl;
+    std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
     bool result = false;
     if(shieldActivated){
         shieldActivated=false;
@@ -370,16 +425,20 @@ bool MainSpaceShip::attack(int damage)
         updateEffect(0);
     }
     else{
-        setLifeLevel(lifeLevel-damage);
-        doDamageAnimation();
-        if(lifeLevel<=0){
-            lifes-=1;
-            lifeLevel=100;
-            if(lifes<=0){
-            result = true;
+        if (blinkAnimationCounter == 0) {
+            setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
+
+            if (lifes > 0) {
+                doDamageAnimation();
+            }
+            if(lifeLevel<=0){
+                loseLife();
+                if(lifes<=0){
+                    blinkAnimationCounter = 0;
+                    result = true;
+                }
             }
         }
-
     }
     return result;
 
@@ -444,6 +503,19 @@ void MainSpaceShip::setDirectionLeft(){
 
 void MainSpaceShip::setDirectionRight(){
     velocity.x += speed;
+}
+
+
+Options *MainSpaceShip::getGameOptions() const {
+    return gameOptions;
+}
+
+void MainSpaceShip::setGameOptions(Options *gameOptions) {
+    MainSpaceShip::gameOptions = gameOptions;
+}
+
+int MainSpaceShip::getBlinkAnimationCounter() const {
+    return blinkAnimationCounter;
 }
 
 

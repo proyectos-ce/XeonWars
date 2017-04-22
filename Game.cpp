@@ -11,6 +11,12 @@
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;
+
+    if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
+    {
+        std::cerr << "Error loading 8bit.ttf" << std::endl;
+    }
+
     ownSpaceShip.setbulletList(&playerbulletList);
     backgroundMusic.openFromFile("Resources/music2.ogg");
     backgroundMusic.setLoop(true);
@@ -24,6 +30,17 @@ Game::Game() {
     collisionManager.setEnemyBulletList(&enemyBulletList);
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
 
+
+    shipIconTexture.loadFromFile("Resources/playerLife.png");
+    shipIcon.setTexture(shipIconTexture);
+    shipIcon.setPosition(20, 630);
+    shipIcon.setScale(0.5, 0.5);
+
+    livesLeft.setFont(classicFont);
+    livesLeft.setPosition(80, 630);
+
+
+    levelflag=false;
     gameClock.restart().asSeconds();
 
 
@@ -39,6 +56,9 @@ void Game::restartGame() {
     gameClock.restart().asSeconds();
     backgroundMusic.stop();
     score.resetScore();
+    ownSpaceShip.setLifes(3);
+    ownSpaceShip.setLifeLevel(100);
+    ownSpaceShip.reset();
 
 }
 
@@ -99,13 +119,17 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
         window.draw(stats);
     }
 
+    window.draw(shipIcon);
+    livesLeft.setString("x " + std::to_string(ownSpaceShip.getLifes()));
+    window.draw(livesLeft);
+
 
 
 }
 
 void Game::loadEnemies()
 {
-    if(enemyList.size()<minEnemyQuantity){
+    if(!score.BossTime && enemyList.size()<minEnemyQuantity){
     std::vector<Enemy *> newEnemySet = enemyReader.getNextEnemySet();
     for (int i = 0; i < newEnemySet.size(); ++i) {
         newEnemySet[i]->setBulletList(&enemyBulletList);
@@ -147,6 +171,9 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
         backgroundMusic.play();
     }
 
+    ownSpaceShip.setGameOptions(gameOptions);
+
+
     sf::Font classicFont;
 
     if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
@@ -158,7 +185,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
     stats.setFont(classicFont);
     stats.setCharacterSize(20);
     stats.setColor(sf::Color::White);
-    stats.setPosition(25, 55 );
+    stats.setPosition(25, 105 );
 
 
     std::cout << running << std::endl;
@@ -225,9 +252,24 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
 
         updateAll(window, gameOptions);
-        if(collisionManager.checkCollisions()){
+        if(collisionManager.checkCollisions() || ownSpaceShip.getLifes() == 0){
+            backgroundMusic.stop();
+            bossMusic.stop();
+            if (gameOptions->name.length() > 0) {
+                std::ofstream myfile;
+                myfile.open("Resources/rankings.txt", std::ofstream::app);
+                if (myfile.is_open())
+                {
+                    myfile << gameOptions->name << "\n";
+                    myfile << "-Score: " << score.get_score() << "pts\n";
+                    myfile << "-Level: " << score.getLevel() << "\n";
+                    myfile << "\n";
+                    myfile.close();
+                }
+            }
             return 2;
         }
+        
         //update score         collisionManager.getLastScore();
         score.add_score(collisionManager.getLastScore());
         loadEnemies();
@@ -243,26 +285,34 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
         score.BossTimeCheck();
 
-        if(score.isBossTime()){
-            if(score.getcreateBoss()){
+        if(score.isBossTime()) {
+            if (score.getcreateBoss()) {
                 backgroundMusic.stop();
                 bossMusic.play();
 
                 cout << "viene el boss" << endl;
-                Boss.BossInit(score.getLevel(),&enemyList,&enemyBulletList);
+                Boss.BossInit(score.getLevel(), &enemyList, &enemyBulletList);
                 score.createbossOff();
             }
             Boss.life_refresh();
             Boss.lifeRender(window);
-            if(Boss.isdead()){
+            if (Boss.isdead()) {
                 score.add_score(1000);
                 bossMusic.stop();
                 backgroundMusic.play();
-                score.BossTime=false;
-                cout << "boss ha muerto"<<endl;
+                score.BossTime = false;
+                cout << "boss ha muerto" << endl;
                 score.nextlevelReached();
-                cout << "ahora esta en el nivel: "<< score.getLevel()<< endl;
-                cout << "proximo boss al score de: "<< score.nextBoss_score;
+                cout << "ahora esta en el nivel: " << score.getLevel() << endl;
+                cout << "proximo boss al score de: " << score.nextBoss_score;
+
+                levelupClock.restart();
+                if (!levelflag) levelflag = true;
+            }
+        }
+        if (  levelupClock.getElapsedTime().asSeconds()<=2){
+            if (levelflag and (int)levelupClock.getElapsedTime().asMilliseconds() % 2 ==0){
+                score.show_levelup(window);
             }
         }
 
@@ -272,7 +322,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
             scoreClock.restart().asMilliseconds();
         }
 
-        if (score.checklifes %1000 >=1){
+        if (score.checklifes >=5000){
             score.checklifes =0;
             ownSpaceShip.addlife();
         }

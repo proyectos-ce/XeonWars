@@ -123,8 +123,13 @@ void Enemy::setEnemy_score(int score) {
     enemy_score = score;
 }
 
+bool Enemy::isBoss() const {
+    return boss;
+}
 
-
+void Enemy::setIsBoss(bool isBoss) {
+    Enemy::boss = isBoss;
+}
 
 
 namespace EnemyFactory {
@@ -276,6 +281,7 @@ Enemy *createBoss(int level, int scale, int yMovement)
     newEnemy->setSpeed(3);
     newEnemy->setTrigger(80);
     newEnemy->setLife(150*level);
+    newEnemy->setIsBoss(true);
     //newEnemy->setLife(4*(level+1));
     return newEnemy;
 

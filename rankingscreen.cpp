@@ -1,20 +1,30 @@
 //
-// Created by joseph on 4/21/17.
+// Created by joseph on 4/22/17.
 //
 
-#include "creditsScreen.h"
+#include "rankingscreen.h"
 
-CreditsScreen::CreditsScreen() {
+RankingScreen::RankingScreen() {
     if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
     {
         std::cerr << "Error loading 8bit.ttf" << std::endl;
     }
 
-    creditsFile.open("Resources/credits.txt");
+
 
     backgroundMusic.openFromFile("Resources/credits.ogg");
     backgroundMusic.setLoop(true);
     backgroundMusic.setVolume(100);
+
+
+
+}
+
+int RankingScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options *gameOptions) {
+
+    creditsFile.open("Resources/rankings.txt");
+    creditsStr = "";
+
 
     if (creditsFile.is_open()) {
         while (getline(creditsFile, line)) {
@@ -22,12 +32,9 @@ CreditsScreen::CreditsScreen() {
         }
         creditsFile.close();
     } else {
-        creditsStr = "ERROR: COULDN'T OPEN CREDITS.TXT";
+        creditsStr = "ERROR: COULDN'T OPEN RANKINGS.TXT";
     }
 
-}
-
-int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options *gameOptions) {
     const int SCREEN_WIDTH = window.getSize().x;
     const int SCREEN_HEIGHT = window.getSize().y;
     const float scale = 0.8; /// I used 0.8 so you have space for the title(top) and a "back" button (bottom)
@@ -40,7 +47,7 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
     creditsView.setViewport(sf::FloatRect(0, (1 - scale) / 2, scale, scale));
 
     ///Title
-    sf::Text titleCredit("Credits", classicFont, SCREEN_HEIGHT / 12);
+    sf::Text titleCredit("High scores", classicFont, SCREEN_HEIGHT / 12);
     titleCredit.setPosition( ( SCREEN_WIDTH - titleCredit.getGlobalBounds().width) / 2, 0);
     titleCredit.setColor(sf::Color::White);
 
@@ -52,16 +59,9 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
     creditText.setColor(sf::Color::White);
 
     ///Such as this one
-    sf::Text creditText2("Dedicado a Isaac Ramirez", classicFont, SCREEN_WIDTH / 16);
+    sf::Text creditText2("Press any key to exit", classicFont, SCREEN_WIDTH / 16);
     creditText2.setPosition( ( SCREEN_WIDTH * invScale - creditText2.getGlobalBounds().width) / 2, creditText.getGlobalBounds().top + creditText.getGlobalBounds().height + 50);
     creditText2.setColor(sf::Color::Red);
-
-    sf::Sprite isaacPhoto;
-    sf::Texture isaacTexture;
-    isaacTexture.loadFromFile("Resources/isaac.jpg");
-    isaacPhoto.setTexture(isaacTexture);
-    isaacPhoto.setPosition( ( SCREEN_WIDTH * invScale - isaacPhoto.getGlobalBounds().width) / 2, creditText2.getGlobalBounds().top + creditText2.getGlobalBounds().height + 35);
-
 
     while (running) {
         while (window.pollEvent(event)){
@@ -79,7 +79,7 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
         time = clock.getElapsedTime();
 
         ///Move the credits upward. You may want this to be tied to a sf::Clock/sf::Time and move it taking into account the delta time
-        creditsView.move(0, SCREEN_HEIGHT * 0.00015 * time.asMilliseconds());
+        creditsView.move(0, SCREEN_HEIGHT * 0.00030 * time.asMilliseconds());
         ///Reset the view if they go "too far"
         if(creditsView.getCenter().y > SCREEN_HEIGHT * 2 + creditText.getGlobalBounds().height + creditText2.getGlobalBounds().height){
             creditsView.setCenter(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -90,7 +90,6 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
         window.setView(creditsView);
         window.draw(creditText);
         window.draw(creditText2);
-        window.draw(isaacPhoto);
         ///set the default view, so that the title doesn't get moved and then show the title
         window.setView(window.getDefaultView());
         window.draw(titleCredit);

@@ -99,6 +99,7 @@ void EnemyReader::reset()
     txtFile.open("Resources/Enemies.txt");
 }
 
+
 std::vector<Enemy *> EnemyReader::getNextEnemySet()
 {
     std::vector<Enemy *> enemySet;

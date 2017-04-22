@@ -11,6 +11,7 @@
 #include "cannon.h"
 #include "motion.h"
 #include "ScoreManager.h"
+#include "options.h"
 
 using namespace sf;
 
@@ -25,6 +26,7 @@ public:
     void playerShoot();
     void checkShieldTimer();
     void lifeManager(int);
+    bool attack(int damage);
 
 
     std::vector<Bullet *> *getbulletList() const;
@@ -32,7 +34,6 @@ public:
 
 
     //const Sprite &getSprite();
-    bool attack(int damage);
     int getLifeLevel() const;
     int getLifes() const;
     void setLifes(int numLifes);
@@ -62,6 +63,10 @@ public:
     void setDirectionLeft();
     void setDirectionRight();
 
+    void reset();
+
+    void loseLife();
+
 private:
     bool missiles_On =false;
     bool laser_On= false;
@@ -84,6 +89,10 @@ private:
     int lifes;
     int lifeLevel=100;
     int blinkAnimationCounter = 0;
+public:
+    int getBlinkAnimationCounter() const;
+
+private:
     int frameCounter = 0;
     int globalScore;
     int scoreForLifes;
@@ -101,6 +110,21 @@ private:
     void updateTexture(int value);
     void updateEffect(int value);
 
+    Options* gameOptions;
+
+    bool exploding = false;
+
+    int currentExplosionTexture = 0;
+    int explosionAmount = 19;
+    sf::Texture* explosionTexture;
+
+    int rectX, rectY;
+public:
+    Options *getGameOptions() const;
+
+    void setGameOptions(Options *gameOptions);
+
+private:
 
 
     const float speed = 6;

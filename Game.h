@@ -20,6 +20,8 @@
 #include "Utils.h"
 #include "collisionmanager.h"
 #include "enemyReader.h"
+#include <fstream>
+
 
 
 enum Direction {LEFT, RIGHT, UP, DOWN, CENTER};
@@ -41,7 +43,8 @@ private:
     Clock shootClock;
     Clock scoreClock;
     Clock gameClock;
-
+    Clock levelupClock;
+    bool levelflag;
     MainSpaceShip ownSpaceShip;
     Background background = Background(1,0.1);
     Background backstars = Background(0,0.05);
@@ -60,6 +63,11 @@ private:
     BossManager Boss;
     void eraseAll();
     EnemyReader enemyReader;
+
+    sf::Sprite shipIcon;
+    sf::Texture shipIconTexture;
+    sf::Text livesLeft;
+    sf::Font classicFont;
 
     string statsTxt;
     size_t currentRss;

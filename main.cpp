@@ -55,6 +55,8 @@ int main(){
     screens.push_back(&optionsScreen);
     CreditsScreen creditsScreen;
     screens.push_back(&creditsScreen);
+    RankingScreen rankingScreen;
+    screens.push_back(&rankingScreen);
 
     Texture pauseTexture;
 
@@ -64,11 +66,11 @@ int main(){
     {
         if (screen == 3)
             game.pauseGame();
-        screen = screens[screen]->run(window, pauseTexture, gameOptions);
-
         if (screen == 0) {
             game.restartGame();
         }
+        screen = screens[screen]->run(window, pauseTexture, gameOptions);
+
     }
 
     return EXIT_SUCCESS;

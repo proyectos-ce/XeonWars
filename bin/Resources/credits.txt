@@ -1,8 +1,29 @@
-Idea original:
-Joseph Vargas
-
 Programacion:
-Joseph Vargas
+-Daniel Castro
+-Ignacio Mora
+-Gustavo Segura
+-Jimena Salas
+-Joseph Vargas
 
 Diseno:
-Joseph Vargas
+-Daniel Castro
+-Gustavo Segura
+
+Aplicacion Movil:
+-Ignacio Mora
+
+Diseno de menus y GUI:
+- Joseph Vargas
+
+Librerias usadas:
+- SFML
+- Mosquitto
+- MQTT
+
+Instituto Tecnologico de 
+Costa Rica
+
+Algoritmos y Estructuras de 
+datos II
+
+I Semestre 2017
