@@ -108,8 +108,6 @@ bool CollisionManager::checkCollisions()
             //collisionSound.play();
             playerPowerUpsQueue->enqueue(powerUpList->operator[](i)->getPowerup());
             deletePowerUp(powerUpList,i);
-
-
             i--;
         }
         i++;
@@ -222,3 +220,6 @@ void CollisionManager::deletePowerUp(std::vector<FlyingPowerUp *> *list, int ind
     delete (list->operator [](index));
     list->erase(list->begin()+index);
 }
+
+
+

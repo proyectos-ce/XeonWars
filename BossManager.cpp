@@ -35,10 +35,11 @@ BossManager::BossManager(){
 };
 void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector<Bullet *> *enemyBulletList) {
     Enemy *Boss = EnemyFactory::createBoss(level,200,50);
-    Boss->setScale(0.2);
+    //Boss->setScale(0.2);
     Boss->setBulletList(enemyBulletList);
     enemyList->push_back(Boss);
-    Boss->setPosition(sf::Vector2f(600,-100));
+    Boss->setPosition(sf::Vector2f(600,-200));
+    //Boss->setPosition(sf::Vector2f(600,-300));
     initialBosslife=Boss->getLife();
     BossPTR= Boss;
     BossLevel=level;

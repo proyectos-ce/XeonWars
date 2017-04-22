@@ -313,6 +313,9 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
 
         updateAll(window, gameOptions);
+        //setPowerUpList();
+        setUpPowerUpIcon();
+
         if(collisionManager.checkCollisions() || ownSpaceShip.getLifes() == 0){
             backgroundMusic.stop();
             bossMusic.stop();
