@@ -138,6 +138,7 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
             }
             lifeLevel=100;
         }
+
     } else {
 
     checkShieldTimer();
