@@ -11,7 +11,7 @@
 class PauseScreen : public Screen {
 public:
     PauseScreen();
-    int run(sf::RenderWindow &window, sf::Texture &pauseScreen);
+    int run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options* gameOptions);
 private:
     bool running = true;
     int menu = 0;

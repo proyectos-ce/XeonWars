@@ -7,10 +7,53 @@
 
 #include "Utils.h"
 #include "ConnectionManager.h"
+#include "memory.h"
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;
     ownSpaceShip.setbulletList(&playerbulletList);
+    backgroundMusic.openFromFile("Resources/music2.ogg");
+    backgroundMusic.setLoop(true);
+    backgroundMusic.setVolume(20);
+    //backgroundMusic.play();
+    collisionManager.setEnemyList(&enemyList);
+    collisionManager.setPlayerShip(&ownSpaceShip);
+    collisionManager.setPlayerBulletList(&playerbulletList);
+    collisionManager.setEnemyBulletList(&enemyBulletList);
+    /*
+    Enemy *newEnemy;
+
+    newEnemy = EnemyFactory::createJet(2,45);
+    newEnemy->setCenterPosition(sf::Vector2f(100,-100));
+    newEnemy->setBulletList(&enemyBulletList);
+    enemyList.push_back(newEnemy);
+
+    newEnemy = EnemyFactory::createBomber(2,200);
+    newEnemy->setCenterPosition(sf::Vector2f(200*2,-100));
+    newEnemy->setBulletList(&enemyBulletList);
+
+    enemyList.push_back(newEnemy);
+
+
+    newEnemy = EnemyFactory::createTower(2, 2);
+    newEnemy->setCenterPosition(sf::Vector2f(200*3,-100));
+    newEnemy->setBulletList(&enemyBulletList);
+    enemyList.push_back(newEnemy);
+
+    newEnemy = EnemyFactory::createMissileTower(2, ownSpaceShip.getSpriteReference(),2);
+    newEnemy->setCenterPosition(sf::Vector2f(200*4,-100));
+    newEnemy->setBulletList(&enemyBulletList);
+    enemyList.push_back(newEnemy);
+
+    newEnemy = EnemyFactory::createKamikaze(2, ownSpaceShip.getSpriteReference());
+    newEnemy->setCenterPosition(sf::Vector2f(200*5,-100));
+    newEnemy->setBulletList(&enemyBulletList);
+    enemyList.push_back(newEnemy);
+    */
+    enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
+
+    gameClock.restart().asSeconds();
+
 
 }
 
@@ -19,7 +62,7 @@ void Game::pauseGame() {
     std::cout << running << std::endl;
 }
 
-void Game::updateAll(RenderWindow &window)
+void Game::updateAll(RenderWindow &window, Options* gameOptions)
 {
     background.update(window, time.asMilliseconds());
     background.render(window);
@@ -57,9 +100,18 @@ void Game::updateAll(RenderWindow &window)
         }
     }
 
+
+
     ownSpaceShip.update(window, time.asMilliseconds());
     ownSpaceShip.render(window);
 
+
+
+    stats.setString("Memoria: " + std::to_string(getCurrentRSS() / 1024 /1024) + "MB \nTiempo: " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + " S");
+
+    if (gameOptions->showStats) {
+        window.draw(stats);
+    }
 
 
 
@@ -90,43 +142,38 @@ void Game::eraseAll()
 
 
 
-int Game::run(RenderWindow &window, Texture &tex) {
 
-    CollisionManager collisionManager;
-    collisionManager.setEnemyList(&enemyList);
-    collisionManager.setPlayerShip(&ownSpaceShip);
-    collisionManager.setPlayerBulletList(&playerbulletList);
-    collisionManager.setEnemyBulletList(&enemyBulletList);
+int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
 
+    backgroundMusic.play();
 
-    Enemy *newEnemy;
-    newEnemy = EnemyFactory::createJet(2,&enemyList,&enemyBulletList);
-    newEnemy->setCenterPosition(sf::Vector2f(100,-100));
+    sf::Font classicFont;
 
-    newEnemy = EnemyFactory::createBomber(2,&enemyList,&enemyBulletList);
-    newEnemy->setCenterPosition(sf::Vector2f(200*2,-100));
+    if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
+    {
+        std::cerr << "Error loading 8bit.ttf" << std::endl;
+        return (-1);
+    }
 
-    newEnemy = EnemyFactory::createTower(2,&enemyList,&enemyBulletList, 2);
-    newEnemy->setCenterPosition(sf::Vector2f(200*3,-100));
-
-    newEnemy = EnemyFactory::createMissileTower(2,&enemyList,&enemyBulletList, ownSpaceShip.getSpriteReference(),2);
-    newEnemy->setCenterPosition(sf::Vector2f(200*4,-100));
-
-    newEnemy = EnemyFactory::createKamikaze(2,&enemyList,&enemyBulletList, ownSpaceShip.getSpriteReference());
-    newEnemy->setCenterPosition(sf::Vector2f(200*5,-100));
+    stats.setFont(classicFont);
+    stats.setCharacterSize(20);
+    stats.setColor(sf::Color::White);
+    stats.setPosition(25, 55 );
 
 
-
-
-
-    backgroundMusic.openFromFile("Resources/music2.ogg");
-    backgroundMusic.setLoop(true);
-    //backgroundMusic.play();
     std::cout << running << std::endl;
 
     running = true;
     clock.restart().asMilliseconds();
+    std::cout<<"testastast"<<std::endl;
+    std::vector<Enemy *> newEnemySet = enemyReader.getNextEnemySet();
+    for (int i = 0; i < newEnemySet.size(); ++i) {
+        newEnemySet[i]->setBulletList(&enemyBulletList);
+        enemyList.push_back(newEnemySet[i]);
+        //newEnemySet[i]->setCenterPosition(sf::Vector2f(500,-100));
+    }
+
 
     while (running) {
 
@@ -152,7 +199,7 @@ int Game::run(RenderWindow &window, Texture &tex) {
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
-                eraseAll();
+                //eraseAll();
                 return (3);
 
             }
@@ -185,33 +232,56 @@ int Game::run(RenderWindow &window, Texture &tex) {
 
 
 
-        updateAll(window);
+        updateAll(window, gameOptions);
         if(collisionManager.checkCollisions()){
             return 2;
         }
+        //update score         collisionManager.getLastScore();
+
+
+
+
+
 
 
         clock.restart().asMilliseconds();
 
-        ownSpaceShip.score.BossTimeCheck();
+        score.BossTimeCheck();
 
-        if(ownSpaceShip.score.isBossTime()){
-            if(ownSpaceShip.score.getcreateBoss()){
+        if(score.isBossTime()){
+            if(score.getcreateBoss()){
+                backgroundMusic.stop();
+                bossMusic.openFromFile("Resources/BackgroundMusic.ogg");
+                bossMusic.setLoop(true);
+                bossMusic.play();
+
                 cout << "viene el boss" << endl;
-                ownSpaceShip.score.setBossOn();
-                ownSpaceShip.score.createbossOff();
+                Boss.BossInit(score.getLevel(),&enemyList,&enemyBulletList);
+                score.createbossOff();
             }
-            ownSpaceShip.score.Boss.lifeRender(window);
-            if(ownSpaceShip.score.Boss.isdead()){
-                ownSpaceShip.score.BossTime=false;
-                ownSpaceShip.score.nextlevelReached();
+            Boss.life_refresh();
+            Boss.lifeRender(window);
+            if(Boss.isdead()){
+                score.add_score(1000);
+                bossMusic.stop();
+                backgroundMusic.play();
+                score.BossTime=false;
+                cout << "boss ha muerto"<<endl;
+                score.nextlevelReached();
+                cout << "ahora esta en el nivel: "<< score.getLevel()<< endl;
+                cout << "proximo boss al score de: "<< score.nextBoss_score;
             }
         }
 
-        ownSpaceShip.score.scoreRender(window);
+        score.scoreRender(window);
         if(scoreClock.getElapsedTime().asMilliseconds()>500) {
-            ownSpaceShip.score.add_score(1);
+            score.add_score(1);
             scoreClock.restart().asMilliseconds();
+        }
+
+        if (score.checklifes %1000 >=1){
+            score.checklifes =0;
+            ownSpaceShip.addlife();
         }
 
         window.display();

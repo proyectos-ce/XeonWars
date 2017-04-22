@@ -9,9 +9,11 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include "enemy.h"
+#include "entity.h"
 //#include "enemyParameters.h"
 
-class enemyParameters{
+class EnemyParameters{
 public:
     int getLevel() const;
     void setLevel(int value);
@@ -36,19 +38,32 @@ private:
     float movement;
 };
 
-class enemyReader{
+
+
+
+class EnemyReader{
+
 private:
     int currentLevel;
     int quantityOfEnemiesToRead;
+    std::vector<EnemyParameters> readEnemyFile();
+    Enemy *createEnemy(EnemyParameters enemyParameters);
+    sf::Sprite *playerSprite;
+
 
 public:
-    enemyReader();
+    EnemyReader();
     int getCurrentLevel();
-    std::vector<enemyParameters> enemyParametersVector;
-
+    std::ifstream txtFile;
     void setCurrentLevel(int numLevel);
-    void readEnemyFile();
+    std::string setDivider = "%";
+    std::string enemyDivider = "\n";
+    std::string parameterDivider = "/";
+    std::vector<Enemy *> getNextEnemySet();
+    //void getNextEnemySet();
 
+    sf::Sprite *getPlayerSprite() const;
+    void setPlayerSprite(sf::Sprite *value);
 };
 
 

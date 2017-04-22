@@ -4,6 +4,7 @@
 
 
 #include "ScoreManager.h"
+#include "Game.h"
 #include <iostream>
 using namespace std;
 
@@ -12,7 +13,8 @@ ScoreManager::ScoreManager(){
     BossTime = false;
     createBoss = false;
     currentLevel = 1;
-    nextBoss_score=50;
+    nextBoss_score=1500;
+    checklifes=0;
     if (!font.loadFromFile("Resources/menu/8bit.ttf"))
     {
         cout << "error with the font" << endl;
@@ -38,8 +40,10 @@ bool ScoreManager::getcreateBoss() {
 void ScoreManager::createbossOff(){
     createBoss=false;
 }
+
 void ScoreManager::add_score(int score) {
     GeneralScore+=score;
+    checklifes+= score;
 }
 bool ScoreManager::isBossTime(){
     bool result = false;
@@ -50,11 +54,9 @@ void ScoreManager::BossTimeCheck(){
     if (get_score()>=nextBoss_score) {
         BossTime = true;
         createBoss = true;
-        nextBoss_score += 10000;
+        nextBoss_score *= 2.5;
+        nextBoss_score += 1000;
     }
-}
-void ScoreManager::setBossOn(){
-    Boss.BossInit(getLevel());
 }
 int ScoreManager::getLevel() {
     return currentLevel;
@@ -63,7 +65,6 @@ void ScoreManager::nextlevelReached() {
     currentLevel+=1;
 }
 void ScoreManager::scoreRender(sf::RenderWindow &window){
-    //cout << "show score render" << endl;
     text.setString("Score: "+to_string(GeneralScore));
     window.draw(text);
 }

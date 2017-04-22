@@ -6,15 +6,16 @@
 #include "ConnectionManager.h"
 #include <time.h>
 #include "enemyReader.h"
-
+#include "options.h"
 
 using namespace sf;
 
 
 int main(){
+    //EnemyReader e;
+    //e.getCurrentLevel();
+    //e.getNextEnemySet();
 
-    enemyReader e;
-    e.readEnemyFile();
 
 
     std::vector<Screen*> screens;
@@ -29,6 +30,10 @@ int main(){
     //icon.loadFromFile("Resources/menu/icon.png");
     //window.setIcon(256,256,icon.getPixelsPtr());
     //window.requestFocus();
+
+
+    Options* gameOptions = new Options();
+
 
     //Screens preparations
     Menu menu;
@@ -47,6 +52,8 @@ int main(){
     screens.push_back(&gameOverScreen);
     PauseScreen pauseScreen;
     screens.push_back(&pauseScreen);
+    OptionsScreen optionsScreen;
+    screens.push_back(&optionsScreen);
 
     Texture pauseTexture;
 
@@ -59,7 +66,7 @@ int main(){
         if (screen == 0) {
             Game* game = new (gameMemory) Game();
         }
-        screen = screens[screen]->run(window, pauseTexture);
+        screen = screens[screen]->run(window, pauseTexture, gameOptions);
     }
 
     return EXIT_SUCCESS;

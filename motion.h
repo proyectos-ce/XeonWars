@@ -33,10 +33,10 @@ class SimpleMotion : public Motion{
 class LinearMotion : public Motion{
 
    public:
-    LinearMotion(double angle);
+    LinearMotion(float angle);
     sf::Vector2f getNext(float speed);
    protected:
-    double angle;
+    float angle;
 };
 
 class SinMotion : public Motion{
@@ -65,7 +65,7 @@ protected:
 namespace MotionFactory{
 
      Motion *createSimpleMotion();
-     Motion *createLinearMotion(double angle);
+     Motion *createLinearMotion(float angle);
      Motion *createSinMotion(int scale);
      Motion *createFollowerMotion(sf::Sprite *owner,sf::Sprite *target);
 }
