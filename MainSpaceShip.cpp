@@ -415,16 +415,7 @@ bool MainSpaceShip::attack(int damage)
         updateEffect(0);
     }
     else{
-<<<<<<< HEAD
-        setLifeLevel(lifeLevel-damage);
-        doDamageAnimation();
-        if(lifeLevel<=0){
-            lifes-=1;
-            powerUpsQueue.dequeueAll();
-            lifeLevel=100;
-            if(lifes<=0){
-            result = true;
-=======
+
         if (blinkAnimationCounter == 0) {
             setLifeLevel(lifeLevel-damage*2);
             doDamageAnimation();
@@ -433,7 +424,7 @@ bool MainSpaceShip::attack(int damage)
                 if(lifes<=0){
                 result = true;
                 }
->>>>>>> 987d9530c81f53e8cb967c0bc901be5802e39ad6
+
             }
         }
     }
