@@ -42,6 +42,9 @@ public:
     Queue<powerUp> *getPlayerPowerUpsQueue() const;
     void setPlayerPowerUpsQueue(Queue<powerUp> *value);
 
+    void *getUpdatePowerUpsLabel() const;
+    void setUpdatePowerUpsLabel(void *value);
+
 private:
     int lastScore=0;
     std::vector<Enemy *> *enemyList;

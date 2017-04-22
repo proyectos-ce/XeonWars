@@ -239,7 +239,7 @@ SpritesManager::SpritesManager()
     towerTexture.loadFromFile("Resources/Tower.png");
     missileTowerTexture.loadFromFile("Resources/MissileTower.png");
     kamikazeTexture.loadFromFile("Resources/Kamikaze.png");
-    bossTexture.loadFromFile("Resources/Boss1.png");
+    bossTexture.loadFromFile("Resources/Boss.png");
 
 
     playerBulletTexture.loadFromFile("Resources/Bullets.png");
