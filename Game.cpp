@@ -105,7 +105,7 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
 
 void Game::loadEnemies()
 {
-    if(enemyList.size()<minEnemyQuantity){
+    if(!score.BossTime && enemyList.size()<minEnemyQuantity){
     std::vector<Enemy *> newEnemySet = enemyReader.getNextEnemySet();
     for (int i = 0; i < newEnemySet.size(); ++i) {
         newEnemySet[i]->setBulletList(&enemyBulletList);
@@ -280,7 +280,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
             scoreClock.restart().asMilliseconds();
         }
 
-        if (score.checklifes %1000 >=1){
+        if (score.checklifes >=5000){
             score.checklifes =0;
             ownSpaceShip.addlife();
         }
