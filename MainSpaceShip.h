@@ -107,7 +107,7 @@ private:
     Clock shieldClock;
     Clock laserClock;
     std::vector<Bullet *> *bulletList;
-    int texturesAmount=7;
+    int texturesAmount=8;
     int defaultTexture=1;
     void updateTexture(int value);
     void updateEffect(int value);
@@ -124,6 +124,9 @@ private:
 public:
     Options* getGameOptions() const;
     void setGameOptions(Options *gameOptions);
+
+    bool getLaser_On() const;
+    void setLaser_On(bool value);
 
 private:
     const float speed = 6;

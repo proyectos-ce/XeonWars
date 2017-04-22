@@ -126,6 +126,8 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
     for (int i = 0; i < playerbulletList.size(); ++i) {
         playerbulletList[i]->update(window, time.asMilliseconds());
         playerbulletList[i]->render(window);
+        //playerbulletList[i]->getSpriteReference()->scale(1,2);
+
         if( playerbulletList[i]->getPosition().y <= 0 | playerbulletList[i]->getPosition().x >= 2000 | playerbulletList[i]->getPosition().x <= -500){
             delete playerbulletList.operator[](i);
             playerbulletList.erase(playerbulletList.begin()+i);

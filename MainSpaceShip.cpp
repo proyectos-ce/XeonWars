@@ -65,12 +65,19 @@ MainSpaceShip::MainSpaceShip() {
     missileCannon->setBulletSpeed(6);
     missileCannon->setReverseDirection(true);
     missileCannon->setBulletTexture(&missileCannonTexture);
+
+    laserCannon= CannonFactory::createLaserCannon();
+    laserCannon->setOwnerSprite(&SOwnSpaceShip);
+    laserCannon->setBulletDamage(20);
+    laserCannon->setBulletSpeed(20);
+    laserCannon->setReverseDirection(1);
+    laserCannon->setBulletTexture(&shipCannonTexture);
     //missileCannon->setBulletTextureFilename("Resources/Missiles.png");
     //missileCannon->setBulletTextureFilename("Resources/Bullets.png");
 
 
-    explosionTexture = SpritesManager::getInstance()->getExplosionTexture();
-    rectX = (explosionTexture->getSize().x/explosionAmount), rectY = explosionTexture->getSize().y;
+    //explosionTexture = SpritesManager::getInstance()->getExplosionTexture();
+    //rectX = (explosionTexture->getSize().x/explosionAmount), rectY = explosionTexture->getSize().y;
 
 }
 
@@ -86,6 +93,7 @@ void MainSpaceShip::setbulletList(std::vector<Bullet *> *value)
     bulletList = value;
     shipCannon->setBulletList(bulletList);
     missileCannon->setBulletList(bulletList);
+    laserCannon->setBulletList(bulletList);
 }
 void MainSpaceShip::lifeManager(int damage){
     lifeLevel-=damage;
@@ -104,7 +112,6 @@ void MainSpaceShip::reset() {
     isWhite = false;
     shieldActivated = false;
     exploding = false;
-    currentExplosionTexture = 0;
     powerUpOn = false;
     globalScore = 0;
 
@@ -298,14 +305,7 @@ void MainSpaceShip::shield() {
 }
 
 void MainSpaceShip::laser(){
-    if(laser_On ==false){
-        laser_On=true;
-        powerUpOn = true;
-        laserClock.restart();
-    }else{
-        laser_On=false;
-        powerUpOn= false;
-    }
+    setLaser_On(true);
 }
 
 bool MainSpaceShip::gameOver() {
@@ -414,7 +414,7 @@ void MainSpaceShip::playerShoot() {
         }
     } else if (laser_On){
         sound.setBuffer(missileShootBuffer);
-        //missileCannon->shoot();
+        laserCannon->shoot();
     } else {
 
         shipCannon->shoot();
@@ -434,6 +434,26 @@ void MainSpaceShip::loseLife() {
 Queue<powerUp> *MainSpaceShip::getPowerUpsQueueReference()
 {
     return &powerUpsQueue;
+}
+
+bool MainSpaceShip::getLaser_On() const
+{
+    return laser_On;
+}
+
+void MainSpaceShip::setLaser_On(bool value)
+{
+    laser_On = value;
+
+    if(laser_On){
+        powerUpOn = true;
+        updateEffect(3);
+
+    }
+    else{
+        updateEffect(0);
+        powerUpOn = false;
+    }
 }
 bool MainSpaceShip::attack(int damage)
 {

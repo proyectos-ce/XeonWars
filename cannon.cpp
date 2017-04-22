@@ -24,6 +24,7 @@ void Cannon::shootBullet(int speed, Motion *bulletMotion, float angle)
     newBullet->setScale(0.2);
     newBullet->setCenterPosition(getCenterPosition());
     newBullet->rotate(angle*getDirection()+(180*reverseDirection));
+    newBullet->setIsLaser(isLaser);
     if(bulletList==NULL){
         std::cout<<"ERROR nullptr"<<std::endl;
     }
@@ -69,6 +70,16 @@ int Cannon::getDirection()
         direction=-1;
     }
     return direction;
+}
+
+bool Cannon::getIsLaser() const
+{
+    return isLaser;
+}
+
+void Cannon::setIsLaser(bool value)
+{
+    isLaser = value;
 }
 
 bool Cannon::getReverseDirection() const
@@ -190,6 +201,14 @@ Cannon *createFollowerCannon(sf::Sprite *owner, sf::Sprite *target)
     return new FollowerCannon(owner, target);
 }
 
+Cannon *createLaserCannon()
+{
+    Cannon *newCannon =  new SimpleCannon();
+    newCannon->setIsLaser(true);
+    return newCannon;
+}
+
+
 }
 
 FollowerCannon::FollowerCannon(sf::Sprite *owner, sf::Sprite *target)
@@ -201,7 +220,7 @@ FollowerCannon::FollowerCannon(sf::Sprite *owner, sf::Sprite *target)
 
 void FollowerCannon::shoot()
 {
-        shootBullet(bulletSpeed);
+    shootBullet(bulletSpeed);
 }
 
 sf::Sprite *FollowerCannon::getOwner() const

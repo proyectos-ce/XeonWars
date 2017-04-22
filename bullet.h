@@ -14,11 +14,13 @@ public:
     void setDamage(int value);
     void animate(float passedTime);
     void update(sf::RenderWindow &window, float time);
-
+    bool getIsLaser() const;
+    void setIsLaser(bool value);
 
 private:
     int damage;
     float time=0;
+    bool isLaser=false;
 };
 
 #endif // BULLET_H
