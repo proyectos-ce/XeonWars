@@ -28,6 +28,8 @@ Game::Game() {
     collisionManager.setPlayerShip(&ownSpaceShip);
     collisionManager.setPlayerBulletList(&playerbulletList);
     collisionManager.setEnemyBulletList(&enemyBulletList);
+    collisionManager.setPowerUpList(&powerUpList);
+    collisionManager.setExplosionList(&explosionList);
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
 
 
@@ -45,7 +47,7 @@ Game::Game() {
 
 
 
-    powerUpList.push_back(PowerUpFactory::createLaserPU(sf::Vector2f(100,200)));
+    //powerUpList.push_back(PowerUpFactory::createLaserPU(sf::Vector2f(100,200)));
     //powerUpList.push_back(PowerUpFactory::createLaserPU(sf:vector(100,200)));
     //powerUpList.push_back(PowerUpFactory::createLaserPU(sf:vector(100,200)));
 
@@ -75,6 +77,16 @@ std::vector<FlyingPowerUp *> Game::getPowerUpList() const
 void Game::setPowerUpList(const std::vector<FlyingPowerUp *> &value)
 {
     powerUpList = value;
+}
+
+std::vector<Explosion *> Game::getExplosionList() const
+{
+    return explosionList;
+}
+
+void Game::setExplosionList(const std::vector<Explosion *> &value)
+{
+    explosionList = value;
 }
 
 void Game::updateAll(RenderWindow &window, Options* gameOptions)
@@ -118,18 +130,25 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
             playerbulletList.erase(playerbulletList.begin()+i);
             i--;
 
+        } 
+    }
+    for (int i = 0; i < powerUpList.size(); ++i) {
+        powerUpList[i]->update(window, time.asMilliseconds());
+        powerUpList[i]->render(window);
+        if( powerUpList[i]->getPosition().y >= 900 | powerUpList[i]->getPosition().x >= 2000 | powerUpList[i]->getPosition().x <= -500){
+            delete powerUpList.operator[](i);
+            powerUpList.erase(powerUpList.begin()+i);
+            i--;
         }
 
-
-        for (int i = 0; i < powerUpList.size(); ++i) {
-            powerUpList[i]->update(window, time.asMilliseconds());
-            powerUpList[i]->render(window);
-            if( powerUpList[i]->getPosition().y >= 900 | powerUpList[i]->getPosition().x >= 2000 | powerUpList[i]->getPosition().x <= -500){
-                delete powerUpList.operator[](i);
-                powerUpList.erase(powerUpList.begin()+i);
-                i--;
-            }
-
+    }
+    for (int i = 0; i < explosionList.size(); ++i) {
+        explosionList[i]->update(window, time.asMilliseconds());
+        explosionList[i]->render(window);
+        if( explosionList[i]->finished()){
+            delete explosionList.operator[](i);
+            explosionList.erase(explosionList.begin()+i);
+            i--;
         }
     }
 

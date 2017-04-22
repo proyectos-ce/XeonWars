@@ -22,6 +22,7 @@
 #include "enemyReader.h"
 #include <fstream>
 #include "flyingpowerup.h"
+#include "explosion.h"
 
 
 
@@ -45,6 +46,9 @@ public:
 
     std::vector<FlyingPowerUp *> getPowerUpList() const;
     void setPowerUpList(const std::vector<FlyingPowerUp *> &value);
+
+    std::vector<Explosion *> getExplosionList() const;
+    void setExplosionList(const std::vector<Explosion *> &value);
 
 private:
     int minEnemyQuantity = 3;
@@ -71,6 +75,7 @@ private:
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
     std::vector<FlyingPowerUp *> powerUpList;
+    std::vector<Explosion *> explosionList;
     BossManager Boss;
     void eraseAll();
     EnemyReader enemyReader;

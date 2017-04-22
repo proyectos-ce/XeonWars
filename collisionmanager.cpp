@@ -47,8 +47,10 @@ bool CollisionManager::checkCollisions()
                     //std::cout<<"bala vs enemigo\n";
                     if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
                         addLastScore(enemyList->operator[](i)->getEnemy_score());
-                        //deleteEnemy(enemyList,i);
-                        enemyList->operator[](i)->explode();
+                        powerUpList->push_back(PowerUpFactory::createLaserPU( enemyList->operator[](i)->getPosition() ));
+                        explosionList->push_back(ExplosionFactory::createSimpleExplosion(enemyList->operator[](i)->getPosition()));
+                        deleteEnemy(enemyList,i);
+                        //enemyList->operator[](i)->explode();
                         deleteBullet(playerBulletList, j);
                         i--;
                         break;
@@ -147,6 +149,26 @@ void CollisionManager::addLastScore(int score)
 void CollisionManager::setLastScore(int value)
 {
     lastScore = value;
+}
+
+std::vector<FlyingPowerUp *> *CollisionManager::getPowerUpList() const
+{
+    return powerUpList;
+}
+
+void CollisionManager::setPowerUpList(std::vector<FlyingPowerUp *> *value)
+{
+    powerUpList = value;
+}
+
+std::vector<Explosion *> *CollisionManager::getExplosionList() const
+{
+    return explosionList;
+}
+
+void CollisionManager::setExplosionList(std::vector<Explosion *> *value)
+{
+    explosionList = value;
 }
 
 void CollisionManager::deleteEnemy(std::vector<Enemy *> *list, int index)

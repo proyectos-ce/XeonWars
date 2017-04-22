@@ -43,6 +43,7 @@ FlyingPowerUp *createMisilePU(sf::Vector2f position, int speed)
     newPU->setSpeed(speed);
     newPU->setTexture(SpritesManager::getInstance()->getMissilePowerUpTexture());
     newPU->setScale(0.2);
+    newPU->setTexturesAmount(2);
     newPU->setSpeed(speed);
 
     return newPU;
@@ -56,6 +57,8 @@ FlyingPowerUp *createLaserPU(sf::Vector2f position, int speed)
     newPU->setPosition(position);
     newPU->setTexture(SpritesManager::getInstance()->getLaserPowerUpTexture());
     newPU->setScale(0.2);
+    newPU->setTexturesAmount(2);
+
     newPU->setSpeed(speed);
 
     return newPU;
@@ -69,6 +72,8 @@ FlyingPowerUp *createShieldPU(sf::Vector2f position, int speed)
     newPU->setPosition(position);
     newPU->setTexture(SpritesManager::getInstance()->getShieldPowerUpTexture());
     newPU->setScale(0.2);
+    newPU->setTexturesAmount(2);
+
     newPU->setSpeed(speed);
     return newPU;
 }

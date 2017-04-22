@@ -5,6 +5,8 @@
 #include "iostream"
 #include "bullet.h"
 #include "enemy.h"
+#include "flyingpowerup.h"
+#include "explosion.h"
 #include"Collision.h"
 class CollisionManager
 {
@@ -31,11 +33,19 @@ public:
 
     void setLastScore(int value);
 
+    std::vector<FlyingPowerUp *> *getPowerUpList() const;
+    void setPowerUpList(std::vector<FlyingPowerUp *> *value);
+
+    std::vector<Explosion *> *getExplosionList() const;
+    void setExplosionList(std::vector<Explosion *> *value);
+
 private:
     int lastScore=0;
     std::vector<Enemy *> *enemyList;
     std::vector<Bullet *> *playerBulletList;
     std::vector<Bullet *> *enemyBulletList;
+    std::vector<FlyingPowerUp *> *powerUpList;
+    std::vector<Explosion *> *explosionList;
     MainSpaceShip *playerShip;
     SoundBuffer collisionSpaceEnemySoundBuffer;
     SoundBuffer collisionBulletEnemySoundBuffer;
