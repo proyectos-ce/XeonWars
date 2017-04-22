@@ -68,7 +68,6 @@ private:
     bool isWhite = false;
     bool shieldActivated = false;
     bool powerUpOn = false;
-
     Sprite SOwnSpaceShip;
     Sprite effectSprite;
     Texture TOwnSpaceShip;
@@ -77,9 +76,7 @@ private:
     Sound shootSound;
     SoundBuffer shieldOnSound;
     SoundBuffer shieldOffSound;
-
     Sound sound;
-
     int missileShootCounter=0;
     int lifes;
     int lifeLevel=100;
@@ -95,18 +92,13 @@ private:
     Cannon *laserCannon;
     Clock shieldClock;
     std::vector<Bullet *> *bulletList;
-
     int texturesAmount=7;
     int defaultTexture=1;
     void updateTexture(int value);
     void updateEffect(int value);
-
-
-
     const float speed = 6;
     const float maxSpeed = speed*10;
     sf::Vector2f velocity;
-
 };
 
 #endif //AIRWAR_MAINSPACESHIP_H
