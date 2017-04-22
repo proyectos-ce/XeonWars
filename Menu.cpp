@@ -13,7 +13,7 @@ Menu::Menu()
     playing = false;
 }
 
-int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
+int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* gameOptions)
 {
     sf::Event event;
     bool running = true;
@@ -26,19 +26,14 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     sf::Text playLabel;
     sf::Text exitLabel;
     sf::Text optionsLabel;
+    sf::Text creditsLabel;
     sf::Text continueLabel;
     sf::Text copyLabel;
     int menu = 0;
 
-    if (!bgTexture.loadFromFile("Resources/menu/presentation.gif"))
+    if (!bgTexture.loadFromFile("Resources/menu/presentation.jpg"))
     {
-        std::cerr << "Error loading presentation.gif" << std::endl;
-        return (-1);
-    }
-
-    if (!verdana.loadFromFile("Resources/menu/verdana.ttf"))
-    {
-        std::cerr << "Error loading verdanab.ttf" << std::endl;
+        std::cerr << "Error loading presentation.jpg" << std::endl;
         return (-1);
     }
 
@@ -65,16 +60,16 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     optionsLabel.setString("Options");
     optionsLabel.setPosition({ 300.f, 400.f });
 
+    creditsLabel.setFont(classicFont);
+    creditsLabel.setCharacterSize(40);
+    creditsLabel.setString("Credits");
+    creditsLabel.setPosition({ 300.f, 450.f });
+
 
     exitLabel.setFont(classicFont);
     exitLabel.setCharacterSize(40);
     exitLabel.setString("Exit");
-    exitLabel.setPosition({ 300.f, 450.f });
-
-    continueLabel.setFont(classicFont);
-    continueLabel.setCharacterSize(40);
-    continueLabel.setString("Continue");
-    continueLabel.setPosition({ 280.f, 160.f });
+    exitLabel.setPosition({ 300.f, 500.f });
 
     logo.setFont(classicFont);
     logo.setCharacterSize(200);
@@ -82,7 +77,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     sf::FloatRect textRect = logo.getLocalBounds();
     logo.setOrigin(textRect.left + textRect.width/2.0f,
                    textRect.top  + textRect.height/2.0f);
-    logo.setPosition({ 1366/2.f, 200.f });
+    logo.setPosition({ window.getSize().x/2.f, 200.f });
 
 
     copyLabel.setFont(classicFont);
@@ -94,11 +89,6 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     copyLabel.setPosition({ 1366/2.0f, 700.f });
 
 
-
-    if (playing)
-    {
-        alpha = alpha_max;
-    }
 
     while (running)
     {
@@ -118,6 +108,8 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
             {
                 switch (event.key.code)
                 {
+                    case sf::Keyboard::Escape:
+                        return -1;
                     case sf::Keyboard::Up:
                         menu--;
                         if (menu<0)
@@ -125,22 +117,19 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
                         break;
                     case sf::Keyboard::Down:
                         menu++;
-                        if (menu>2)
-                            menu = 2;
+                        if (menu>3)
+                            menu = 3;
                         break;
                     case sf::Keyboard::Return:
-                        if (menu == 0)
-                        {
-                            //Let's get play !
-                            playing = true;
+                        if (menu == 0) {
                             return (1);
-                        }
-                        else
-                        {
-                            //Let's get work...
+                        } else if (menu == 1) {
+                            return (4);
+                        } else if (menu == 2) {
+                                return(5);
+                        } else  {
                             return (-1);
                         }
-                        break;
                     default:
                         break;
                 }
@@ -156,22 +145,29 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
         {
             playLabel.setColor(sf::Color(255, 0, 0, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
-            continueLabel.setColor(sf::Color(255, 0, 0, 255));
         }
         else if (menu == 1)
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 0, 0, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
-            continueLabel.setColor(sf::Color(255, 0, 0, 255));
+        }
+        else if (menu == 2)
+        {
+            playLabel.setColor(sf::Color(255, 255, 255, 255));
+            optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 0, 0, 255));
+            exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
         else
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 0, 0, 255));
-            continueLabel.setColor(sf::Color(255, 255, 255, 255));
         }
 
         //Clearing screen
@@ -181,19 +177,11 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
         if (alpha >= alpha_max)
             alpha = alpha_max;
         {
-            if (playing)
-            {
-                bg.setTexture(pauseTexture);
-                alpha = 150;
-                window.draw(continueLabel);
-            }
-            else
-            {
-                window.draw(playLabel);
-                window.draw(copyLabel);
-                window.draw(logo);
-                window.draw(optionsLabel);
-            }
+            window.draw(playLabel);
+            window.draw(copyLabel);
+            window.draw(logo);
+            window.draw(optionsLabel);
+            window.draw(creditsLabel);
             window.draw(exitLabel);
         }
         window.display();

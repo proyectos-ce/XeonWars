@@ -10,40 +10,59 @@ MainSpaceShip::MainSpaceShip() {
     scoreForLifes = 0;
     globalScore = 0;
 
-
-    TOwnSpaceShip.loadFromFile("Resources/FramesNave.png");
+    TOwnSpaceShip.loadFromFile("Resources/PlayerShip.png");
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
-    SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+    effectSprite.setTexture(TOwnSpaceShip);
+
+    //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
     //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
-    SOwnSpaceShip.setPosition(550,720);
+    SOwnSpaceShip.setPosition(550,620);
+    SOwnSpaceShip.setScale(0.25,0.25);
+    effectSprite.setPosition(550,620);
+    effectSprite.setScale(0.25,0.25);
+    updateEffect(0);
+
+
+    normalShootBuffer.loadFromFile("Resources/sfx_laser1.ogg");
+    missileShootBuffer.loadFromFile("Resources/sfx_laser2.ogg");
+
+    shieldOnSound.loadFromFile("Resources/sfx_shieldUp.ogg");
+    shieldOffSound.loadFromFile("Resources/sfx_shieldDown.ogg");
+
     powerUp p1(missile);
     powerUp p2(shieldd);
-    powerUp p3(laser);
+    powerUp p3(missile);
+    //powerUp p4(laser);
+
 
     powerUpsQueue.enqueue(p1);
     powerUpsQueue.enqueue(p2);
     powerUpsQueue.enqueue(p3);
+    //powerUpsQueue.enqueue(p4);
 
 
+    shipCannonTexture.loadFromFile("Resources/Bullets.png");
+    missileCannonTexture.loadFromFile("Resources/Missiles.png");
 
-    shipCannon = CannonFactory::createSprayCannon(3,3);
+    shipCannon = CannonFactory::createSprayCannon(3,1);
+
     shipCannon->setOwnerSprite(&SOwnSpaceShip);
     shipCannon->setBulletDamage(14);
-    shipCannon->setBulletSpeed(3);
+    shipCannon->setBulletSpeed(8);
     shipCannon->setReverseDirection(1);
-    shipCannon->setBulletTextureFilename("Resources/Bullets.png");
+    shipCannon->setBulletTexture(&shipCannonTexture);
+    //shipCannon->setBulletTextureFilename("Resources/Bullets.png");
 
     missileCannon = CannonFactory::createSprayCannon(10,7);
-
     missileCannon->setOwnerSprite(&SOwnSpaceShip);
     missileCannon->setBulletDamage(30);
-    missileCannon->setBulletSpeed(-6);
-
-    missiles_On=false;
-    laser_On= false;
-
+    missileCannon->setBulletSpeed(6);
+    missileCannon->setReverseDirection(true);
+    missileCannon->setBulletTexture(&missileCannonTexture);
+    //missileCannon->setBulletTextureFilename("Resources/Missiles.png");
+    //missileCannon->setBulletTextureFilename("Resources/Bullets.png");
 }
 
 
@@ -72,6 +91,28 @@ void MainSpaceShip::lifeManager(int damage){
 
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
+
+    checkShieldTimer();
+
+    frameCounter++;
+
+    if (frameCounter == 4) {
+        if (blinkAnimationCounter > 0) {
+            if (isWhite) {
+                SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
+                isWhite = false;
+            } else {
+                SOwnSpaceShip.setColor(sf::Color(200,50,0,255));
+                isWhite = true;
+            }
+            blinkAnimationCounter--;
+        }
+        frameCounter = 0;
+
+    }
+
+
+
     bool anyKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
             sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
             sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
@@ -79,23 +120,12 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
     // Si no hay ninguna tecla presionada la velocidad se pone en 0 si es muy pequeña
     if (!anyKeyPressed) {
-        if (std::fabs(velocity.y) <= speed/2)
+        if (fabs(velocity.y) <= speed/2)
             velocity.y = 0;
 
-        if (std::fabs(velocity.x) <= speed/2)
+        if (fabs(velocity.x) <= speed/2)
             velocity.x = 0;
     }
-
-    // Modifica el vector segun las teclas presionadas
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        velocity.y -= speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        velocity.y += speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        velocity.x -= speed;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        velocity.x += speed;
-
 
 
     // Air friction
@@ -105,25 +135,30 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
         velocity.y += speed/2;
 
     if (velocity.x > 0) {
-        SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
+        //SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
+        updateTexture(2);
+
         velocity.x -= speed/2;
     } else if (velocity.x < 0) {
-        SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
+        //SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
+        updateTexture(0);
+
         velocity.x += speed/2;
     } else {
-        SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+        //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+        updateTexture(defaultTexture);
     }
 
     // Maximum speed
 
-    if (std::fabs(velocity.x) > maxSpeed)
+    if (fabs(velocity.x) > maxSpeed)
     {
         if (velocity.x > 0)
             velocity.x = maxSpeed;
         else
             velocity.x = -maxSpeed;
     }
-    if (std::fabs(velocity.y) > maxSpeed)
+    if (fabs(velocity.y) > maxSpeed)
     {
         if (velocity.y > 0)
             velocity.y = maxSpeed;
@@ -156,62 +191,197 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
     SOwnSpaceShip.move(velocity * (time/30));
 
+    //update effect sprite
+    effectSprite.setPosition(SOwnSpaceShip.getPosition());
 
 }
 
 void MainSpaceShip::render(RenderWindow &window) {
+    window.draw(effectSprite);
     window.draw(SOwnSpaceShip);
+
 }
 
 void MainSpaceShip::usePowerUp() {
-    if(!powerUpsQueue.isEmpty()) {
-        int powerToUse = powerUpsQueue.dequeue().getType();
-        if(powerToUse == 0){
-            cout <<"Misiles"<<endl;
-            missiles_On=true;
+    if(powerUpOn == false) {
+        updateEffect(0);
+        if (!powerUpsQueue.isEmpty()) {
+            int powerToUse = powerUpsQueue.dequeue().getType();
+            if (powerToUse == 0) {
+                //cout <<"Misiles"<<endl;
+                setMissiles_On(true);
+            } else if (powerToUse == 1) {
+                if (!shieldActivated) {
+                    shield();
+                }
+                //cout <<"Escudo"<<endl;
+
+            } else if (powerToUse == 2) {
+                //cout <<"Laser"<<endl;
+                laser_On;
+            }
+        } else {
+            cout << "No hay power ups" << endl;
+            updateEffect(0);
+
         }
-        else if(powerToUse == 1){
-            shield();
-            cout <<"Escudo"<<endl;
-        }
-        else if(powerToUse == 2){
-            cout <<"Laser"<<endl;
-            laser_On;
-        }
-    }else{
-        cout <<"No hay power ups"<<endl;
     }
 }
 
 void MainSpaceShip::shield() {
     if(shieldActivated == false){
-        shieldActivated = true;
-        cout<<"Escudo activado"<<endl;
+        setShieldActivated(true);
+        powerUpOn = true;
+        shieldClock.restart();
+        sound.setBuffer(shieldOnSound);
+        //cout<<"Escudo activado"<<endl;
     }
+    else{
+        setShieldActivated(false);
+        sound.setBuffer(shieldOffSound);
+        powerUpOn = false;
+        //cout<<"Escudo desactivado"<<endl;
+
+    }
+    sound.play();
 }
 
 bool MainSpaceShip::gameOver() {
    cout << "aqui hay que programar que termine el juego" << endl;
 }
 
+void MainSpaceShip::doDamageAnimation() {
+    if (blinkAnimationCounter == 0)
+        blinkAnimationCounter = 10;
+}
+
+int MainSpaceShip::getTexturesAmount() const
+{
+    return texturesAmount;
+}
+
+void MainSpaceShip::setTexturesAmount(int value)
+{
+    texturesAmount = value;
+    updateTexture(0);
+
+}
+
+Sprite MainSpaceShip::getEffectSprite() const
+{
+    return effectSprite;
+}
+
+void MainSpaceShip::setEffectSprite(const Sprite &value)
+{
+    effectSprite = value;
+}
+
+bool MainSpaceShip::getMissiles_On() const
+{
+    return missiles_On;
+}
+
+void MainSpaceShip::setMissiles_On(bool value)
+{
+    missiles_On = value;
+
+    if(missiles_On){
+        powerUpOn = true;
+        updateEffect(2);
+
+    }
+    else{
+        updateEffect(0);
+        powerUpOn = false;
+    }
+}
+
+bool MainSpaceShip::getShieldActivated() const
+{
+    return shieldActivated;
+}
+
+void MainSpaceShip::setShieldActivated(bool value)
+{
+    shieldActivated = value;
+    if(shieldActivated){
+
+        updateEffect(1);
+
+    }
+    else{
+        updateEffect(0);
+
+    }
+}
+
+void MainSpaceShip::updateTexture(int value)
+{
+    
+    
+    int rectX = (TOwnSpaceShip.getSize().x/texturesAmount), rectY = TOwnSpaceShip.getSize().y;
+    SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*value,0 , rectX, rectY ));
+}
+
+void MainSpaceShip::updateEffect(int value)
+{
+    value += 4;
+    int rectX = (TOwnSpaceShip.getSize().x/texturesAmount), rectY = TOwnSpaceShip.getSize().y;
+    effectSprite.setTextureRect(sf::IntRect(rectX*value,0 , rectX, rectY ));
+}
 
 
 void MainSpaceShip::playerShoot() {
     // CHEQUEAR SI LA NAVE TIENE ACTIVADO LOS MISILES _______________________________******
     if (missiles_On){
-        missileCannon->shoot();
-        cout << "disparo misil" << endl;
+        if(missileShootCounter <5) {
+            missileShootCounter++;
+            missileCannon->shoot();
+            sound.setBuffer(missileShootBuffer);
+            //cout << "disparo misil" << endl;
+            //updateEffect(0);
+
+        }else{
+            missiles_On= false;
+            missileShootCounter=0;
+            sound.setBuffer(normalShootBuffer);
+            shipCannon->shoot();
+            powerUpOn= false;
+            updateEffect(0);
+        }
     } else if (laser_On){
-        cout << "disparo laser" << endl;
     } else {
 
         shipCannon->shoot();
+        sound.setBuffer(normalShootBuffer);
         //std::cout<< shipCannon->getBulletDamage()<<endl;
-        cout << "disparo simple" << endl;
+        //cout << "disparo simple" << endl;
     }
+    sound.play();
 }
 bool MainSpaceShip::attack(int damage)
 {
+    std::cout<<lifeLevel<<endl;
+    bool result = false;
+    if(shieldActivated){
+        shieldActivated=false;
+        powerUpOn = false;
+        updateEffect(0);
+    }
+    else{
+        setLifeLevel(lifeLevel-damage);
+        doDamageAnimation();
+        if(lifeLevel<=0){
+            lifes-=1;
+            lifeLevel=100;
+            if(lifes<=0){
+            result = true;
+            }
+        }
+
+    }
+    return result;
 
 }
 
@@ -221,7 +391,13 @@ int MainSpaceShip::getLifeLevel() const
 }
 
 void MainSpaceShip::setLifeLevel(int value)
-{
+{   if(value<50){
+    defaultTexture=3;
+    }
+    else{
+        defaultTexture=1;
+    }
+    std::cout<<lifeLevel<<std::endl;
     lifeLevel = value;
 }
 
@@ -234,6 +410,40 @@ Sprite *MainSpaceShip::getSpriteReference()
 Sprite MainSpaceShip::getSprite() const
 {
     return SOwnSpaceShip;
+}
+
+void MainSpaceShip::checkShieldTimer() {
+    if(shieldClock.getElapsedTime().asMilliseconds()>10000 && shieldActivated==true) {
+        shield();
+    }
+    //else()
+}
+
+int MainSpaceShip::getLifes() const {
+    return lifes;
+}
+
+void MainSpaceShip::setLifes(int numLifes){
+    lifes =  numLifes;
+}
+void MainSpaceShip::addlife() {
+    lifes+=1;
+}
+
+void MainSpaceShip::setDirectionUp(){
+    velocity.y -= speed;
+}
+
+void MainSpaceShip::setDirectionDown(){
+    velocity.y += speed;
+}
+
+void MainSpaceShip::setDirectionLeft(){
+    velocity.x -= speed;
+}
+
+void MainSpaceShip::setDirectionRight(){
+    velocity.x += speed;
 }
 
 

@@ -12,7 +12,7 @@ using namespace sf;
 class Background
 {
 public:
-    Background();
+    Background(int bg, float speed);
     void update(RenderWindow &window, float elapsedTime);
     void render(RenderWindow &window);
 

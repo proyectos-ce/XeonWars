@@ -7,12 +7,12 @@ Motion::Motion()
     x=0;
 }
 
-int Motion::getX() const
+float Motion::getX() const
 {
     return x;
 }
 
-void Motion::setX(int value)
+void Motion::setX(float value)
 {
     x = value;
 }
@@ -41,12 +41,12 @@ bool Motion::reverseDirection() const
 
 
 
-LinearMotion::LinearMotion(double angle)
+LinearMotion::LinearMotion(float angle)
 {
     this->angle=(angle*PI/180.0);
 }
 
-sf::Vector2f LinearMotion::getNext(int speed)
+sf::Vector2f LinearMotion::getNext(float speed)
 {
     sf::Vector2f newPos;
     newPos.x= speed*sin(angle);
@@ -62,7 +62,7 @@ SinMotion::SinMotion(int scale)
     x=0.01;
 }
 
-sf::Vector2f SinMotion::getNext(int speed)
+sf::Vector2f SinMotion::getNext(float speed)
 {
     sf::Vector2f newPos;
     double sin1 =sin((x+1)/15.0), sin2 = sin(x/15.0);
@@ -77,7 +77,7 @@ SimpleMotion::SimpleMotion()
 {
 }
 
-sf::Vector2f SimpleMotion::getNext(int speed)
+sf::Vector2f SimpleMotion::getNext(float speed)
 {
     x+=speed;
     sf::Vector2f newPos;
@@ -93,18 +93,20 @@ FollowerMotion::FollowerMotion(sf::Sprite *owner,sf::Sprite *target)
     setTarget(target);
 }
 
-sf::Vector2f FollowerMotion::getNext(int speed)
+sf::Vector2f FollowerMotion::getNext(float speed)
 {
     sf::Vector2f next(0,speed*direction);
-    if((owner->getLocalBounds().height/2+owner->getPosition().y < target->getLocalBounds().height/2+target->getPosition().y != reverseDirection())
-            && (400 < fabs(target->getLocalBounds().width/2+target->getPosition().x - owner->getLocalBounds().width/2+owner->getPosition().x ) ) ){
-        if(owner->getLocalBounds().width/2+owner->getPosition().x < target->getLocalBounds().width/2+target->getPosition().x){
+    //std::cout<< target->getGlobalBounds().width <<std::endl;
+    if(owner->getGlobalBounds().height/2+owner->getPosition().y < target->getGlobalBounds().height/2+target->getPosition().y != reverseDirection()
+            && speed <  fabs(  (owner->getPosition().x+owner->getGlobalBounds().width/2) - (target->getPosition().x+target->getGlobalBounds().width/2)) ){
+        if(owner->getGlobalBounds().width/2+owner->getPosition().x < target->getGlobalBounds().width/2+target->getPosition().x){
             next.x=speed;
         }
         else {
             next.x=-speed;
         }
     }
+
     return next;
 }
 
@@ -139,7 +141,7 @@ Motion *createSimpleMotion()
     return new SimpleMotion();
 }
 
-Motion *createLinearMotion(double angle)
+Motion *createLinearMotion(float angle)
 {
     return new LinearMotion(angle);
 
@@ -154,4 +156,32 @@ Motion *createFollowerMotion(sf::Sprite *owner, sf::Sprite *target)
 {
     return new FollowerMotion(owner, target);
 }
+
+Motion *createBossMotion(int scale, int yMovement)
+{
+    return new BossMotion(scale, yMovement);
 }
+
+}
+
+
+
+BossMotion::BossMotion(int scale, int yMovement)
+{
+    this->scale=scale;
+    this->yMovement=yMovement;
+}
+
+sf::Vector2f BossMotion::getNext(float speed)
+{
+    sf::Vector2f newPos(0,0);
+    float sin1 =sin((x+1)/15.0), sin2 = sin(x/15.0);
+    newPos.x = (sin1- sin2)*scale;
+    if(x<yMovement){
+    newPos.y = speed*direction;
+    }
+    x+=1;
+    return newPos;
+}
+
+

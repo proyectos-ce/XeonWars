@@ -17,24 +17,58 @@
 #include "enemy.h"
 #include "motion.h"
 #include "cannon.h"
-#include "Collision.h"
 #include "Utils.h"
 #include "collisionmanager.h"
+#include "enemyReader.h"
+
+
+enum Direction {LEFT, RIGHT, UP, DOWN, CENTER};
 
 class Game : public Screen {
 
-    int score = 0;
-    Clock clock;
-    MainSpaceShip ownSpaceShip;
-    Background background;
-    Music backgroundMusic;
-    bool running = true;
 
 public:
     Game();
-    int run(RenderWindow &window, Texture &tex);
-
+    int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
+    void setPhoneDirection(string direction);
+
+    void restartGame();
+
+private:
+    int minEnemyQuantity = 3;
+    Clock clock;
+    Clock shootClock;
+    Clock scoreClock;
+    Clock gameClock;
+
+    MainSpaceShip ownSpaceShip;
+    Background background = Background(1,0.1);
+    Background backstars = Background(0,0.05);
+    Background backasteroids = Background(2,0.04);
+    Music backgroundMusic;
+    Music bossMusic;
+    ScoreManager score;
+    Direction phoneDirection = CENTER;
+
+    bool running = true;
+    Time time;
+    CollisionManager collisionManager;
+    std::vector<Enemy *> enemyList;
+    std::vector<Bullet *> enemyBulletList;
+    std::vector<Bullet *> playerbulletList;
+    BossManager Boss;
+    void eraseAll();
+    EnemyReader enemyReader;
+
+    string statsTxt;
+    size_t currentRss;
+    sf::Text stats;
+
+
+    void updateAll(RenderWindow &window, Options *gameOptions);
+    void loadEnemies();
+
 };
 
 

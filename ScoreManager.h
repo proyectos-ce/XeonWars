@@ -14,28 +14,27 @@
 class ScoreManager {
     public:
     ScoreManager();
-    BossManager Boss;
     float get_score();
     void add_score(int);
     bool isBossTime();
     int getLevel();
     void nextlevelReached();
     void scoreRender(sf::RenderWindow &window);
-    void setBossOn();
     bool createBoss;
     bool getcreateBoss();
     void createbossOff();
     bool BossTime;
     int nextBoss_score;
     void BossTimeCheck();
+    int checklifes;
+
+    void resetScore();
 
 private:
     int GeneralScore;
     int currentLevel;
     sf::Text text;
     sf::Font font;
-
-
 
 
 };

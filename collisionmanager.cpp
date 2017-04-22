@@ -2,7 +2,8 @@
 
 CollisionManager::CollisionManager()
 {
-
+    collisionSpaceEnemySoundBuffer.loadFromFile("Resources/explosion.ogg");
+    collisionBulletEnemySoundBuffer.loadFromFile("Resources/collisionSpaceEnemy.ogg");
 }
 
 CollisionManager::CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet *> *playerBulletList, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *enemyBulletList)
@@ -13,15 +14,21 @@ CollisionManager::CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet
 
 }
 
-void CollisionManager::checkCollisions()
+bool CollisionManager::checkCollisions()
 {
     int i = 0, j=0;
     while(i<enemyList->size()){
         //player vs enemies
         if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())){
             //kill player
+            collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+            collisionSound.play();
+            addLastScore(enemyList->operator[](i)->getEnemy_score());
             deleteEnemy(enemyList,i);
             i--;
+            if(playerShip->attack(1000)){
+            return true;
+            }
         }
 
         else{
@@ -29,8 +36,11 @@ void CollisionManager::checkCollisions()
             j=0;
             while(j<playerBulletList->size()){
                 if(Collision::PixelPerfectTest(playerBulletList->operator[](j)->getSprite(), enemyList->operator[](i)->getSprite())){
+                    collisionSound.setBuffer(collisionBulletEnemySoundBuffer);
+                    collisionSound.play();
                     //std::cout<<"bala vs enemigo\n";
                     if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
+                        addLastScore(enemyList->operator[](i)->getEnemy_score());
                         deleteEnemy(enemyList,i);
                         deleteBullet(playerBulletList, j);
                         i--;
@@ -50,13 +60,30 @@ void CollisionManager::checkCollisions()
     while(i<enemyBulletList->size()){
         //player vs enemies
         if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
+
+            collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+            collisionSound.play();
+
             //attack player
+
             deleteBullet(enemyBulletList, i);
             //delete bullet
+            //playerShip->attack(enemyBulletList->operator[](i)->getDamage());
+            //playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
+            if(playerShip->attack(enemyBulletList->operator[](i)->getDamage())){
+            //if(playerShip->getLifeLevel() <=0){
+                //if(playerShip->getLifes() <=0){
+                    collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+                    collisionSound.play();
+                    return true;
+                //}
+            }
+
             i--;
         }
         i++;
     }
+    return false;
 }
 MainSpaceShip *CollisionManager::getPlayerShip() const
 {
@@ -96,6 +123,23 @@ std::vector<Bullet *> *CollisionManager::getEnemyBulletList() const
 void CollisionManager::setEnemyBulletList(std::vector<Bullet *> *value)
 {
     enemyBulletList = value;
+}
+
+int CollisionManager::getLastScore()
+{
+    int newScore = lastScore;
+    setLastScore(0);
+    return newScore;
+}
+
+void CollisionManager::addLastScore(int score)
+{
+    lastScore+=score;
+}
+
+void CollisionManager::setLastScore(int value)
+{
+    lastScore = value;
 }
 
 void CollisionManager::deleteEnemy(std::vector<Enemy *> *list, int index)

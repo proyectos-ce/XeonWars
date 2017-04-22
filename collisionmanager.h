@@ -11,7 +11,7 @@ class CollisionManager
 public:
     CollisionManager();
     CollisionManager(MainSpaceShip *playerShip, std::vector<Bullet *> *playerBulletList, std::vector<Enemy *> *enemyList, std::vector<Bullet *> *enemyBulletList);
-    void checkCollisions();
+    bool checkCollisions();
 
 
     MainSpaceShip *getPlayerShip() const;
@@ -26,11 +26,20 @@ public:
     std::vector<Bullet *> *getEnemyBulletList() const;
     void setEnemyBulletList(std::vector<Bullet *> *value);
 
+    int getLastScore();
+    void addLastScore(int score);
+
+    void setLastScore(int value);
+
 private:
+    int lastScore=0;
     std::vector<Enemy *> *enemyList;
     std::vector<Bullet *> *playerBulletList;
     std::vector<Bullet *> *enemyBulletList;
     MainSpaceShip *playerShip;
+    SoundBuffer collisionSpaceEnemySoundBuffer;
+    SoundBuffer collisionBulletEnemySoundBuffer;
+    Sound collisionSound;
     void deleteEnemy(std::vector<Enemy *> *enemyList, int index);
     void deleteBullet(std::vector<Bullet *> *bulletList, int index);
 };
