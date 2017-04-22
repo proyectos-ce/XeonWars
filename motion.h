@@ -25,22 +25,22 @@ protected:
 
 class SimpleMotion : public Motion{
 
-   public:
+public:
     SimpleMotion();
     sf::Vector2f getNext(float speed);
 };
 
 class LinearMotion : public Motion{
 
-   public:
+public:
     LinearMotion(float angle);
     sf::Vector2f getNext(float speed);
-   protected:
+protected:
     float angle;
 };
 
 class SinMotion : public Motion{
-   public:
+public:
     SinMotion(int scale);
     sf::Vector2f getNext(float speed);
 protected:
@@ -48,7 +48,7 @@ protected:
 };
 
 class FollowerMotion : public Motion{
-   public:
+public:
     FollowerMotion(sf::Sprite *owner,sf::Sprite *target);
     sf::Vector2f getNext(float speed);
     sf::Sprite *getTarget() const;
@@ -62,12 +62,24 @@ protected:
     sf::Sprite *target;
 };
 
+class BossMotion : public Motion{
+public:
+    BossMotion(int scale, int yMovement);
+    sf::Vector2f getNext(float speed);
+
+protected:
+    int scale;
+    int yMovement;
+
+};
+
 namespace MotionFactory{
 
-     Motion *createSimpleMotion();
-     Motion *createLinearMotion(float angle);
-     Motion *createSinMotion(int scale);
-     Motion *createFollowerMotion(sf::Sprite *owner,sf::Sprite *target);
+Motion *createSimpleMotion();
+Motion *createLinearMotion(float angle);
+Motion *createSinMotion(int scale);
+Motion *createFollowerMotion(sf::Sprite *owner,sf::Sprite *target);
+Motion *createBossMotion(int scale, int yMovement);
 }
 
 

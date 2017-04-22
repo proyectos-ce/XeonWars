@@ -32,14 +32,20 @@ public:
     int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
     void setPhoneDirection(string direction);
+
+    void restartGame();
+
 private:
+    int minEnemyQuantity = 3;
     Clock clock;
     Clock shootClock;
     Clock scoreClock;
     Clock gameClock;
 
     MainSpaceShip ownSpaceShip;
-    Background background;
+    Background background = Background(1,0.1);
+    Background backstars = Background(0,0.05);
+    Background backasteroids = Background(2,0.04);
     Music backgroundMusic;
     Music bossMusic;
     ScoreManager score;
@@ -61,6 +67,8 @@ private:
 
 
     void updateAll(RenderWindow &window, Options *gameOptions);
+    void loadEnemies();
+
 };
 
 

@@ -75,7 +75,9 @@ void Enemy::setTrigger(int value)
 
 void Enemy::shoot()
 {
+    if(sprite.getPosition().y>-100){
     cannon->shoot();
+    }
 
 }
 
@@ -254,6 +256,59 @@ Enemy *createKamikaze(int level, sf::Sprite *target)
     newEnemy->setLife(1);
 
     return newEnemy;
+}
+
+Enemy *createBoss(int level, int scale, int yMovement)
+{
+
+    Motion *enemyMotion = MotionFactory::createBossMotion(scale, yMovement);
+    Cannon *enemyCannon = CannonFactory::createSprayCannon(20,level*2);
+    enemyCannon->setBulletDamage(10*level);
+    enemyCannon->setBulletTexture(SpritesManager::getInstance()->getEnemyBulletTexture());
+    //enemyCannon->setBulletTextureFilename("Resources/Bomber.png");
+    //enemyCannon->setBulletSpeed(4*(level+1));
+    enemyCannon->setBulletSpeed(3*level);
+    enemyCannon->setBulletDamage(3*level);
+    Enemy *newEnemy = createEnemy(level,  SpritesManager::getInstance()->getBossTexture(),  enemyMotion,  enemyCannon);
+    newEnemy->setTexturesAmount(1);
+    //newEnemy->updateTexture(level-1);
+    newEnemy->setScale(0.1+(0.01*level));
+    newEnemy->setSpeed(3);
+    newEnemy->setTrigger(80);
+    newEnemy->setLife(150*level);
+    //newEnemy->setLife(4*(level+1));
+    return newEnemy;
+
+
+
+    /*
+    //Motion *BossMotion = MotionFactory::createLinearMotion(45);
+    Motion *BossMotion;
+    Cannon *BossCannon;
+    BossTexture.loadFromFile("Resources/Boss1.png");
+
+
+    BossMotion = MotionFactory::createBossMotion(250,100);
+    BossCannon = CannonFactory::createSprayCannon(2,3);
+    BossCannon->setBulletDamage(30);
+    BossCannon->setBulletSpeed(3);
+    Enemy *Boss;
+    //Boss = new Enemy(BossTexture, enemyList, enemyBulletList);
+    Boss = new Enemy(&BossTexture);
+    BossPTR= Boss;
+    Boss->setTexturesAmount(1);
+    Boss->setLife(150*level);
+    cout<<"BOSS set life to : "<<Boss->getLife()<<endl;
+
+    Boss->setMotion(BossMotion);
+    Boss->setSpeed(1);
+    Boss->setPosition(sf::Vector2f(600,-100));
+    Boss->setTrigger(0);
+    Boss->setCannon(BossCannon);
+    Boss->setScale(0.2);
+    Boss->setBulletList(enemyBulletList);
+    enemyList->push_back(Boss);
+    */
 }
 
 

@@ -39,13 +39,12 @@ int main(){
     Menu menu;
     screens.push_back(&menu);
 
-    Game* gameMemory = (Game*) malloc(sizeof(Game));
-    Game* game = new (gameMemory) Game();
-  
-    ConnectionManager* myConnectionManager = new ConnectionManager(game);
+
+    Game game;
+    ConnectionManager* myConnectionManager = new ConnectionManager(&game);
 
 
-    screens.push_back(std::move(gameMemory));
+    screens.push_back(&game);
 
 
     GameOverScreen gameOverScreen;
@@ -64,11 +63,12 @@ int main(){
     while (screen >= 0)
     {
         if (screen == 3)
-            game->pauseGame();
-        if (screen == 0) {
-            Game* game = new (gameMemory) Game();
-        }
+            game.pauseGame();
         screen = screens[screen]->run(window, pauseTexture, gameOptions);
+
+        if (screen == 0) {
+            game.restartGame();
+        }
     }
 
     return EXIT_SUCCESS;
