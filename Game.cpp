@@ -211,11 +211,11 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::X) {
                 ownSpaceShip.usePowerUp();
             }
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z) {
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z ) {
                 if(shootClock.getElapsedTime().asMilliseconds()>150){
 
                     ownSpaceShip.playerShoot();
-
+                    setPhoneShooting(false);
                     shootClock.restart().asMilliseconds();
                 }
             }
@@ -307,6 +307,13 @@ void Game::setPhoneDirection(string direction) {
     else if(direction.compare("C") ==0){
         phoneDirection = CENTER;
     }
+    else if(direction.compare("S") ==0){
+        ownSpaceShip.playerShoot();
+    }
+}
+
+void Game::setPhoneShooting(bool boolean) {
+    phoneShooting = boolean;
 }
 
 

@@ -32,6 +32,7 @@ public:
     int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
     void setPhoneDirection(string direction);
+    void setPhoneShooting(bool boolean);
 private:
     Clock clock;
     Clock shootClock;
@@ -45,6 +46,7 @@ private:
     ScoreManager score;
     Direction phoneDirection = CENTER;
 
+    bool phoneShooting = false;
     bool running = true;
     Time time;
     CollisionManager collisionManager;
