@@ -19,10 +19,11 @@ MainSpaceShip::MainSpaceShip() {
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
     //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
 
-    SOwnSpaceShip.setPosition(550,720);
-    SOwnSpaceShip.setScale(0.4,0.4);
-    effectSprite.setPosition(550,720);
-    effectSprite.setScale(0.4,0.4);
+    SOwnSpaceShip.setPosition(550,620);
+    SOwnSpaceShip.setScale(0.25,0.25);
+    effectSprite.setPosition(550,620);
+    effectSprite.setScale(0.25,0.25);
+
     updateEffect(0);
 
 
@@ -89,6 +90,30 @@ void MainSpaceShip::lifeManager(int damage){
         }
     }
 }
+
+void MainSpaceShip::reset() {
+    missiles_On =false;
+    laser_On= false;
+    isWhite = false;
+    shieldActivated = false;
+    powerUpOn = false;
+    globalScore = 0;
+
+    TOwnSpaceShip.setSmooth(true);
+    SOwnSpaceShip.setTexture(TOwnSpaceShip);
+    effectSprite.setTexture(TOwnSpaceShip);
+
+    SOwnSpaceShip.setPosition(550,620);
+    SOwnSpaceShip.setScale(0.25,0.25);
+    effectSprite.setPosition(550,620);
+    effectSprite.setScale(0.25,0.25);
+    updateEffect(0);
+
+    blinkAnimationCounter = 0;
+    frameCounter = 0;
+    missileShootCounter = 0;
+}
+
 
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
@@ -263,7 +288,7 @@ bool MainSpaceShip::gameOver() {
 
 void MainSpaceShip::doDamageAnimation() {
     if (blinkAnimationCounter == 0)
-        blinkAnimationCounter = 10;
+        blinkAnimationCounter = 6;
 }
 
 int MainSpaceShip::getTexturesAmount() const
@@ -373,9 +398,16 @@ void MainSpaceShip::playerShoot() {
     }
     sound.play();
 }
+
+void MainSpaceShip::loseLife() {
+    lifes-=1;
+    reset();
+    blinkAnimationCounter = 16;
+    lifeLevel=100;
+}
 bool MainSpaceShip::attack(int damage)
 {
-    std::cout<<lifeLevel<<endl;
+    std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
     bool result = false;
     if(shieldActivated){
         shieldActivated=false;
@@ -383,6 +415,7 @@ bool MainSpaceShip::attack(int damage)
         updateEffect(0);
     }
     else{
+<<<<<<< HEAD
         setLifeLevel(lifeLevel-damage);
         doDamageAnimation();
         if(lifeLevel<=0){
@@ -391,9 +424,18 @@ bool MainSpaceShip::attack(int damage)
             lifeLevel=100;
             if(lifes<=0){
             result = true;
+=======
+        if (blinkAnimationCounter == 0) {
+            setLifeLevel(lifeLevel-damage*2);
+            doDamageAnimation();
+            if(lifeLevel<=0){
+                loseLife();
+                if(lifes<=0){
+                result = true;
+                }
+>>>>>>> 987d9530c81f53e8cb967c0bc901be5802e39ad6
             }
         }
-
     }
     return result;
 

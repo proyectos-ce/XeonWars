@@ -32,15 +32,25 @@ public:
     int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
     void setPhoneDirection(string direction);
+
     void setPhoneShooting(bool boolean);
+
+
+    void restartGame();
+
+
 private:
+    int minEnemyQuantity = 3;
     Clock clock;
     Clock shootClock;
     Clock scoreClock;
     Clock gameClock;
-
+    Clock levelupClock;
+    bool levelflag;
     MainSpaceShip ownSpaceShip;
-    Background background;
+    Background background = Background(1,0.1);
+    Background backstars = Background(0,0.05);
+    Background backasteroids = Background(2,0.04);
     Music backgroundMusic;
     Music bossMusic;
     ScoreManager score;
@@ -57,12 +67,19 @@ private:
     void eraseAll();
     EnemyReader enemyReader;
 
+    sf::Sprite shipIcon;
+    sf::Texture shipIconTexture;
+    sf::Text livesLeft;
+    sf::Font classicFont;
+
     string statsTxt;
     size_t currentRss;
     sf::Text stats;
 
 
     void updateAll(RenderWindow &window, Options *gameOptions);
+    void loadEnemies();
+
 };
 
 

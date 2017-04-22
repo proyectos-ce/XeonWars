@@ -27,14 +27,17 @@ class ScoreManager {
     int nextBoss_score;
     void BossTimeCheck();
     int checklifes;
+    void show_levelup(sf::RenderWindow &window);
+
+    void resetScore();
 
 private:
     int GeneralScore;
     int currentLevel;
     sf::Text text;
+    sf::Text showlevel;
+    sf::Text levelup;
     sf::Font font;
-
-
 
 
 };

@@ -27,6 +27,7 @@ public:
     void checkShieldTimer();
     void checkLaserTimer();
     void lifeManager(int);
+    bool attack(int damage);
 
 
     std::vector<Bullet *> *getbulletList() const;
@@ -34,7 +35,6 @@ public:
 
 
     //const Sprite &getSprite();
-    bool attack(int damage);
     int getLifeLevel() const;
     int getLifes() const;
     void setLifes(int numLifes);
@@ -63,6 +63,10 @@ public:
     void setDirectionDown();
     void setDirectionLeft();
     void setDirectionRight();
+
+    void reset();
+
+    void loseLife();
 
 private:
     bool missiles_On =false;

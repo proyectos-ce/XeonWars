@@ -62,6 +62,7 @@ public:
     sf::Texture *getTowerTexture();
     sf::Texture *getMissileTowerTexture();
     sf::Texture *getKamikazeTexture();
+    sf::Texture *getBossTexture();
 
     sf::Texture *getPlayerBulletTexture();
     sf::Texture *getFollowerBulletTexture();
@@ -79,6 +80,7 @@ SpritesManager();
     sf::Texture towerTexture;
     sf::Texture missileTowerTexture;
     sf::Texture kamikazeTexture;
+    sf::Texture bossTexture;
 
     sf::Texture playerBulletTexture;
     sf::Texture followerBulletTexture;

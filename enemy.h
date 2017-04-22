@@ -44,6 +44,7 @@ Enemy *createBomber(int level, float motionScale);
 Enemy *createTower(int level, int backgroundSpeed=2);
 Enemy *createMissileTower(int level, sf::Sprite *target, int backgroundSpeed=2);
 Enemy *createKamikaze(int level, sf::Sprite *target);
+Enemy *createBoss(int level,int scale, int yMovement);
 //Enemy *createMeteor(int level);
 }
 

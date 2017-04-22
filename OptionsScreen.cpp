@@ -59,6 +59,8 @@ int OptionsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
             if (event.type == sf::Event::KeyPressed)
             {
                 switch (event.key.code) {
+                    case sf::Keyboard::Escape:
+                        return 0;
                     case sf::Keyboard::Up:
                         menu--;
                         if (menu < 0)

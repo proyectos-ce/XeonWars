@@ -49,6 +49,8 @@ private:
     std::vector<EnemyParameters> readEnemyFile();
     Enemy *createEnemy(EnemyParameters enemyParameters);
     sf::Sprite *playerSprite;
+    void reset();
+
 
 
 public:
