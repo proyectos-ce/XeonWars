@@ -20,36 +20,6 @@ Game::Game() {
     collisionManager.setPlayerShip(&ownSpaceShip);
     collisionManager.setPlayerBulletList(&playerbulletList);
     collisionManager.setEnemyBulletList(&enemyBulletList);
-    /*
-    Enemy *newEnemy;
-
-    newEnemy = EnemyFactory::createJet(2,45);
-    newEnemy->setCenterPosition(sf::Vector2f(100,-100));
-    newEnemy->setBulletList(&enemyBulletList);
-    enemyList.push_back(newEnemy);
-
-    newEnemy = EnemyFactory::createBomber(2,200);
-    newEnemy->setCenterPosition(sf::Vector2f(200*2,-100));
-    newEnemy->setBulletList(&enemyBulletList);
-
-    enemyList.push_back(newEnemy);
-
-
-    newEnemy = EnemyFactory::createTower(2, 2);
-    newEnemy->setCenterPosition(sf::Vector2f(200*3,-100));
-    newEnemy->setBulletList(&enemyBulletList);
-    enemyList.push_back(newEnemy);
-
-    newEnemy = EnemyFactory::createMissileTower(2, ownSpaceShip.getSpriteReference(),2);
-    newEnemy->setCenterPosition(sf::Vector2f(200*4,-100));
-    newEnemy->setBulletList(&enemyBulletList);
-    enemyList.push_back(newEnemy);
-
-    newEnemy = EnemyFactory::createKamikaze(2, ownSpaceShip.getSpriteReference());
-    newEnemy->setCenterPosition(sf::Vector2f(200*5,-100));
-    newEnemy->setBulletList(&enemyBulletList);
-    enemyList.push_back(newEnemy);
-    */
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
 
     gameClock.restart().asSeconds();
@@ -70,7 +40,7 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
     for (int i = 0; i < enemyBulletList.size(); ++i) {
         enemyBulletList[i]->update(window, time.asMilliseconds());
         enemyBulletList[i]->render(window);
-        if( enemyBulletList[i]->getPosition().y >= 3000 | enemyBulletList[i]->getPosition().x >= 2000 | enemyBulletList[i]->getPosition().x <= -500){
+        if( enemyBulletList[i]->getPosition().y >= 900 | enemyBulletList[i]->getPosition().x >= 2000 | enemyBulletList[i]->getPosition().x <= -500){
             delete enemyBulletList.operator[](i);
             enemyBulletList.erase(enemyBulletList.begin()+i);
             i--;
@@ -81,7 +51,7 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
     for (int i = 0; i < enemyList.size(); ++i) {
         enemyList[i]->update(window, time.asMilliseconds());
         enemyList[i]->render(window);
-        if( enemyList[i]->getPosition().y >= 3000 | enemyList[i]->getPosition().x >= 2000 | enemyList[i]->getPosition().x <= -500){
+        if( enemyList[i]->getPosition().y >= 900 | enemyList[i]->getPosition().x >= 2000 | enemyList[i]->getPosition().x <= -500){
             delete enemyList.operator[](i);
             enemyList.erase(enemyList.begin()+i);
             i--;
@@ -115,6 +85,17 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
 
 
 
+}
+
+void Game::loadEnemies()
+{
+    if(enemyList.size()<minEnemyQuantity){
+    std::vector<Enemy *> newEnemySet = enemyReader.getNextEnemySet();
+    for (int i = 0; i < newEnemySet.size(); ++i) {
+        newEnemySet[i]->setBulletList(&enemyBulletList);
+        enemyList.push_back(newEnemySet[i]);
+    }
+    }
 }
 
 void Game::eraseAll()
@@ -164,14 +145,6 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
     running = true;
     clock.restart().asMilliseconds();
-    std::cout<<"testastast"<<std::endl;
-    std::vector<Enemy *> newEnemySet = enemyReader.getNextEnemySet();
-    for (int i = 0; i < newEnemySet.size(); ++i) {
-        newEnemySet[i]->setBulletList(&enemyBulletList);
-        enemyList.push_back(newEnemySet[i]);
-        //newEnemySet[i]->setCenterPosition(sf::Vector2f(500,-100));
-    }
-
 
     while (running) {
 
@@ -236,7 +209,8 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
         }
         //update score         collisionManager.getLastScore();
         score.add_score(collisionManager.getLastScore());
-        score.add_score(5);
+        loadEnemies();
+        //score.add_score(100);
 
 
 

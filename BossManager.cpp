@@ -32,45 +32,11 @@ BossManager::BossManager(){
     sprite.setPosition(950,23);
 };
 void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector<Bullet *> *enemyBulletList) {
-    /*BossLevel=level;
-    Bosslife=level*150;
-    initialBosslife=Bosslife;
-
-
-    //Motion *BossMotion = MotionFactory::createLinearMotion(45);
-    Motion *BossMotion;
-    Cannon *BossCannon;
-    BossTexture.loadFromFile("Resources/Boss1.png");
-
-
-    BossMotion = MotionFactory::createBossMotion(250,100);
-    BossCannon = CannonFactory::createSprayCannon(2,3);
-    BossCannon->setBulletDamage(30);
-    BossCannon->setBulletSpeed(3);
-    Enemy *Boss;
-    //Boss = new Enemy(BossTexture, enemyList, enemyBulletList);
-    Boss = new Enemy(&BossTexture);
-    BossPTR= Boss;
-    Boss->setTexturesAmount(1);
-    Boss->setLife(Bosslife);
-    cout<<"BOSS set life to : "<<Boss->getLife()<<endl;
-
-    Boss->setMotion(BossMotion);
-    Boss->setSpeed(1);
-    Boss->setPosition(sf::Vector2f(600,-100));
-    Boss->setTrigger(0);
-    Boss->setCannon(BossCannon);
-    Boss->setScale(0.2);
-    Boss->setBulletList(enemyBulletList);
-    enemyList->push_back(Boss);
-    */
     Enemy *Boss = EnemyFactory::createBoss(level,200,50);
     Boss->setScale(0.2);
     Boss->setBulletList(enemyBulletList);
     enemyList->push_back(Boss);
     Boss->setPosition(sf::Vector2f(600,-100));
-
-
     initialBosslife=Boss->getLife();
     BossPTR= Boss;
 

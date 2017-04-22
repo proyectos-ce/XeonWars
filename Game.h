@@ -33,6 +33,7 @@ public:
     void pauseGame();
     void setPhoneDirection(string direction);
 private:
+    int minEnemyQuantity = 3;
     Clock clock;
     Clock shootClock;
     Clock scoreClock;
@@ -61,6 +62,7 @@ private:
 
 
     void updateAll(RenderWindow &window, Options *gameOptions);
+    void loadEnemies();
 };
 
 

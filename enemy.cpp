@@ -75,7 +75,9 @@ void Enemy::setTrigger(int value)
 
 void Enemy::shoot()
 {
+    if(sprite.getPosition().y>-100){
     cannon->shoot();
+    }
 
 }
 
