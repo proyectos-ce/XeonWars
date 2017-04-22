@@ -19,7 +19,7 @@ bool GameOverScreen::elapsedFrames(int frames) {
     return false;
 }
 
-int GameOverScreen::run(sf::RenderWindow &window, sf::Texture &Texture) {
+int GameOverScreen::run(sf::RenderWindow &window, sf::Texture &Texture, Options* gameOptions) {
 
     if (!classicFont.loadFromFile("Resources/menu/8bit.ttf")) {
         std::cerr << "Error loading 8bit.ttf" << std::endl;

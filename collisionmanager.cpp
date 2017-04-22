@@ -23,9 +23,12 @@ bool CollisionManager::checkCollisions()
             //kill player
             collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
             collisionSound.play();
+            addLastScore(enemyList->operator[](i)->getEnemy_score());
             deleteEnemy(enemyList,i);
             i--;
+            if(playerShip->attack(1000)){
             return true;
+            }
         }
 
         else{
@@ -37,6 +40,7 @@ bool CollisionManager::checkCollisions()
                     collisionSound.play();
                     //std::cout<<"bala vs enemigo\n";
                     if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
+                        addLastScore(enemyList->operator[](i)->getEnemy_score());
                         deleteEnemy(enemyList,i);
                         deleteBullet(playerBulletList, j);
                         i--;
@@ -57,8 +61,8 @@ bool CollisionManager::checkCollisions()
         //player vs enemies
         if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
 
-            getPlayerShip()->doDamageAnimation();
-
+            collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+            collisionSound.play();
 
             //attack player
 
@@ -68,14 +72,11 @@ bool CollisionManager::checkCollisions()
             //playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
             if(playerShip->attack(enemyBulletList->operator[](i)->getDamage())){
             //if(playerShip->getLifeLevel() <=0){
-                if(playerShip->getLifes() <=0){
+                //if(playerShip->getLifes() <=0){
                     collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
                     collisionSound.play();
                     return true;
-                }else{
-                    //playerShip->setLifes(playerShip->getLifes()-1);
-                    //playerShip->setLifeLevel(100);
-                }
+                //}
             }
 
             i--;
@@ -122,6 +123,23 @@ std::vector<Bullet *> *CollisionManager::getEnemyBulletList() const
 void CollisionManager::setEnemyBulletList(std::vector<Bullet *> *value)
 {
     enemyBulletList = value;
+}
+
+int CollisionManager::getLastScore()
+{
+    int newScore = lastScore;
+    setLastScore(0);
+    return newScore;
+}
+
+void CollisionManager::addLastScore(int score)
+{
+    lastScore+=score;
+}
+
+void CollisionManager::setLastScore(int value)
+{
+    lastScore = value;
 }
 
 void CollisionManager::deleteEnemy(std::vector<Enemy *> *list, int index)

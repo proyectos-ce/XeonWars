@@ -8,7 +8,7 @@ Bullet::~Bullet()
 {
 }
 
-Bullet::Bullet(sf::Texture texture, Motion *motion , int damage, int speed)
+Bullet::Bullet(sf::Texture *texture, Motion *motion , int damage, int speed)
 {
     setTexture(texture);
     setDamage(damage);

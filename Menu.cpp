@@ -13,7 +13,7 @@ Menu::Menu()
     playing = false;
 }
 
-int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
+int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* gameOptions)
 {
     sf::Event event;
     bool running = true;
@@ -26,13 +26,14 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     sf::Text playLabel;
     sf::Text exitLabel;
     sf::Text optionsLabel;
+    sf::Text creditsLabel;
     sf::Text continueLabel;
     sf::Text copyLabel;
     int menu = 0;
 
-    if (!bgTexture.loadFromFile("Resources/menu/presentation.gif"))
+    if (!bgTexture.loadFromFile("Resources/menu/presentation.jpg"))
     {
-        std::cerr << "Error loading presentation.gif" << std::endl;
+        std::cerr << "Error loading presentation.jpg" << std::endl;
         return (-1);
     }
 
@@ -59,11 +60,16 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
     optionsLabel.setString("Options");
     optionsLabel.setPosition({ 300.f, 400.f });
 
+    creditsLabel.setFont(classicFont);
+    creditsLabel.setCharacterSize(40);
+    creditsLabel.setString("Credits");
+    creditsLabel.setPosition({ 300.f, 450.f });
+
 
     exitLabel.setFont(classicFont);
     exitLabel.setCharacterSize(40);
     exitLabel.setString("Exit");
-    exitLabel.setPosition({ 300.f, 450.f });
+    exitLabel.setPosition({ 300.f, 500.f });
 
     logo.setFont(classicFont);
     logo.setCharacterSize(200);
@@ -111,14 +117,14 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
                         break;
                     case sf::Keyboard::Down:
                         menu++;
-                        if (menu>2)
-                            menu = 2;
+                        if (menu>3)
+                            menu = 3;
                         break;
                     case sf::Keyboard::Return:
                         if (menu == 0) {
                             return (1);
                         } if (menu == 1) {
-                            return(2);
+                            return(4);
                         } else  {
                             return (-1);
                         }
@@ -137,18 +143,28 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
         {
             playLabel.setColor(sf::Color(255, 0, 0, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
         else if (menu == 1)
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 0, 0, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
+            exitLabel.setColor(sf::Color(255, 255, 255, 255));
+        }
+        else if (menu == 2)
+        {
+            playLabel.setColor(sf::Color(255, 255, 255, 255));
+            optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 0, 0, 255));
             exitLabel.setColor(sf::Color(255, 255, 255, 255));
         }
         else
         {
             playLabel.setColor(sf::Color(255, 255, 255, 255));
             optionsLabel.setColor(sf::Color(255, 255, 255, 255));
+            creditsLabel.setColor(sf::Color(255, 255, 255, 255));
             exitLabel.setColor(sf::Color(255, 0, 0, 255));
         }
 
@@ -163,6 +179,7 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture)
             window.draw(copyLabel);
             window.draw(logo);
             window.draw(optionsLabel);
+            window.draw(creditsLabel);
             window.draw(exitLabel);
         }
         window.display();
