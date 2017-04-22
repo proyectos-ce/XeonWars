@@ -39,7 +39,9 @@ private:
     Clock gameClock;
 
     MainSpaceShip ownSpaceShip;
-    Background background;
+    Background background = Background(1,0.1);
+    Background backstars = Background(0,0.05);
+    Background backasteroids = Background(2,0.04);
     Music backgroundMusic;
     Music bossMusic;
     ScoreManager score;

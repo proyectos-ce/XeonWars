@@ -66,8 +66,14 @@ void Game::pauseGame() {
 
 void Game::updateAll(RenderWindow &window, Options* gameOptions)
 {
-    background.update(window, time.asMilliseconds());
-    background.render(window);
+
+   background.update(window, time.asMilliseconds());
+   background.render(window);
+    backstars.update(window,time.asMilliseconds());
+    backstars.render(window);
+    backasteroids.update(window, time.asMilliseconds());
+    backasteroids.render(window);
+
 
     for (int i = 0; i < enemyBulletList.size(); ++i) {
         enemyBulletList[i]->update(window, time.asMilliseconds());
