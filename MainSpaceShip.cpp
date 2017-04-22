@@ -31,9 +31,9 @@ MainSpaceShip::MainSpaceShip() {
     shieldOnSound.loadFromFile("Resources/sfx_shieldUp.ogg");
     shieldOffSound.loadFromFile("Resources/sfx_shieldDown.ogg");
 
-    powerUp p1(missile);
-    powerUp p2(shieldd);
-    powerUp p3(missile);
+    powerUp p1(Missile);
+    powerUp p2(Shield);
+    powerUp p3(Laser);
     //powerUp p4(laser);
 
 

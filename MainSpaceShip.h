@@ -68,6 +68,7 @@ private:
     bool isWhite = false;
     bool shieldActivated = false;
     bool powerUpOn = false;
+
     Sprite SOwnSpaceShip;
     Sprite effectSprite;
     Texture TOwnSpaceShip;
