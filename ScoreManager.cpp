@@ -63,7 +63,6 @@ void ScoreManager::BossTimeCheck(){
         BossTime = true;
         createBoss = true;
         nextBoss_score *= 2.5;
-        nextBoss_score += 1000;
     }
 }
 int ScoreManager::getLevel() {
