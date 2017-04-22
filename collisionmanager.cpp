@@ -19,16 +19,17 @@ bool CollisionManager::checkCollisions()
     int i = 0, j=0;
     while(i<enemyList->size()){
         //player vs enemies
-        if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())){
+        if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())) {
             //kill player
             collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
             collisionSound.play();
-            addLastScore(enemyList->operator[](i)->getEnemy_score());
-            deleteEnemy(enemyList,i);
+            deleteEnemy(enemyList, i);
             playerShip->loseLife();
+
+
             i--;
-            if(playerShip->attack(1000)){
-            return true;
+            if (playerShip->attack(0)) {
+                return true;
             }
         }
 

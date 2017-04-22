@@ -110,6 +110,8 @@ void MainSpaceShip::reset() {
     effectSprite.setScale(0.25,0.25);
     updateEffect(0);
 
+    SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
+
 
 }
 
@@ -389,7 +391,9 @@ void MainSpaceShip::playerShoot() {
 void MainSpaceShip::loseLife() {
     lifes-=1;
     reset();
-    blinkAnimationCounter = 16;
+    if (lifes > 0) {
+        blinkAnimationCounter = 16;
+    }
     lifeLevel=100;
 }
 bool MainSpaceShip::attack(int damage)
@@ -404,11 +408,15 @@ bool MainSpaceShip::attack(int damage)
     else{
         if (blinkAnimationCounter == 0) {
             setLifeLevel(lifeLevel-damage*2);
-            doDamageAnimation();
+
+            if (lifes > 0) {
+                doDamageAnimation();
+            }
             if(lifeLevel<=0){
                 loseLife();
                 if(lifes<=0){
-                result = true;
+                    blinkAnimationCounter = 0;
+                    result = true;
                 }
             }
         }
