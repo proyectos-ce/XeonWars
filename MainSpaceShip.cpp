@@ -305,7 +305,15 @@ void MainSpaceShip::shield() {
 }
 
 void MainSpaceShip::laser(){
-    setLaser_On(true);
+    //setLaser_On(true);
+    if(laser_On ==false){
+           laser_On=true;
+           powerUpOn = true;
+           laserClock.restart();
+       }else{
+           laser_On=false;
+           powerUpOn= false;
+   }
 }
 
 bool MainSpaceShip::gameOver() {
@@ -453,7 +461,10 @@ void MainSpaceShip::setLaser_On(bool value)
     else{
         updateEffect(0);
         powerUpOn = false;
+        laserClock.restart();
+
     }
+
 }
 bool MainSpaceShip::attack(int damage)
 {
@@ -517,7 +528,7 @@ void MainSpaceShip::checkShieldTimer() {
     }
 }
 void MainSpaceShip::checkLaserTimer() {
-    if(laserClock.getElapsedTime().asMilliseconds()>5000 && laser_On == true)
+    if(laserClock.getElapsedTime().asMilliseconds()>3000 && laser_On == true)
         laser();
 }
 
