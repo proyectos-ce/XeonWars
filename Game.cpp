@@ -171,7 +171,7 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
 
 
     stats.setString("Memoria: " + std::to_string(getCurrentRSS() / 1024 /1024) + "MB \nTiempo: " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + " S");
-    ConnectionManager::getInstance()->send("{ \"Memoria\": \"" + std::to_string(getCurrentRSS() / 1024 /1024) + "MB\", \"Tiempo\": " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + ", \"Vidas\":" + std::to_string(ownSpaceShip.getLifes())+ "\"Puntaje\":" + std::to_string(score.get_score()) +"}");
+    ConnectionManager::getInstance()->send("{ \"Memoria\": \"" + std::to_string(getCurrentRSS() / 1024 /1024) + "MB\", \"Tiempo\": " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + ", \"Vidas\":" + std::to_string(ownSpaceShip.getLifes())+ ",\"Puntaje\":" + std::to_string(score.get_score()) +"}");
 
     if (gameOptions->showStats) {
         window.draw(stats);
