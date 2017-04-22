@@ -22,14 +22,14 @@ int PauseScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options
     continueLabel.setFont(classicFont);
     continueLabel.setCharacterSize(40);
     continueLabel.setString("Continue");
-    continueLabel.setPosition({ 280.f, 160.f });
+    continueLabel.setPosition({ 280.f, 300.f });
 
 
     sf::Text exitLabel;
     exitLabel.setFont(classicFont);
     exitLabel.setCharacterSize(40);
     exitLabel.setString("Exit");
-    exitLabel.setPosition({ 300.f, 450.f });
+    exitLabel.setPosition({ 280.f, 400.f });
 
     sf::Sprite background;
     background.setColor(sf::Color(255,255,255,120));
@@ -54,6 +54,8 @@ int PauseScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options
             if (event.type == sf::Event::KeyPressed)
             {
                 switch (event.key.code) {
+                    case sf::Keyboard::Escape:
+                        return 1;
                     case sf::Keyboard::Up:
                         menu--;
                         if (menu < 0)

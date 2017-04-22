@@ -14,7 +14,9 @@ Game::Game() {
     ownSpaceShip.setbulletList(&playerbulletList);
     backgroundMusic.openFromFile("Resources/music2.ogg");
     backgroundMusic.setLoop(true);
-    backgroundMusic.setVolume(20);
+    backgroundMusic.setVolume(60);
+    bossMusic.openFromFile("Resources/boss.ogg");
+    bossMusic.setLoop(true);
     //backgroundMusic.play();
     collisionManager.setEnemyList(&enemyList);
     collisionManager.setPlayerShip(&ownSpaceShip);
@@ -144,7 +146,11 @@ void Game::eraseAll()
 
 int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
-    backgroundMusic.play();
+    if (score.isBossTime()) {
+        bossMusic.play();
+    } else {
+        backgroundMusic.play();
+    }
 
     sf::Font classicFont;
 
@@ -192,19 +198,20 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
                 eraseAll();
+                backgroundMusic.stop();
+                bossMusic.stop();
                 return(3);
             }
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
                 sf::Image img = window.capture();
                 tex.loadFromImage(img);
                 //eraseAll();
+                backgroundMusic.pause();
+                bossMusic.pause();
                 return (3);
 
             }
 
-            if (event.type == sf::Event::Resized) {
-                window.setView(Utils::calcView(sf::Vector2u(event.size.width, event.size.height), Utils::designedsize));
-            }
 
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::X) {
                 ownSpaceShip.usePowerUp();
@@ -249,8 +256,6 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
         if(score.isBossTime()){
             if(score.getcreateBoss()){
                 backgroundMusic.stop();
-                bossMusic.openFromFile("Resources/BackgroundMusic.ogg");
-                bossMusic.setLoop(true);
                 bossMusic.play();
 
                 cout << "viene el boss" << endl;

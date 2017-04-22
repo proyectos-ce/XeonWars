@@ -54,6 +54,8 @@ int main(){
     screens.push_back(&pauseScreen);
     OptionsScreen optionsScreen;
     screens.push_back(&optionsScreen);
+    CreditsScreen creditsScreen;
+    screens.push_back(&creditsScreen);
 
     Texture pauseTexture;
 
