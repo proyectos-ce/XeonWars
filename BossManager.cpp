@@ -32,7 +32,7 @@ BossManager::BossManager(){
     sprite.setPosition(950,23);
 };
 void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector<Bullet *> *enemyBulletList) {
-    BossLevel=level;
+    /*BossLevel=level;
     Bosslife=level*150;
     initialBosslife=Bosslife;
 
@@ -63,6 +63,18 @@ void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector
     Boss->setScale(0.2);
     Boss->setBulletList(enemyBulletList);
     enemyList->push_back(Boss);
+    */
+    Enemy *Boss = EnemyFactory::createBoss(level,200,50);
+    Boss->setScale(0.2);
+    Boss->setBulletList(enemyBulletList);
+    enemyList->push_back(Boss);
+    Boss->setPosition(sf::Vector2f(600,-100));
+
+
+    initialBosslife=Boss->getLife();
+    BossPTR= Boss;
+
+
 }
 
 void BossManager::life_refresh() {
