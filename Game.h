@@ -20,6 +20,10 @@
 #include "Utils.h"
 #include "collisionmanager.h"
 #include "enemyReader.h"
+#include <fstream>
+#include "flyingpowerup.h"
+
+
 
 
 enum Direction {LEFT, RIGHT, UP, DOWN, CENTER};
@@ -33,7 +37,14 @@ public:
     void pauseGame();
     void setPhoneDirection(string direction);
 
+    void setPhoneShooting(bool boolean);
+
+
     void restartGame();
+
+
+    std::vector<FlyingPowerUp *> getPowerUpList() const;
+    void setPowerUpList(const std::vector<FlyingPowerUp *> &value);
 
 private:
     int minEnemyQuantity = 3;
@@ -41,7 +52,8 @@ private:
     Clock shootClock;
     Clock scoreClock;
     Clock gameClock;
-
+    Clock levelupClock;
+    bool levelflag;
     MainSpaceShip ownSpaceShip;
     Background background = Background(1,0.1);
     Background backstars = Background(0,0.05);
@@ -51,15 +63,22 @@ private:
     ScoreManager score;
     Direction phoneDirection = CENTER;
 
+    bool phoneShooting = false;
     bool running = true;
     Time time;
     CollisionManager collisionManager;
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
+    std::vector<FlyingPowerUp *> powerUpList;
     BossManager Boss;
     void eraseAll();
     EnemyReader enemyReader;
+
+    sf::Sprite shipIcon;
+    sf::Texture shipIconTexture;
+    sf::Text livesLeft;
+    sf::Font classicFont;
 
     string statsTxt;
     size_t currentRss;

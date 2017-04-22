@@ -64,5 +64,19 @@ bool Queue<T>::isEmpty() {
     return result;
 }
 
+template <typename T>
+void Queue<T>::dequeueAll() {
+    for(int i=0; i<lenght; i++) {
+        Node<T> *temp = new Node<T>;
+        if (head == NULL) {
+            cout << "Empty Queue" << endl;
+        } else {
+            temp = head;
+            head = head->next;
+        }
+    }
+    lenght = 0;
+}
+
 
 template class Queue<powerUp>;

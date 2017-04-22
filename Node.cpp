@@ -10,6 +10,6 @@ Node<T>::Node(){
 }
 
 template class Node<int>;
-template class Node<powerUps>;
+template class Node<powerUp>;
 template class Node<char*>;
 

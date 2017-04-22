@@ -35,6 +35,10 @@ protected:
     void setMoves(int value);
     Cannon *cannon = NULL;
     int enemy_score=50;
+    bool boss = false;
+public:
+    bool isBoss() const;
+    void setIsBoss(bool isBoss);
 };
 
 namespace EnemyFactory {

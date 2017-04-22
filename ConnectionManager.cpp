@@ -9,9 +9,11 @@
 
 
 #include <mosquitto.h>
+#include <cstring>
 
 
 Game* ConnectionManager::mainGame;
+ConnectionManager* ConnectionManager::instance;
 
 void connect_callback(struct mosquitto *mosq, void *obj, int result)
 {
@@ -36,7 +38,6 @@ void ConnectionManager::setPhoneDirection(string direction){
 ConnectionManager::ConnectionManager(Game *gamecito) {
     ConnectionManager::mainGame = gamecito;
 
-    struct mosquitto *mosq;
 
     mosquitto_lib_init();
 
@@ -56,4 +57,23 @@ ConnectionManager::ConnectionManager(Game *gamecito) {
 
         mosquitto_loop_start(mosq);
     }
+}
+
+
+
+ConnectionManager *ConnectionManager::createInstance(Game *gamecito) {
+    instance = new ConnectionManager(gamecito);
+    return instance;
+}
+
+ConnectionManager *ConnectionManager::getInstance() {
+    return instance;
+}
+
+void ConnectionManager::send(string toSend) {
+    char* cToSend = new char[toSend.length()+1];
+    std::strcpy (cToSend, toSend.c_str());
+    mosquitto_publish(mosq, NULL, "/XeonDataFrom/PC", toSend.length()+1, cToSend, 0, true);
+
+
 }

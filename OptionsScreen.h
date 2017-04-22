@@ -23,6 +23,11 @@ private:
     sf::Text nameStatus;
     sf::Text backLabel;
 
+    sf::Text difficultyLabel;
+    sf::Text easyLabel;
+    sf::Text mediumLabel;
+    sf::Text hardLabel;
+
     sf::Event event;
 };
 

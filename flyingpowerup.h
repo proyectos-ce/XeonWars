@@ -4,26 +4,24 @@
 #include "motion.h"
 #include "powerUp.h"
 
-class FlyingPowerUp :Entity
+class FlyingPowerUp : public Entity
 {
 public:
     FlyingPowerUp(sf::Texture *texture, Motion *motion);
-    powerUps getPowerup() const;
-    void setPowerup(const powerUps &value);
+    powerUp getPowerup() const;
+    void setPowerup(const powerUp &value);
     void animate(float passedTime);
     void update(sf::RenderWindow &window, float time);
 private:
-    powerUps powerup;
+    powerUp powerup;
     float time=0;
 
 };
 
 namespace PowerUpFactory {
-FlyingPowerUp *createMisilePU();
-FlyingPowerUp *createLaserPU();
-FlyingPowerUp *createShieldPU();
-
-
+FlyingPowerUp *createMisilePU(sf::Vector2f position,int speed = 2);
+FlyingPowerUp *createLaserPU(sf::Vector2f position,int speed = 2);
+FlyingPowerUp *createShieldPU(sf::Vector2f position,int speed = 2);
 }
 
 #endif // FLYINGPOWERUP_H

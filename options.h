@@ -21,6 +21,8 @@ public:
 
     bool showStats = false;
 
+    int difficulty = 2;
+
 };
 
 

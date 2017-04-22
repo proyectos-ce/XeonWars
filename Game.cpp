@@ -11,6 +11,12 @@
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;
+
+    if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
+    {
+        std::cerr << "Error loading 8bit.ttf" << std::endl;
+    }
+
     ownSpaceShip.setbulletList(&playerbulletList);
     backgroundMusic.openFromFile("Resources/music2.ogg");
     backgroundMusic.setLoop(true);
@@ -24,8 +30,24 @@ Game::Game() {
     collisionManager.setEnemyBulletList(&enemyBulletList);
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
 
+
+    shipIconTexture.loadFromFile("Resources/playerLife.png");
+    shipIcon.setTexture(shipIconTexture);
+    shipIcon.setPosition(20, 630);
+    shipIcon.setScale(0.5, 0.5);
+
+    livesLeft.setFont(classicFont);
+    livesLeft.setPosition(80, 630);
+
+
+    levelflag=false;
     gameClock.restart().asSeconds();
 
+
+
+    powerUpList.push_back(PowerUpFactory::createLaserPU(sf::Vector2f(100,200)));
+    //powerUpList.push_back(PowerUpFactory::createLaserPU(sf:vector(100,200)));
+    //powerUpList.push_back(PowerUpFactory::createLaserPU(sf:vector(100,200)));
 
 }
 
@@ -39,14 +61,27 @@ void Game::restartGame() {
     gameClock.restart().asSeconds();
     backgroundMusic.stop();
     score.resetScore();
+    ownSpaceShip.setLifes(3);
+    ownSpaceShip.setLifeLevel(100);
+    ownSpaceShip.reset();
 
+}
+
+std::vector<FlyingPowerUp *> Game::getPowerUpList() const
+{
+    return powerUpList;
+}
+
+void Game::setPowerUpList(const std::vector<FlyingPowerUp *> &value)
+{
+    powerUpList = value;
 }
 
 void Game::updateAll(RenderWindow &window, Options* gameOptions)
 {
 
-   background.update(window, time.asMilliseconds());
-   background.render(window);
+    background.update(window, time.asMilliseconds());
+    background.render(window);
     backstars.update(window,time.asMilliseconds());
     backstars.render(window);
     backasteroids.update(window, time.asMilliseconds());
@@ -84,6 +119,18 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
             i--;
 
         }
+
+
+        for (int i = 0; i < powerUpList.size(); ++i) {
+            powerUpList[i]->update(window, time.asMilliseconds());
+            powerUpList[i]->render(window);
+            if( powerUpList[i]->getPosition().y >= 900 | powerUpList[i]->getPosition().x >= 2000 | powerUpList[i]->getPosition().x <= -500){
+                delete powerUpList.operator[](i);
+                powerUpList.erase(powerUpList.begin()+i);
+                i--;
+            }
+
+        }
     }
 
 
@@ -95,10 +142,15 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
 
 
     stats.setString("Memoria: " + std::to_string(getCurrentRSS() / 1024 /1024) + "MB \nTiempo: " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + " S");
+    ConnectionManager::getInstance()->send("{ \"Memoria\": \"" + std::to_string(getCurrentRSS() / 1024 /1024) + "MB\", \"Tiempo\": " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + ", \"Vidas\":" + std::to_string(ownSpaceShip.getLifes())+ "\"Puntaje\":" + std::to_string(score.get_score()) +"}");
 
     if (gameOptions->showStats) {
         window.draw(stats);
     }
+
+    window.draw(shipIcon);
+    livesLeft.setString("x " + std::to_string(ownSpaceShip.getLifes()));
+    window.draw(livesLeft);
 
 
 
@@ -140,6 +192,7 @@ void Game::eraseAll()
 
 
 
+
 int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
     if (score.isBossTime()) {
@@ -147,6 +200,9 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
     } else {
         backgroundMusic.play();
     }
+
+    ownSpaceShip.setGameOptions(gameOptions);
+
 
     sf::Font classicFont;
 
@@ -159,7 +215,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
     stats.setFont(classicFont);
     stats.setCharacterSize(20);
     stats.setColor(sf::Color::White);
-    stats.setPosition(25, 55 );
+    stats.setPosition(25, 125 );
 
 
     std::cout << running << std::endl;
@@ -204,11 +260,11 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::X) {
                 ownSpaceShip.usePowerUp();
             }
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z) {
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z ) {
                 if(shootClock.getElapsedTime().asMilliseconds()>150){
 
                     ownSpaceShip.playerShoot();
-
+                    setPhoneShooting(false);
                     shootClock.restart().asMilliseconds();
                 }
             }
@@ -226,9 +282,25 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
 
         updateAll(window, gameOptions);
-        if(collisionManager.checkCollisions()){
+        if(collisionManager.checkCollisions() || ownSpaceShip.getLifes() == 0){
+            backgroundMusic.stop();
+            bossMusic.stop();
+            if (gameOptions->name.length() > 0) {
+                std::ofstream myfile;
+                myfile.open("Resources/rankings.txt", std::ofstream::app);
+                if (myfile.is_open())
+                {
+                    myfile << gameOptions->name << "\n";
+                    myfile << "-Score: " << score.get_score() << "pts\n";
+                    myfile << "-Level: " << score.getLevel() << "\n";
+                    myfile << "\n";
+                    myfile.close();
+                }
+            }
+
             return 2;
         }
+        
         //update score         collisionManager.getLastScore();
         score.add_score(collisionManager.getLastScore());
         loadEnemies();
@@ -244,26 +316,34 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
         score.BossTimeCheck();
 
-        if(score.isBossTime()){
-            if(score.getcreateBoss()){
+        if(score.isBossTime()) {
+            if (score.getcreateBoss()) {
                 backgroundMusic.stop();
                 bossMusic.play();
 
                 cout << "viene el boss" << endl;
-                Boss.BossInit(score.getLevel(),&enemyList,&enemyBulletList);
+                Boss.BossInit(score.getLevel(), &enemyList, &enemyBulletList);
                 score.createbossOff();
             }
             Boss.life_refresh();
             Boss.lifeRender(window);
-            if(Boss.isdead()){
+            if (Boss.isdead()) {
                 score.add_score(1000);
                 bossMusic.stop();
                 backgroundMusic.play();
-                score.BossTime=false;
-                cout << "boss ha muerto"<<endl;
+                score.BossTime = false;
+                cout << "boss ha muerto" << endl;
                 score.nextlevelReached();
-                cout << "ahora esta en el nivel: "<< score.getLevel()<< endl;
-                cout << "proximo boss al score de: "<< score.nextBoss_score;
+                cout << "ahora esta en el nivel: " << score.getLevel() << endl;
+                cout << "proximo boss al score de: " << score.nextBoss_score;
+
+                levelupClock.restart();
+                if (!levelflag) levelflag = true;
+            }
+        }
+        if (  levelupClock.getElapsedTime().asSeconds()<=2){
+            if (levelflag and (int)levelupClock.getElapsedTime().asMilliseconds() % 2 ==0){
+                score.show_levelup(window);
             }
         }
 
@@ -301,6 +381,16 @@ void Game::setPhoneDirection(string direction) {
     else if(direction.compare("C") ==0){
         phoneDirection = CENTER;
     }
+    else if(direction.compare("S") ==0){
+        ownSpaceShip.playerShoot();
+    }
+    else if(direction.compare("P") == 0){
+        ownSpaceShip.usePowerUp();
+    }
+}
+
+void Game::setPhoneShooting(bool boolean) {
+    phoneShooting = boolean;
 }
 
 

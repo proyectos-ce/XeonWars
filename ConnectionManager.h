@@ -22,10 +22,16 @@
 class ConnectionManager {
 
 public:
-    ConnectionManager(Game* gamecito);
+    static ConnectionManager* getInstance();
+    static ConnectionManager* createInstance(Game* gamecito);
+    void send(string toSend);
     static Game* mainGame;
     static void setPhoneDirection(string);
 private:
+
+    struct mosquitto *mosq;
+    ConnectionManager(Game* gamecito);
+    static ConnectionManager* instance;
 
 
 };
