@@ -36,7 +36,7 @@ Game::Game() {
 
     shipIconTexture.loadFromFile("Resources/playerLife.png");
     shipIcon.setTexture(shipIconTexture);
-    shipIcon.setPosition(20, 630);
+    shipIcon.setPosition(20, 700);
     shipIcon.setScale(0.5, 0.5);
 
     powerUpIconTexture.loadFromFile("Resources/MiniPowerUps.png");
@@ -47,7 +47,7 @@ Game::Game() {
 
 
     livesLeft.setFont(classicFont);
-    livesLeft.setPosition(80, 630);
+    livesLeft.setPosition(80, 700);
 
 
     levelflag=false;
