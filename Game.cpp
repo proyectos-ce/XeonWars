@@ -11,6 +11,12 @@
 
 Game::Game() {
     cout<<"Juego Creado"<<endl;
+
+    if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
+    {
+        std::cerr << "Error loading 8bit.ttf" << std::endl;
+    }
+
     ownSpaceShip.setbulletList(&playerbulletList);
     backgroundMusic.openFromFile("Resources/music2.ogg");
     backgroundMusic.setLoop(true);
@@ -23,6 +29,14 @@ Game::Game() {
     collisionManager.setPlayerBulletList(&playerbulletList);
     collisionManager.setEnemyBulletList(&enemyBulletList);
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
+
+    shipIconTexture.loadFromFile("Resources/playerLife.png");
+    shipIcon.setTexture(shipIconTexture);
+    shipIcon.setPosition(20, 630);
+    shipIcon.setScale(0.5, 0.5);
+
+    livesLeft.setFont(classicFont);
+    livesLeft.setPosition(80, 630);
 
     gameClock.restart().asSeconds();
 
@@ -39,6 +53,9 @@ void Game::restartGame() {
     gameClock.restart().asSeconds();
     backgroundMusic.stop();
     score.resetScore();
+    ownSpaceShip.setLifes(3);
+    ownSpaceShip.setLifeLevel(100);
+    ownSpaceShip.reset();
 
 }
 
@@ -98,6 +115,10 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
     if (gameOptions->showStats) {
         window.draw(stats);
     }
+
+    window.draw(shipIcon);
+    livesLeft.setString("x " + std::to_string(ownSpaceShip.getLifes()));
+    window.draw(livesLeft);
 
 
 
@@ -225,9 +246,10 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
 
         updateAll(window, gameOptions);
-        if(collisionManager.checkCollisions()){
+        if(collisionManager.checkCollisions() || ownSpaceShip.getLifes() == 0){
             return 2;
         }
+        
         //update score         collisionManager.getLastScore();
         score.add_score(collisionManager.getLastScore());
         loadEnemies();

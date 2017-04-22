@@ -64,11 +64,11 @@ int main(){
     {
         if (screen == 3)
             game.pauseGame();
-        screen = screens[screen]->run(window, pauseTexture, gameOptions);
-
         if (screen == 0) {
             game.restartGame();
         }
+        screen = screens[screen]->run(window, pauseTexture, gameOptions);
+
     }
 
     return EXIT_SUCCESS;

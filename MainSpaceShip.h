@@ -62,6 +62,10 @@ public:
     void setDirectionLeft();
     void setDirectionRight();
 
+    void reset();
+
+    void loseLife();
+
 private:
     bool missiles_On =false;
     bool laser_On= false;

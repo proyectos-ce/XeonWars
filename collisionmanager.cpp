@@ -25,6 +25,7 @@ bool CollisionManager::checkCollisions()
             collisionSound.play();
             addLastScore(enemyList->operator[](i)->getEnemy_score());
             deleteEnemy(enemyList,i);
+            playerShip->loseLife();
             i--;
             if(playerShip->attack(1000)){
             return true;

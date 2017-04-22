@@ -61,6 +61,11 @@ private:
     void eraseAll();
     EnemyReader enemyReader;
 
+    sf::Sprite shipIcon;
+    sf::Texture shipIconTexture;
+    sf::Text livesLeft;
+    sf::Font classicFont;
+
     string statsTxt;
     size_t currentRss;
     sf::Text stats;

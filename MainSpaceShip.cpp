@@ -89,6 +89,30 @@ void MainSpaceShip::lifeManager(int damage){
     }
 }
 
+void MainSpaceShip::reset() {
+    missiles_On =false;
+    laser_On= false;
+    isWhite = false;
+    shieldActivated = false;
+    powerUpOn = false;
+    globalScore = 0;
+
+    TOwnSpaceShip.setSmooth(true);
+    SOwnSpaceShip.setTexture(TOwnSpaceShip);
+    effectSprite.setTexture(TOwnSpaceShip);
+
+    SOwnSpaceShip.setPosition(550,620);
+    SOwnSpaceShip.setScale(0.25,0.25);
+    effectSprite.setPosition(550,620);
+    effectSprite.setScale(0.25,0.25);
+    updateEffect(0);
+
+    blinkAnimationCounter = 0;
+    frameCounter = 0;
+    missileShootCounter = 0;
+}
+
+
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
 
@@ -252,7 +276,7 @@ bool MainSpaceShip::gameOver() {
 
 void MainSpaceShip::doDamageAnimation() {
     if (blinkAnimationCounter == 0)
-        blinkAnimationCounter = 10;
+        blinkAnimationCounter = 6;
 }
 
 int MainSpaceShip::getTexturesAmount() const
@@ -360,6 +384,13 @@ void MainSpaceShip::playerShoot() {
     }
     sound.play();
 }
+
+void MainSpaceShip::loseLife() {
+    lifes-=1;
+    reset();
+    blinkAnimationCounter = 16;
+    lifeLevel=100;
+}
 bool MainSpaceShip::attack(int damage)
 {
     std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
@@ -370,16 +401,16 @@ bool MainSpaceShip::attack(int damage)
         updateEffect(0);
     }
     else{
-        setLifeLevel(lifeLevel-damage);
-        doDamageAnimation();
-        if(lifeLevel<=0){
-            lifes-=1;
-            lifeLevel=100;
-            if(lifes<=0){
-            result = true;
+        if (blinkAnimationCounter == 0) {
+            setLifeLevel(lifeLevel-damage*2);
+            doDamageAnimation();
+            if(lifeLevel<=0){
+                loseLife();
+                if(lifes<=0){
+                result = true;
+                }
             }
         }
-
     }
     return result;
 
