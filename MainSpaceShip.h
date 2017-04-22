@@ -113,8 +113,12 @@ private:
     void updateTexture(int value);
     void updateEffect(int value);
 
+    Options* gameOptions;
+public:
+    Options* getGameOptions() const;
+    void setGameOptions(Options *gameOptions);
 
-
+private:
     const float speed = 6;
     const float maxSpeed = speed*10;
     sf::Vector2f velocity;

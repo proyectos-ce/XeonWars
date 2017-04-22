@@ -123,6 +123,14 @@ void Enemy::setEnemy_score(int score) {
     enemy_score = score;
 }
 
+bool Enemy::isBoss() const {
+    return boss;
+}
+
+void Enemy::setIsBoss(bool isBoss) {
+    Enemy::boss=isBoss;
+}
+
 
 
 
