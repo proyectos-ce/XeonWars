@@ -20,14 +20,15 @@ bool CollisionManager::checkCollisions()
     while(i<enemyList->size()){
         //player vs enemies
 
-        if(playerShip->getBlinkAnimationCounter() == 0 && !enemyList->operator[](i)->isExploding() && Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())) {
+        if(playerShip->getBlinkAnimationCounter() == 0 && Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())) {
             //kill player
             collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
             collisionSound.play();
 
             if (!enemyList->operator[](i)->isBoss()) {
-                //deleteEnemy(enemyList, i);
-                enemyList->operator[](i)->explode();
+                explosionList->push_back(ExplosionFactory::createSimpleExplosion(enemyList->operator[](i)->getPosition()));
+                deleteEnemy(enemyList, i);
+                //enemyList->operator[](i)->explode();
             }
 
             playerShip->loseLife();

@@ -36,7 +36,6 @@ public:
     sf::Texture *getTexture() const;
     void setTexture(sf::Texture *value);
 
-    void explode();
 
 protected:
     //bool *lifeFlag = NULL;
@@ -46,9 +45,6 @@ protected:
     sf::Sprite sprite;
     sf::Texture *texture;
     int currentTexture=0;
-    bool exploding = false;
-public:
-    bool isExploding() const;
 
 
 };
