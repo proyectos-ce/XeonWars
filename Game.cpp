@@ -171,6 +171,9 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
         backgroundMusic.play();
     }
 
+    ownSpaceShip.setGameOptions(gameOptions);
+
+
     sf::Font classicFont;
 
     if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
@@ -182,7 +185,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
     stats.setFont(classicFont);
     stats.setCharacterSize(20);
     stats.setColor(sf::Color::White);
-    stats.setPosition(25, 55 );
+    stats.setPosition(25, 105 );
 
 
     std::cout << running << std::endl;
@@ -250,6 +253,8 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
         updateAll(window, gameOptions);
         if(collisionManager.checkCollisions() || ownSpaceShip.getLifes() == 0){
+            backgroundMusic.stop();
+            bossMusic.stop();
             return 2;
         }
         

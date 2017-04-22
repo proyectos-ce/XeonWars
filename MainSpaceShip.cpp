@@ -96,6 +96,9 @@ void MainSpaceShip::reset() {
     shieldActivated = false;
     powerUpOn = false;
     globalScore = 0;
+    blinkAnimationCounter = 0;
+    frameCounter = 0;
+    missileShootCounter = 0;
 
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
@@ -107,9 +110,9 @@ void MainSpaceShip::reset() {
     effectSprite.setScale(0.25,0.25);
     updateEffect(0);
 
-    blinkAnimationCounter = 0;
-    frameCounter = 0;
-    missileShootCounter = 0;
+    SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
+
+
 }
 
 
@@ -388,7 +391,9 @@ void MainSpaceShip::playerShoot() {
 void MainSpaceShip::loseLife() {
     lifes-=1;
     reset();
-    blinkAnimationCounter = 16;
+    if (lifes > 0) {
+        blinkAnimationCounter = 16;
+    }
     lifeLevel=100;
 }
 bool MainSpaceShip::attack(int damage)
@@ -402,12 +407,16 @@ bool MainSpaceShip::attack(int damage)
     }
     else{
         if (blinkAnimationCounter == 0) {
-            setLifeLevel(lifeLevel-damage*2);
-            doDamageAnimation();
+            setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
+
+            if (lifes > 0) {
+                doDamageAnimation();
+            }
             if(lifeLevel<=0){
                 loseLife();
                 if(lifes<=0){
-                result = true;
+                    blinkAnimationCounter = 0;
+                    result = true;
                 }
             }
         }
@@ -475,6 +484,15 @@ void MainSpaceShip::setDirectionLeft(){
 
 void MainSpaceShip::setDirectionRight(){
     velocity.x += speed;
+}
+
+
+Options *MainSpaceShip::getGameOptions() const {
+    return gameOptions;
+}
+
+void MainSpaceShip::setGameOptions(Options *gameOptions) {
+    MainSpaceShip::gameOptions = gameOptions;
 }
 
 

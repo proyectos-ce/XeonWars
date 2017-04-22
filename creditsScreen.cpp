@@ -12,10 +12,9 @@ CreditsScreen::CreditsScreen() {
 
     creditsFile.open("Resources/credits.txt");
 
-    backgroundMusic.openFromFile("Resources/peligro.ogg");
+    backgroundMusic.openFromFile("Resources/credits.ogg");
     backgroundMusic.setLoop(true);
-  //  backgroundMusic.setVolume(80);
-    backgroundMusic.setVolume(120);
+    backgroundMusic.setVolume(100);
 
     if (creditsFile.is_open()) {
         while (getline(creditsFile, line)) {

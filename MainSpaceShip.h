@@ -11,6 +11,7 @@
 #include "cannon.h"
 #include "motion.h"
 #include "ScoreManager.h"
+#include "options.h"
 
 using namespace sf;
 
@@ -105,6 +106,13 @@ private:
     void updateTexture(int value);
     void updateEffect(int value);
 
+    Options* gameOptions;
+public:
+    Options *getGameOptions() const;
+
+    void setGameOptions(Options *gameOptions);
+
+private:
 
 
     const float speed = 6;
