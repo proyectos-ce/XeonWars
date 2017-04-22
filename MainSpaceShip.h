@@ -23,8 +23,10 @@ public:
     void usePowerUp();
     bool gameOver();
     void shield();
+    void laser();
     void playerShoot();
     void checkShieldTimer();
+    void checkLaserTimer();
     void lifeManager(int);
     bool attack(int damage);
 
@@ -103,6 +105,7 @@ private:
     Texture missileCannonTexture;
     Cannon *laserCannon;
     Clock shieldClock;
+    Clock laserClock;
     std::vector<Bullet *> *bulletList;
 
     int texturesAmount=7;
@@ -120,16 +123,14 @@ private:
 
     int rectX, rectY;
 public:
-    Options *getGameOptions() const;
-
+    Options* getGameOptions() const;
     void setGameOptions(Options *gameOptions);
 
 private:
-
-
     const float speed = 6;
     const float maxSpeed = speed*10;
     sf::Vector2f velocity;
+
 
 };
 

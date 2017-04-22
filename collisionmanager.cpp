@@ -19,6 +19,7 @@ bool CollisionManager::checkCollisions()
     int i = 0, j=0;
     while(i<enemyList->size()){
         //player vs enemies
+
         if(playerShip->getBlinkAnimationCounter() == 0 && !enemyList->operator[](i)->isExploding() && Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())) {
             //kill player
             collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
@@ -30,11 +31,9 @@ bool CollisionManager::checkCollisions()
             }
 
             playerShip->loseLife();
-
-
             i--;
-            if (playerShip->attack(0)) {
-                return true;
+            if(playerShip->attack(1000)){
+            return true;
             }
         }
 

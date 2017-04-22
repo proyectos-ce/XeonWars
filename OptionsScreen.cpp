@@ -29,7 +29,7 @@ OptionsScreen::OptionsScreen() {
     nameStatus.setFont(classicFont);
     nameStatus.setCharacterSize(40);
     nameStatus.setPosition({ 480.f, 250.f });
-    
+
     difficultyLabel.setFont(classicFont);
     difficultyLabel.setCharacterSize(40);
     difficultyLabel.setString("Difficulty");

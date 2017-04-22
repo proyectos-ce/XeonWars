@@ -114,6 +114,7 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
 
 
     stats.setString("Memoria: " + std::to_string(getCurrentRSS() / 1024 /1024) + "MB \nTiempo: " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + " S");
+    ConnectionManager::getInstance()->send("{ \"Memoria\": \"" + std::to_string(getCurrentRSS() / 1024 /1024) + "MB\", \"Tiempo\": " + std::to_string((int) floor(gameClock.getElapsedTime().asSeconds())) + ", \"Vidas\":" + std::to_string(ownSpaceShip.getLifes())+ "\"Puntaje\":" + std::to_string(score.get_score()) +"}");
 
     if (gameOptions->showStats) {
         window.draw(stats);
@@ -163,6 +164,7 @@ void Game::eraseAll()
 
 
 
+
 int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
     if (score.isBossTime()) {
@@ -170,8 +172,6 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
     } else {
         backgroundMusic.play();
     }
-
-    ownSpaceShip.setGameOptions(gameOptions);
 
 
     sf::Font classicFont;
@@ -185,7 +185,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
     stats.setFont(classicFont);
     stats.setCharacterSize(20);
     stats.setColor(sf::Color::White);
-    stats.setPosition(25, 105 );
+    stats.setPosition(25, 125 );
 
 
     std::cout << running << std::endl;
@@ -230,11 +230,11 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::X) {
                 ownSpaceShip.usePowerUp();
             }
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z) {
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z ) {
                 if(shootClock.getElapsedTime().asMilliseconds()>150){
 
                     ownSpaceShip.playerShoot();
-
+                    setPhoneShooting(false);
                     shootClock.restart().asMilliseconds();
                 }
             }
@@ -267,6 +267,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
                     myfile.close();
                 }
             }
+
             return 2;
         }
         
@@ -350,6 +351,16 @@ void Game::setPhoneDirection(string direction) {
     else if(direction.compare("C") ==0){
         phoneDirection = CENTER;
     }
+    else if(direction.compare("S") ==0){
+        ownSpaceShip.playerShoot();
+    }
+    else if(direction.compare("P") == 0){
+        ownSpaceShip.usePowerUp();
+    }
+}
+
+void Game::setPhoneShooting(bool boolean) {
+    phoneShooting = boolean;
 }
 
 

@@ -5,6 +5,7 @@
 #include "MainSpaceShip.h"
 #include "ScoreManager.h"
 
+
 MainSpaceShip::MainSpaceShip() {
     lifes = 3;
     scoreForLifes = 0;
@@ -18,10 +19,12 @@ MainSpaceShip::MainSpaceShip() {
     //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
     //SOwnSpaceShip.setColor(sf::Color(0,250,100,255));
     //SOwnSpaceShip.setScale(sf::Vector2f(0.8,0.8));
+
     SOwnSpaceShip.setPosition(550,620);
     SOwnSpaceShip.setScale(0.25,0.25);
     effectSprite.setPosition(550,620);
     effectSprite.setScale(0.25,0.25);
+
     updateEffect(0);
 
 
@@ -31,9 +34,9 @@ MainSpaceShip::MainSpaceShip() {
     shieldOnSound.loadFromFile("Resources/sfx_shieldUp.ogg");
     shieldOffSound.loadFromFile("Resources/sfx_shieldDown.ogg");
 
-    powerUp p1(missile);
-    powerUp p2(shieldd);
-    powerUp p3(missile);
+    powerUp p1(LASER);
+    powerUp p2(SHIELD);
+    powerUp p3(MISSILE);
     //powerUp p4(laser);
 
 
@@ -103,9 +106,6 @@ void MainSpaceShip::reset() {
     currentExplosionTexture = 0;
     powerUpOn = false;
     globalScore = 0;
-    blinkAnimationCounter = 0;
-    frameCounter = 0;
-    missileShootCounter = 0;
 
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
@@ -117,9 +117,9 @@ void MainSpaceShip::reset() {
     effectSprite.setScale(0.25,0.25);
     updateEffect(0);
 
-    SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
-
-
+    blinkAnimationCounter = 0;
+    frameCounter = 0;
+    missileShootCounter = 0;
 }
 
 
@@ -138,7 +138,8 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
         }
     } else {
 
-        checkShieldTimer();
+    checkShieldTimer();
+    checkLaserTimer();
 
         frameCounter++;
 
@@ -264,8 +265,7 @@ void MainSpaceShip::usePowerUp() {
                 //cout <<"Escudo"<<endl;
 
             } else if (powerToUse == 2) {
-                //cout <<"Laser"<<endl;
-                laser_On;
+                laser();
             }
         } else {
             cout << "No hay power ups" << endl;
@@ -291,6 +291,17 @@ void MainSpaceShip::shield() {
 
     }
     sound.play();
+}
+
+void MainSpaceShip::laser(){
+    if(laser_On ==false){
+        laser_On=true;
+        powerUpOn = true;
+        laserClock.restart();
+    }else{
+        laser_On=false;
+        powerUpOn= false;
+    }
 }
 
 bool MainSpaceShip::gameOver() {
@@ -398,6 +409,8 @@ void MainSpaceShip::playerShoot() {
             updateEffect(0);
         }
     } else if (laser_On){
+        sound.setBuffer(missileShootBuffer);
+        missileCannon->shoot();
     } else {
 
         shipCannon->shoot();
@@ -415,33 +428,33 @@ void MainSpaceShip::loseLife() {
     SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
     exploding = true;
 }
-bool MainSpaceShip::attack(int damage)
-{
-    std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
+bool MainSpaceShip::attack(int damage) {
+    std::cout << "lifes:" << lifes << " level:" << lifeLevel << endl;
     bool result = false;
-    if(shieldActivated){
-        shieldActivated=false;
+    if (shieldActivated) {
+        shieldActivated = false;
         powerUpOn = false;
         updateEffect(0);
-    }
-    else{
+    } else {
+
         if (blinkAnimationCounter == 0) {
             setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
 
-            if (lifes > 0) {
+            if (blinkAnimationCounter == 0) {
+                setLifeLevel(lifeLevel - damage * 2);
                 doDamageAnimation();
-            }
-            if(lifeLevel<=0){
-                loseLife();
-                if(lifes<=0){
-                    blinkAnimationCounter = 0;
-                    result = true;
+                if (lifeLevel <= 0) {
+                    loseLife();
+                    if (lifes <= 0) {
+                        result = true;
+                    }
+
                 }
             }
         }
-    }
-    return result;
+        return result;
 
+    }
 }
 
 int MainSpaceShip::getLifeLevel() const
@@ -475,7 +488,10 @@ void MainSpaceShip::checkShieldTimer() {
     if(shieldClock.getElapsedTime().asMilliseconds()>10000 && shieldActivated==true) {
         shield();
     }
-    //else()
+}
+void MainSpaceShip::checkLaserTimer() {
+    if(laserClock.getElapsedTime().asMilliseconds()>5000 && laser_On == true)
+        laser();
 }
 
 int MainSpaceShip::getLifes() const {
@@ -506,6 +522,7 @@ void MainSpaceShip::setDirectionRight(){
 }
 
 
+
 Options *MainSpaceShip::getGameOptions() const {
     return gameOptions;
 }
@@ -517,5 +534,6 @@ void MainSpaceShip::setGameOptions(Options *gameOptions) {
 int MainSpaceShip::getBlinkAnimationCounter() const {
     return blinkAnimationCounter;
 }
+
 
 

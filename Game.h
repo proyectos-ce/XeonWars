@@ -35,7 +35,11 @@ public:
     void pauseGame();
     void setPhoneDirection(string direction);
 
+    void setPhoneShooting(bool boolean);
+
+
     void restartGame();
+
 
 private:
     int minEnemyQuantity = 3;
@@ -54,6 +58,7 @@ private:
     ScoreManager score;
     Direction phoneDirection = CENTER;
 
+    bool phoneShooting = false;
     bool running = true;
     Time time;
     CollisionManager collisionManager;
