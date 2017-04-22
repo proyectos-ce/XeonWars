@@ -19,34 +19,48 @@
 #include "cannon.h"
 #include "Utils.h"
 #include "collisionmanager.h"
+#include "enemyReader.h"
+
+
+enum Direction {LEFT, RIGHT, UP, DOWN, CENTER};
 
 class Game : public Screen {
 
 
-
 public:
     Game();
-    int run(RenderWindow &window, Texture &tex);
+    int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
+    void setPhoneDirection(string direction);
 private:
     Clock clock;
     Clock shootClock;
     Clock scoreClock;
+    Clock gameClock;
+
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
     Music bossMusic;
     ScoreManager score;
+    Direction phoneDirection = CENTER;
 
     bool running = true;
     Time time;
+    CollisionManager collisionManager;
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
     BossManager Boss;
-    void updateAll(RenderWindow &window);
     void eraseAll();
+    EnemyReader enemyReader;
 
+    string statsTxt;
+    size_t currentRss;
+    sf::Text stats;
+
+
+    void updateAll(RenderWindow &window, Options *gameOptions);
 };
 
 
