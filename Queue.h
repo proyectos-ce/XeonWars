@@ -9,8 +9,16 @@
 using namespace std;
 
 template <class T> class Queue {
-    Node<T> *head;
+
+
+
+private:
     int lenght;
+public:
+    int getLenght() const;
+
+private:
+    Node<T> *head;
 
 public:
     Queue<T>();
@@ -19,6 +27,9 @@ public:
     void dequeueAll();
     void printQueue();
     bool isEmpty();
+    Node<T> *getHead() const;
+
+
 
 };
 

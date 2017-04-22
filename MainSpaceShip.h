@@ -93,12 +93,14 @@ private:
     int blinkAnimationCounter = 0;
 public:
     int getBlinkAnimationCounter() const;
+    Queue<powerUp> powerUpsQueue;
+    //Queue<powerUp> getPowerUpsQueue();
 
 private:
     int frameCounter = 0;
     int globalScore;
     int scoreForLifes;
-    Queue<powerUp> powerUpsQueue;
+
     Cannon *shipCannon;
     Texture shipCannonTexture;
     Cannon *missileCannon;

@@ -36,6 +36,13 @@ Game::Game() {
     shipIcon.setPosition(20, 630);
     shipIcon.setScale(0.5, 0.5);
 
+    powerUpIconTexture.loadFromFile("Resources/MiniPowerUps.png");
+    setUpPowerUpIcon();
+    powerUpIcon.setTexture(powerUpIconTexture);
+    powerUpIcon.setPosition(30, 150);
+
+
+
     livesLeft.setFont(classicFont);
     livesLeft.setPosition(80, 630);
 
@@ -121,6 +128,7 @@ void Game::updateAll(RenderWindow &window, Options* gameOptions)
     }
 
     window.draw(shipIcon);
+    window.draw(powerUpIcon);
     livesLeft.setString("x " + std::to_string(ownSpaceShip.getLifes()));
     window.draw(livesLeft);
 
@@ -231,6 +239,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::X) {
                 ownSpaceShip.usePowerUp();
+                setUpPowerUpIcon();
             }
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Z ) {
                 if(shootClock.getElapsedTime().asMilliseconds()>150){
@@ -363,6 +372,24 @@ void Game::setPhoneDirection(string direction) {
 
 void Game::setPhoneShooting(bool boolean) {
     phoneShooting = boolean;
+}
+
+void Game::setUpPowerUpIcon() {
+
+    if(ownSpaceShip.powerUpsQueue.getHead() == NULL) {
+        powerUpIcon.setTextureRect(sf::IntRect(0, 0, 93.75, 94));
+    }
+    else if(ownSpaceShip.powerUpsQueue.getHead()->data.getType() == 0){
+        powerUpIcon.setTextureRect(sf::IntRect(187.5, 0, 93.75, 94));
+    }
+    else if(ownSpaceShip.powerUpsQueue.getHead()->data.getType() == 1){
+        powerUpIcon.setTextureRect(sf::IntRect(281.25, 0, 93.75, 94));
+    }
+    else if(ownSpaceShip.powerUpsQueue.getHead()->data.getType() == 2){
+        powerUpIcon.setTextureRect(sf::IntRect(93.75, 0, 93.75, 94));
+    }
+
+
 }
 
 
