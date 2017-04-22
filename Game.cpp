@@ -272,7 +272,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
             scoreClock.restart().asMilliseconds();
         }
 
-        if (score.checklifes %1000 >=1){
+        if (score.checklifes >=5000){
             score.checklifes =0;
             ownSpaceShip.addlife();
         }
