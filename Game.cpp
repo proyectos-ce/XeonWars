@@ -255,6 +255,18 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
         if(collisionManager.checkCollisions() || ownSpaceShip.getLifes() == 0){
             backgroundMusic.stop();
             bossMusic.stop();
+            if (gameOptions->name.length() > 0) {
+                std::ofstream myfile;
+                myfile.open("Resources/rankings.txt", std::ofstream::app);
+                if (myfile.is_open())
+                {
+                    myfile << gameOptions->name << "\n";
+                    myfile << "-Score: " << score.get_score() << "pts\n";
+                    myfile << "-Level: " << score.getLevel() << "\n";
+                    myfile << "\n";
+                    myfile.close();
+                }
+            }
             return 2;
         }
         

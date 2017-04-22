@@ -11,11 +11,20 @@ RankingScreen::RankingScreen() {
     }
 
 
-    creditsFile.open("Resources/rankings.txt");
 
     backgroundMusic.openFromFile("Resources/credits.ogg");
     backgroundMusic.setLoop(true);
     backgroundMusic.setVolume(100);
+
+
+
+}
+
+int RankingScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options *gameOptions) {
+
+    creditsFile.open("Resources/rankings.txt");
+    creditsStr = "";
+
 
     if (creditsFile.is_open()) {
         while (getline(creditsFile, line)) {
@@ -26,9 +35,6 @@ RankingScreen::RankingScreen() {
         creditsStr = "ERROR: COULDN'T OPEN RANKINGS.TXT";
     }
 
-}
-
-int RankingScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options *gameOptions) {
     const int SCREEN_WIDTH = window.getSize().x;
     const int SCREEN_HEIGHT = window.getSize().y;
     const float scale = 0.8; /// I used 0.8 so you have space for the title(top) and a "back" button (bottom)
@@ -73,7 +79,7 @@ int RankingScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
         time = clock.getElapsedTime();
 
         ///Move the credits upward. You may want this to be tied to a sf::Clock/sf::Time and move it taking into account the delta time
-        creditsView.move(0, SCREEN_HEIGHT * 0.00015 * time.asMilliseconds());
+        creditsView.move(0, SCREEN_HEIGHT * 0.00030 * time.asMilliseconds());
         ///Reset the view if they go "too far"
         if(creditsView.getCenter().y > SCREEN_HEIGHT * 2 + creditText.getGlobalBounds().height + creditText2.getGlobalBounds().height){
             creditsView.setCenter(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
