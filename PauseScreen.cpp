@@ -5,35 +5,36 @@
 #include <iostream>
 #include "PauseScreen.h"
 #include "Utils.h"
+#include <unistd.h>
 
-PauseScreen::PauseScreen() {}
-
-int PauseScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options* gameOptions) {
-
-    sf::Font classicFont;
+PauseScreen::PauseScreen() {
 
     if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))
     {
         std::cerr << "Error loading 8bit.ttf" << std::endl;
-        return (-1);
     }
 
-    sf::Text continueLabel;
     continueLabel.setFont(classicFont);
     continueLabel.setCharacterSize(40);
     continueLabel.setString("Continue");
-    continueLabel.setPosition({ 280.f, 160.f });
+    continueLabel.setPosition({ 280.f, 300.f });
 
 
-    sf::Text exitLabel;
     exitLabel.setFont(classicFont);
     exitLabel.setCharacterSize(40);
     exitLabel.setString("Exit");
-    exitLabel.setPosition({ 300.f, 450.f });
+    exitLabel.setPosition({ 280.f, 400.f });
 
-    sf::Sprite background;
+
+}
+
+int PauseScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options* gameOptions) {
+
+
+
     background.setColor(sf::Color(255,255,255,120));
     background.setTexture(pauseScreen);
+
 
     sf::Event event;
 
@@ -54,6 +55,8 @@ int PauseScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Options
             if (event.type == sf::Event::KeyPressed)
             {
                 switch (event.key.code) {
+                    case sf::Keyboard::Escape:
+                        return 1;
                     case sf::Keyboard::Up:
                         menu--;
                         if (menu < 0)

@@ -45,6 +45,14 @@ void ScoreManager::add_score(int score) {
     GeneralScore+=score;
     checklifes+= score;
 }
+void ScoreManager::resetScore() {
+    GeneralScore = 0;
+    BossTime = false;
+    createBoss = false;
+    currentLevel = 1;
+    nextBoss_score=100;
+    checklifes=0;
+}
 bool ScoreManager::isBossTime(){
     bool result = false;
     if (BossTime) result = true;

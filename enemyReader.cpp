@@ -53,6 +53,7 @@ std::vector<EnemyParameters> EnemyReader::readEnemyFile(){
         }
         catch(std::invalid_argument&) {
             std::cout << "Error in line number:" << k << '\n';
+            reset();
             break;
             //throw;
         }
@@ -88,9 +89,16 @@ Enemy *EnemyReader::createEnemy(EnemyParameters enemyParameters)
     else{
         enemy = EnemyFactory::createJet(enemyParameters.getLevel(),enemyParameters.getMovement());
     }
-    enemy->setCenterPosition(sf::Vector2f(enemyParameters.getXPosition(),enemyParameters.getYPosition()));
+    enemy->setCenterPosition(sf::Vector2f(enemyParameters.getXPosition(),-enemyParameters.getYPosition()));
     return enemy;
 }
+
+void EnemyReader::reset()
+{
+    txtFile.close();
+    txtFile.open("Resources/Enemies.txt");
+}
+
 
 std::vector<Enemy *> EnemyReader::getNextEnemySet()
 {
@@ -137,6 +145,7 @@ void EnemyParameters::setLevel(int value)
     }
     level = value;
 }
+
 
 std::string EnemyParameters::getType() const
 {

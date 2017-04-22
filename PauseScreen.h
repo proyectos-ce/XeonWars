@@ -15,6 +15,11 @@ public:
 private:
     bool running = true;
     int menu = 0;
+    sf::Text continueLabel;
+    sf::Text exitLabel;
+    sf::Sprite background;
+    sf::Font classicFont;
+
 };
 
 

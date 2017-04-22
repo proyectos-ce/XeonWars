@@ -50,8 +50,6 @@ int GameOverScreen::run(sf::RenderWindow &window, sf::Texture &Texture, Options*
 
         while (window.pollEvent(event)) {
 
-            if (event.type == sf::Event::Resized)
-                window.setView(Utils::calcView(sf::Vector2u(event.size.width, event.size.height), Utils::designedsize));
             // Window closed
             if (event.type == sf::Event::Closed) {
                 return (-1);

@@ -187,6 +187,12 @@ sf::Texture *SpritesManager::getKamikazeTexture(){
     return &kamikazeTexture;
 }
 
+sf::Texture *SpritesManager::getBossTexture()
+{
+    return &bossTexture;
+
+}
+
 
 sf::Texture *SpritesManager::getPlayerBulletTexture(){
     return &playerBulletTexture;
@@ -211,8 +217,13 @@ SpritesManager::SpritesManager()
     towerTexture.loadFromFile("Resources/Tower.png");
     missileTowerTexture.loadFromFile("Resources/MissileTower.png");
     kamikazeTexture.loadFromFile("Resources/Kamikaze.png");
+    bossTexture.loadFromFile("Resources/Boss1.png");
+
+
     playerBulletTexture.loadFromFile("Resources/Bullets.png");
     followerBulletTexture.loadFromFile("Resources/FollowerBullet.png");
     missileTexture.loadFromFile("Resources/Missiles.png");
     enemyBulletTexture.loadFromFile("Resources/EnemyBullets.png");
 }
+
+
