@@ -23,7 +23,11 @@ bool CollisionManager::checkCollisions()
             //kill player
             collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
             collisionSound.play();
-            deleteEnemy(enemyList, i);
+
+            if (!enemyList->operator[](i)->isBoss()) {
+                deleteEnemy(enemyList, i);
+            }
+
             playerShip->loseLife();
 
 

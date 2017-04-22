@@ -171,6 +171,9 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
         backgroundMusic.play();
     }
 
+    ownSpaceShip.setGameOptions(gameOptions);
+
+
     sf::Font classicFont;
 
     if (!classicFont.loadFromFile("Resources/menu/8bit.ttf"))

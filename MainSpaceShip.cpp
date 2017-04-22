@@ -407,7 +407,7 @@ bool MainSpaceShip::attack(int damage)
     }
     else{
         if (blinkAnimationCounter == 0) {
-            setLifeLevel(lifeLevel-damage*2);
+            setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
 
             if (lifes > 0) {
                 doDamageAnimation();
@@ -484,6 +484,15 @@ void MainSpaceShip::setDirectionLeft(){
 
 void MainSpaceShip::setDirectionRight(){
     velocity.x += speed;
+}
+
+
+Options *MainSpaceShip::getGameOptions() const {
+    return gameOptions;
+}
+
+void MainSpaceShip::setGameOptions(Options *gameOptions) {
+    MainSpaceShip::gameOptions = gameOptions;
 }
 
 
