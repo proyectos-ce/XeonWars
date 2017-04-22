@@ -96,6 +96,9 @@ void MainSpaceShip::reset() {
     shieldActivated = false;
     powerUpOn = false;
     globalScore = 0;
+    blinkAnimationCounter = 0;
+    frameCounter = 0;
+    missileShootCounter = 0;
 
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
@@ -107,9 +110,7 @@ void MainSpaceShip::reset() {
     effectSprite.setScale(0.25,0.25);
     updateEffect(0);
 
-    blinkAnimationCounter = 0;
-    frameCounter = 0;
-    missileShootCounter = 0;
+
 }
 
 
