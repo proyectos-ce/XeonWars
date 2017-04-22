@@ -149,8 +149,11 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
 
     } else {
 
+
+
     checkShieldTimer();
     checkLaserTimer();
+
 
         frameCounter++;
 
@@ -433,10 +436,12 @@ void MainSpaceShip::playerShoot() {
 
 void MainSpaceShip::loseLife() {
     lifes-=1;
+
     SOwnSpaceShip.setTexture(*explosionTexture);
     SOwnSpaceShip.setScale(0.7, 0.7);
     SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
     exploding = true;
+
 }
 
 Queue<powerUp> *MainSpaceShip::getPowerUpsQueueReference()
@@ -469,6 +474,7 @@ void MainSpaceShip::setLaser_On(bool value)
 bool MainSpaceShip::attack(int damage)
 {
     std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
+
     bool result = false;
     if(shieldActivated){
         shieldActivated=false;
@@ -477,7 +483,9 @@ bool MainSpaceShip::attack(int damage)
     }
     else{
         if (blinkAnimationCounter == 0) {
+
             setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
+
 
             if (lifes > 0) {
                 doDamageAnimation();
@@ -572,6 +580,8 @@ void MainSpaceShip::setGameOptions(Options *gameOptions) {
 int MainSpaceShip::getBlinkAnimationCounter() const {
     return blinkAnimationCounter;
 }
+
+
 
 
 

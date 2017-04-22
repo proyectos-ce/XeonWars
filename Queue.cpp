@@ -78,5 +78,15 @@ void Queue<T>::dequeueAll() {
     lenght = 0;
 }
 
+template <typename T>
+Node<T> *Queue<T>::getHead() const {
+    return head;
+}
+
+template <typename T>
+int Queue<T>::getLenght() const {
+    return lenght;
+}
+
 
 template class Queue<powerUp>;

@@ -37,10 +37,7 @@ public:
     int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
     void setPhoneDirection(string direction);
-
     void setPhoneShooting(bool boolean);
-
-
     void restartGame();
 
 
@@ -81,6 +78,8 @@ private:
     EnemyReader enemyReader;
 
     sf::Sprite shipIcon;
+    sf::Sprite powerUpIcon;
+    sf::Texture powerUpIconTexture;
     sf::Texture shipIconTexture;
     sf::Text livesLeft;
     sf::Font classicFont;
@@ -92,6 +91,7 @@ private:
 
     void updateAll(RenderWindow &window, Options *gameOptions);
     void loadEnemies();
+    void setUpPowerUpIcon();
 
 };
 
