@@ -76,8 +76,8 @@ MainSpaceShip::MainSpaceShip() {
     //missileCannon->setBulletTextureFilename("Resources/Bullets.png");
 
 
-    //explosionTexture = SpritesManager::getInstance()->getExplosionTexture();
-    //rectX = (explosionTexture->getSize().x/explosionAmount), rectY = explosionTexture->getSize().y;
+    explosionTexture = SpritesManager::getInstance()->getExplosionTexture();
+    rectX = (explosionTexture->getSize().x/explosionAmount), rectY = explosionTexture->getSize().y;
 
 }
 
@@ -114,6 +114,7 @@ void MainSpaceShip::reset() {
     exploding = false;
     powerUpOn = false;
     globalScore = 0;
+    currentExplosionTexture = 0;
 
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
