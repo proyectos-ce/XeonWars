@@ -123,8 +123,10 @@ int Menu::run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* game
                     case sf::Keyboard::Return:
                         if (menu == 0) {
                             return (1);
-                        } if (menu == 1) {
-                            return(4);
+                        } else if (menu == 1) {
+                            return (4);
+                        } else if (menu == 2) {
+                                return(5);
                         } else  {
                             return (-1);
                         }
