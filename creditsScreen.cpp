@@ -12,6 +12,10 @@ CreditsScreen::CreditsScreen() {
 
     creditsFile.open("Resources/credits.txt");
 
+    backgroundMusic.openFromFile("Resources/credits.ogg");
+    backgroundMusic.setLoop(true);
+    backgroundMusic.setVolume(80);
+
     if (creditsFile.is_open()) {
         while (getline(creditsFile, line)) {
             creditsStr += line + "\n";
@@ -28,6 +32,8 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
     const int SCREEN_HEIGHT = window.getSize().y;
     const float scale = 0.8; /// I used 0.8 so you have space for the title(top) and a "back" button (bottom)
     const float invScale = 1 / scale; /// 1.25 in the example
+
+    backgroundMusic.play();
 
     creditsView.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
     creditsView.setCenter(SCREEN_WIDTH / 2, SCREEN_HEIGHT/ 2);
@@ -61,14 +67,19 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
         while (window.pollEvent(event)){
             // Window closed
             if (event.type == sf::Event::Closed) {
+                backgroundMusic.stop();
                 return 0;
             }
             if (event.type == sf::Event::KeyPressed) {
+                backgroundMusic.stop();
                 return 0;
             }
         }
+
+        time = clock.getElapsedTime();
+
         ///Move the credits upward. You may want this to be tied to a sf::Clock/sf::Time and move it taking into account the delta time
-        creditsView.move(0, SCREEN_HEIGHT * 0.01/5);
+        creditsView.move(0, SCREEN_HEIGHT * 0.00015 * time.asMilliseconds());
         ///Reset the view if they go "too far"
         if(creditsView.getCenter().y > SCREEN_HEIGHT * 2 + creditText.getGlobalBounds().height + creditText2.getGlobalBounds().height){
             creditsView.setCenter(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -85,7 +96,10 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
         window.draw(titleCredit);
         window.draw(creditText);
         ///display all
+        clock.restart().asMilliseconds();
         window.display();
+
+
     }
 
     return 0;

@@ -7,6 +7,7 @@
 
 #include "Screen.h"
 #include <fstream>
+#include <SFML/Audio.hpp>
 
 class CreditsScreen : public Screen {
 public:
@@ -21,6 +22,10 @@ private:
     sf::Text titleCredit;
     sf::Text creditText;
     sf::Text creditText2;
+    sf::Clock clock;
+    sf::Time time;
+
+    sf::Music backgroundMusic;
 
     std::string creditsStr;
     std::string line;
