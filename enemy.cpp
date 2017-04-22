@@ -271,7 +271,6 @@ Enemy *createBoss(int level, int scale, int yMovement)
     Cannon *enemyCannon = CannonFactory::createSprayCannon(20,level*3);
     enemyCannon->setBulletDamage(10*level);
     enemyCannon->setBulletTexture(SpritesManager::getInstance()->getMissileTexture());
-    ene
     //enemyCannon->setBulletTextureFilename("Resources/Bomber.png");
     //enemyCannon->setBulletSpeed(4*(level+1));
     enemyCannon->setBulletSpeed(3*level);
