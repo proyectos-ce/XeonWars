@@ -310,6 +310,9 @@ void Game::setPhoneDirection(string direction) {
     else if(direction.compare("S") ==0){
         ownSpaceShip.playerShoot();
     }
+    else if(direction.compare("P") == 0){
+        ownSpaceShip.usePowerUp();
+    }
 }
 
 void Game::setPhoneShooting(bool boolean) {
