@@ -4,77 +4,133 @@
 // Created by jimena on 19/04/17.
 //
 
-enemyReader::enemyReader(){
+EnemyReader::EnemyReader(){
     currentLevel = 1;
     quantityOfEnemiesToRead = 0;
-}
-
-void enemyReader::readEnemyFile(){
-    std::ifstream txtFile;
     txtFile.open("Resources/Enemies.txt");
     std::string enemyFile = "";
-
     while (getline(txtFile,enemyFile,'\n')){
         quantityOfEnemiesToRead+=1;
-
     }
     quantityOfEnemiesToRead--;
     txtFile.close();
     txtFile.open("Resources/Enemies.txt");
+}
 
-    //std::cout <<"enemies to read"<< quantityOfEnemiesToRead << std::endl;
-       // Code that could throw an exception
-
-    for(int k = 0; k<quantityOfEnemiesToRead; k++) {
+std::vector<EnemyParameters> EnemyReader::readEnemyFile(){
+    int k =0;
+    std::string enemyLine="";
+    std::vector<EnemyParameters>enemyParametersVector ;
+    while( k<quantityOfEnemiesToRead) {
         try {
 
-        std::vector<std::string> enemyAttributes;
-        std::cout<<"enemigo" <<k<<std::endl;
-        for (int i = 0; i < 5; i++) {
-            std::getline(txtFile, enemyFile, '/');
-            //std::cout << enemyFile;
-            enemyAttributes.push_back(enemyFile);
-        }
-        //std::cout << std::endl;
-        enemyParameters newEnemy;
-        newEnemy.setLevel(std::stoi(enemyAttributes[0]));
-        newEnemy.setType(enemyAttributes[1]);
-        newEnemy.setXPosition(std::stoi(enemyAttributes[2]));
-        newEnemy.setYPosition(std::stoi(enemyAttributes[3]));
-        newEnemy.setMovement(std::stof(enemyAttributes[4]));
-        enemyParametersVector.push_back(newEnemy);
+            std::getline(txtFile, enemyLine, '\n');
+            if(enemyLine.find("#")!=std::string::npos){
+                std::cout<<"linea comentario"<<k<<std::endl;
+                break;
+            }
+            else{
+                std::vector<std::string> enemyAttributes;
+                for (int i = 0; i < 5; i++) {
+                    std::string parameter =enemyLine.substr(0,enemyLine.find_first_of(parameterDivider));
+                    enemyLine.erase(0, parameter.size()+1);                            //std::cout << enemyFile;
+                    enemyAttributes.push_back(parameter);
+                }
+                EnemyParameters newEnemy;
+                newEnemy.setLevel(std::stoi(enemyAttributes[0]));
+                newEnemy.setType(enemyAttributes[1]);
+                newEnemy.setXPosition(std::stoi(enemyAttributes[2]));
+                newEnemy.setYPosition(std::stoi(enemyAttributes[3]));
+                newEnemy.setMovement(std::stof(enemyAttributes[4]));
+                enemyParametersVector.push_back(newEnemy);
+                //std::cout<<newEnemy.getType()<<"\n";
+
+            }
+            //enemyAttributes.push_back(enemyLine);
+
+            //std::cout << std::endl;
+
         }
         catch(std::invalid_argument&) {
             std::cout << "Error in line number:" << k << '\n';
             break;
             //throw;
         }
+        k++;
     }
-    //for(int i = 0; i<quantityOfEnemiesToRead; i++){
-    //    std::cout << enemyParametersVector[i].getLevel()<<std::endl;
-    //}
+    return enemyParametersVector;
+}
 
-};
+Enemy *EnemyReader::createEnemy(EnemyParameters enemyParameters)
+{
+    Enemy *enemy;
+    //std::cout<<"___"<<enemyParameters.getType()<<"___"<<std::endl;
+    if(enemyParameters.getType()=="jet"){
+        std::cout<<"jet"<<std::endl;
+        enemy = EnemyFactory::createJet(enemyParameters.getLevel(),enemyParameters.getMovement());
+    }
+    else if(enemyParameters.getType()=="bomber"){
+        std::cout<<"bomber"<<std::endl;
+        enemy = EnemyFactory::createBomber(enemyParameters.getLevel(),enemyParameters.getMovement());
+    }
+    else if(enemyParameters.getType()=="tower"){
+        std::cout<<"tower"<<std::endl;
+        enemy = EnemyFactory::createTower(enemyParameters.getLevel());
+    }
+    else if(enemyParameters.getType()=="missileTower"){
+        std::cout<<"missileTower"<<std::endl;
+         enemy = EnemyFactory::createMissileTower(enemyParameters.getLevel(), playerSprite);
+    }
+    else if(enemyParameters.getType()=="kamikaze"){
+        std::cout<<"kamikaze"<<std::endl;
+        enemy = EnemyFactory::createKamikaze(enemyParameters.getLevel(), playerSprite);
+    }
+    else{
+        enemy = EnemyFactory::createJet(enemyParameters.getLevel(),enemyParameters.getMovement());
+    }
+    enemy->setCenterPosition(sf::Vector2f(enemyParameters.getXPosition(),enemyParameters.getYPosition()));
+    return enemy;
+}
+
+std::vector<Enemy *> EnemyReader::getNextEnemySet()
+{
+    std::vector<Enemy *> enemySet;
+    std::vector<EnemyParameters> enemyParametersVector = readEnemyFile();
+    for (int i=0; i < enemyParametersVector.size(); ++i) {
+      enemySet.push_back(createEnemy(enemyParametersVector[i]));
+    }
+    return enemySet;
+}
+
+sf::Sprite *EnemyReader::getPlayerSprite() const
+{
+    return playerSprite;
+}
+
+void EnemyReader::setPlayerSprite(sf::Sprite *value)
+{
+    playerSprite = value;
+}
 
 
 
 
-int enemyReader::getCurrentLevel() {
+int EnemyReader::getCurrentLevel() {
     return currentLevel;
 }
 
-void enemyReader::setCurrentLevel(int numLevel) {
+void EnemyReader::setCurrentLevel(int numLevel) {
     currentLevel = numLevel;
 }
 
 
 
-int enemyParameters::getLevel() const
+int EnemyParameters::getLevel() const
 {
     return level;
 }
 
-void enemyParameters::setLevel(int value)
+void EnemyParameters::setLevel(int value)
 {
     if(value>4){
         value=4;
@@ -82,42 +138,42 @@ void enemyParameters::setLevel(int value)
     level = value;
 }
 
-std::string enemyParameters::getType() const
+std::string EnemyParameters::getType() const
 {
     return type;
 }
 
-void enemyParameters::setType(const std::string &value)
+void EnemyParameters::setType(const std::string &value)
 {
     type = value;
 }
 
-int enemyParameters::getXPosition() const
+int EnemyParameters::getXPosition() const
 {
     return xPosition;
 }
 
-void enemyParameters::setXPosition(int value)
+void EnemyParameters::setXPosition(int value)
 {
     xPosition = value;
 }
 
-int enemyParameters::getYPosition() const
+int EnemyParameters::getYPosition() const
 {
     return yPosition;
 }
 
-void enemyParameters::setYPosition(int value)
+void EnemyParameters::setYPosition(int value)
 {
     yPosition = value;
 }
 
-float enemyParameters::getMovement() const
+float EnemyParameters::getMovement() const
 {
     return movement;
 }
 
-void enemyParameters::setMovement(float value)
+void EnemyParameters::setMovement(float value)
 {
     movement = value;
 }

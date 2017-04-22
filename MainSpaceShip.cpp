@@ -351,7 +351,6 @@ void MainSpaceShip::playerShoot() {
             updateEffect(0);
         }
     } else if (laser_On){
-        cout << "disparo laser" << endl;
     } else {
 
         shipCannon->shoot();
@@ -426,6 +425,9 @@ int MainSpaceShip::getLifes() const {
 
 void MainSpaceShip::setLifes(int numLifes){
     lifes =  numLifes;
+}
+void MainSpaceShip::addlife() {
+    lifes+=1;
 }
 
 void MainSpaceShip::setDirectionUp(){
