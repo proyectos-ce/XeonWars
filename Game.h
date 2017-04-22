@@ -20,31 +20,42 @@
 #include "Utils.h"
 #include "collisionmanager.h"
 
-class Game : public Screen {
 
+enum Direction {LEFT, RIGHT, UP, DOWN, CENTER};
+
+class Game : public Screen {
 
 
 public:
     Game();
-    int run(RenderWindow &window, Texture &tex);
+    int run(RenderWindow &window, Texture &tex, Options* gameOptions);
     void pauseGame();
+    void setPhoneDirection(string direction);
 private:
     int score = 0;
     Clock clock;
     Clock shootClock;
     Clock scoreClock;
+    Clock gameClock;
+
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
+    Direction phoneDirection = CENTER;
 
     bool running = true;
     Time time;
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
-    void updateAll(RenderWindow &window);
     void eraseAll();
 
+    string statsTxt;
+    size_t currentRss;
+    sf::Text stats;
+
+
+    void updateAll(RenderWindow &window, Options *gameOptions);
 };
 
 

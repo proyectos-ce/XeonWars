@@ -15,7 +15,7 @@ private:
     bool playing;
 public:
     Menu();
-    int run(sf::RenderWindow &window, sf::Texture &pauseTexture);
+    int run(sf::RenderWindow &window, sf::Texture &pauseTexture, Options* gameOptions);
 };
 
 

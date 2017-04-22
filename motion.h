@@ -8,16 +8,16 @@ class Motion
 {
 public:
     Motion();
-    virtual sf::Vector2f getNext(int speed)=0;
-    int getX() const;
-    void setX(int value);
+    virtual sf::Vector2f getNext(float speed)=0;
+    float getX() const;
+    void setX(float value);
 
     void setReverseDirection(bool value);
 
 
 
 protected:
-    int x= 0;
+    float x= 0;
     int direction=1;
     bool reverseDirection() const;
 };
@@ -27,14 +27,14 @@ class SimpleMotion : public Motion{
 
    public:
     SimpleMotion();
-    sf::Vector2f getNext(int speed);
+    sf::Vector2f getNext(float speed);
 };
 
 class LinearMotion : public Motion{
 
    public:
     LinearMotion(double angle);
-    sf::Vector2f getNext(int speed);
+    sf::Vector2f getNext(float speed);
    protected:
     double angle;
 };
@@ -42,7 +42,7 @@ class LinearMotion : public Motion{
 class SinMotion : public Motion{
    public:
     SinMotion(int scale);
-    sf::Vector2f getNext(int speed);
+    sf::Vector2f getNext(float speed);
 protected:
     int scale;
 };
@@ -50,7 +50,7 @@ protected:
 class FollowerMotion : public Motion{
    public:
     FollowerMotion(sf::Sprite *owner,sf::Sprite *target);
-    sf::Vector2f getNext(int speed);
+    sf::Vector2f getNext(float speed);
     sf::Sprite *getTarget() const;
     void setTarget(sf::Sprite *value);
 

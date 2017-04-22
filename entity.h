@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include"motion.h"
 #include "iostream"
+//#include <stddef.h>  // defines NULL
 class Entity
 {
 public:
@@ -16,15 +17,15 @@ public:
 
     Motion *getMotion() const;
     void setMotion(Motion *value);
-    sf::Texture getTexture() const;
-    void setTexture(sf::Texture value);
+
     sf::Sprite getSprite() const;
     void setSprite(const sf::Sprite &value);
     int getTexturesAmount() const;
     void setTexturesAmount(int value);
-    int getSpeed() const;
-    void setSpeed(int value);
-    void setPosition(sf::Vector2f postion);
+    float getSpeed() const;
+    void setSpeed(float value);
+    void setPosition(sf::Vector2f position);
+    void setCenterPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
     sf::Vector2f getCenterPosition();
     void setScale(float scale);
@@ -32,16 +33,64 @@ public:
     void rotate(float angle);
     sf::Sprite *getSpriteReference();
 
+    sf::Texture *getTexture() const;
+    void setTexture(sf::Texture *value);
+
 protected:
-    int speed=10;
+    //bool *lifeFlag = NULL;
+    float speed=10;
     int texturesAmount=2;
     Motion *motion;
     sf::Sprite sprite;
-    sf::Texture texture;
+    sf::Texture *texture;
     int currentTexture=0;
 
 
 
+};
+
+
+class SpritesManager
+{
+
+public:
+    static SpritesManager *getInstance();//{
+
+
+    sf::Texture *getJetTexture();
+    sf::Texture *getBomberTexture();
+    sf::Texture *getTowerTexture();
+    sf::Texture *getMissileTowerTexture();
+    sf::Texture *getKamikazeTexture();
+
+    sf::Texture *getPlayerBulletTexture();
+    sf::Texture *getFollowerBulletTexture();
+    sf::Texture *getMissileTexture();
+    sf::Texture *getEnemyBulletTexture();
+
+
+
+
+private:
+SpritesManager();
+    static SpritesManager *instance;
+    sf::Texture jetTexture;
+    sf::Texture bomberTexture;
+    sf::Texture towerTexture;
+    sf::Texture missileTowerTexture;
+    sf::Texture kamikazeTexture;
+
+    sf::Texture playerBulletTexture;
+    sf::Texture followerBulletTexture;
+    sf::Texture missileTexture;
+    sf::Texture enemyBulletTexture;
+/*
+    SpritesManager() {
+
+    }
+    //EnemySpritesManager(EnemySpritesManager const&);              // Don't Implement
+    //void operator=(EnemySpritesManager const&); // Don't implement
+*/
 };
 
 #endif // ENTITY_H

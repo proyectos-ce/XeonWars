@@ -50,10 +50,24 @@ public:
     Sprite getEffectSprite() const;
     void setEffectSprite(const Sprite &value);
 
+    bool getMissiles_On() const;
+    void setMissiles_On(bool value);
+
+    bool getShieldActivated() const;
+    void setShieldActivated(bool value);
+
+    void setDirectionUp();
+    void setDirectionDown();
+    void setDirectionLeft();
+    void setDirectionRight();
+
 private:
-    bool missiles_On;
-    bool laser_On;
+    bool missiles_On =false;
+    bool laser_On= false;
     bool isWhite = false;
+    bool shieldActivated = false;
+    bool powerUpOn = false;
+
     Sprite SOwnSpaceShip;
     Sprite effectSprite;
     Texture TOwnSpaceShip;
@@ -65,17 +79,18 @@ private:
 
     Sound sound;
 
-    int missileShootCounter;
+    int missileShootCounter=0;
     int lifes;
     int lifeLevel=100;
     int blinkAnimationCounter = 0;
     int frameCounter = 0;
     int globalScore;
     int scoreForLifes;
-    bool shieldActivated;
     Queue<powerUp> powerUpsQueue;
     Cannon *shipCannon;
+    Texture shipCannonTexture;
     Cannon *missileCannon;
+    Texture missileCannonTexture;
     Cannon *laserCannon;
     Clock shieldClock;
     std::vector<Bullet *> *bulletList;
