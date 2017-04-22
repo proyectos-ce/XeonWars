@@ -30,6 +30,7 @@ Game::Game() {
     collisionManager.setEnemyBulletList(&enemyBulletList);
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
 
+
     shipIconTexture.loadFromFile("Resources/playerLife.png");
     shipIcon.setTexture(shipIconTexture);
     shipIcon.setPosition(20, 630);
@@ -38,6 +39,8 @@ Game::Game() {
     livesLeft.setFont(classicFont);
     livesLeft.setPosition(80, 630);
 
+
+    levelflag=false;
     gameClock.restart().asSeconds();
 
 
@@ -265,26 +268,34 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
         score.BossTimeCheck();
 
-        if(score.isBossTime()){
-            if(score.getcreateBoss()){
+        if(score.isBossTime()) {
+            if (score.getcreateBoss()) {
                 backgroundMusic.stop();
                 bossMusic.play();
 
                 cout << "viene el boss" << endl;
-                Boss.BossInit(score.getLevel(),&enemyList,&enemyBulletList);
+                Boss.BossInit(score.getLevel(), &enemyList, &enemyBulletList);
                 score.createbossOff();
             }
             Boss.life_refresh();
             Boss.lifeRender(window);
-            if(Boss.isdead()){
+            if (Boss.isdead()) {
                 score.add_score(1000);
                 bossMusic.stop();
                 backgroundMusic.play();
-                score.BossTime=false;
-                cout << "boss ha muerto"<<endl;
+                score.BossTime = false;
+                cout << "boss ha muerto" << endl;
                 score.nextlevelReached();
-                cout << "ahora esta en el nivel: "<< score.getLevel()<< endl;
-                cout << "proximo boss al score de: "<< score.nextBoss_score;
+                cout << "ahora esta en el nivel: " << score.getLevel() << endl;
+                cout << "proximo boss al score de: " << score.nextBoss_score;
+
+                levelupClock.restart();
+                if (!levelflag) levelflag = true;
+            }
+        }
+        if (  levelupClock.getElapsedTime().asSeconds()<=2){
+            if (levelflag and (int)levelupClock.getElapsedTime().asMilliseconds() % 2 ==0){
+                score.show_levelup(window);
             }
         }
 

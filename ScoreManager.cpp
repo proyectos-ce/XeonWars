@@ -28,7 +28,25 @@ ScoreManager::ScoreManager(){
     text.setColor(sf::Color::White);
 // set the text style
     text.setStyle(sf::Text::Bold );
-// inside the main loop, between window.clear() and window.display()
+// inside the main loop, between window.clear() and window.display
+    levelup.setPosition(480,-10);
+// select the font
+    levelup.setFont(font);
+// set the character size
+    levelup.setCharacterSize(65); // in pixels, not points!
+// set the color
+    levelup.setColor(sf::Color::Red);
+// set the text style
+    levelup.setStyle(sf::Text::Bold );
+    showlevel.setPosition(20,45);
+// select the font
+    showlevel.setFont(font);
+// set the character size
+    showlevel.setCharacterSize(50); // in pixels, not points!
+// set the color
+    showlevel.setColor(sf::Color::White);
+// set the text style
+    showlevel.setStyle(sf::Text::Bold );
 };
 
 float ScoreManager::get_score() {
@@ -74,4 +92,10 @@ void ScoreManager::nextlevelReached() {
 void ScoreManager::scoreRender(sf::RenderWindow &window){
     text.setString("Score: "+to_string(GeneralScore));
     window.draw(text);
+    showlevel.setString("Lvl: "+to_string(currentLevel));
+    window.draw(showlevel);
+}
+void ScoreManager::show_levelup(sf::RenderWindow &window){
+    levelup.setString("LEVEL UP!!!");
+    window.draw(levelup);
 }
