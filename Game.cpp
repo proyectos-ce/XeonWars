@@ -18,7 +18,7 @@ Game::Game() {
     }
 
     ownSpaceShip.setbulletList(&playerbulletList);
-    backgroundMusic.openFromFile("Resources/music2.ogg");
+    backgroundMusic.openFromFile("Resources/TameImpala.ogg");
     backgroundMusic.setLoop(true);
     backgroundMusic.setVolume(60);
     bossMusic.openFromFile("Resources/boss.ogg");
