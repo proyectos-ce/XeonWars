@@ -30,6 +30,7 @@ Game::Game() {
     collisionManager.setEnemyBulletList(&enemyBulletList);
     collisionManager.setPowerUpList(&powerUpList);
     collisionManager.setExplosionList(&explosionList);
+    collisionManager.setPlayerPowerUpsQueue(ownSpaceShip.getPowerUpsQueueReference());
     enemyReader.setPlayerSprite(ownSpaceShip.getSpriteReference());
 
 

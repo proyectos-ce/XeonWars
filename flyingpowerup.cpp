@@ -78,6 +78,27 @@ FlyingPowerUp *createShieldPU(sf::Vector2f position, int speed)
     return newPU;
 }
 
+FlyingPowerUp *createPU(int type, sf::Vector2f position, int speed)
+{
+    FlyingPowerUp *newPU;
+    if (type==0) {
+        newPU = createLaserPU(position,speed);
+    }
+    else if(type==1) {
+        newPU = createMisilePU(position,speed);
+
+    }
+    else if(type==2) {
+        newPU = createShieldPU(position,speed);
+
+    }
+    else{
+        newPU = createLaserPU(position,speed);
+
+    }
+    return newPU;
+}
+
 
 
 }

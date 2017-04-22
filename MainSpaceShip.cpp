@@ -401,7 +401,7 @@ void MainSpaceShip::playerShoot() {
             missileShootCounter++;
             missileCannon->shoot();
             sound.setBuffer(missileShootBuffer);
-            //cout << "disparo misil" << endl;
+            cout << "disparo misil " <<missileShootCounter<< endl;
             //updateEffect(0);
 
         }else{
@@ -414,13 +414,11 @@ void MainSpaceShip::playerShoot() {
         }
     } else if (laser_On){
         sound.setBuffer(missileShootBuffer);
-        missileCannon->shoot();
+        //missileCannon->shoot();
     } else {
 
         shipCannon->shoot();
         sound.setBuffer(normalShootBuffer);
-        //std::cout<< shipCannon->getBulletDamage()<<endl;
-        //cout << "disparo simple" << endl;
     }
     sound.play();
 }
@@ -431,6 +429,11 @@ void MainSpaceShip::loseLife() {
     SOwnSpaceShip.setScale(0.7, 0.7);
     SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
     exploding = true;
+}
+
+Queue<powerUp> *MainSpaceShip::getPowerUpsQueueReference()
+{
+    return &powerUpsQueue;
 }
 bool MainSpaceShip::attack(int damage)
 {

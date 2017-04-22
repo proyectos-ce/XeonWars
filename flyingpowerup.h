@@ -19,6 +19,7 @@ private:
 };
 
 namespace PowerUpFactory {
+FlyingPowerUp *createPU(int type,sf::Vector2f position,int speed = 2);
 FlyingPowerUp *createMisilePU(sf::Vector2f position,int speed = 2);
 FlyingPowerUp *createLaserPU(sf::Vector2f position,int speed = 2);
 FlyingPowerUp *createShieldPU(sf::Vector2f position,int speed = 2);

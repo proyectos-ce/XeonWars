@@ -48,8 +48,11 @@ bool CollisionManager::checkCollisions()
                     //std::cout<<"bala vs enemigo\n";
                     if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
                         addLastScore(enemyList->operator[](i)->getEnemy_score());
-                        powerUpList->push_back(PowerUpFactory::createLaserPU( enemyList->operator[](i)->getPosition() ));
+                        if(enemyList->size()%5==0){
+                        powerUpList->push_back(PowerUpFactory::createPU(enemyBulletList->size()%3, enemyList->operator[](i)->getPosition() ));
+                        }
                         explosionList->push_back(ExplosionFactory::createSimpleExplosion(enemyList->operator[](i)->getPosition()));
+
                         deleteEnemy(enemyList,i);
                         //enemyList->operator[](i)->explode();
                         deleteBullet(playerBulletList, j);
@@ -76,7 +79,6 @@ bool CollisionManager::checkCollisions()
 
             //attack player
 
-            deleteBullet(enemyBulletList, i);
             //delete bullet
             //playerShip->attack(enemyBulletList->operator[](i)->getDamage());
             //playerShip->setLifeLevel(playerShip->getLifeLevel()-enemyBulletList->operator[](i)->getDamage());
@@ -88,11 +90,31 @@ bool CollisionManager::checkCollisions()
                     return true;
                 //}
             }
+            deleteBullet(enemyBulletList, i);
+
 
             i--;
         }
         i++;
     }
+
+    //player vs powerUps
+    i=0;
+    while(i<powerUpList->size()){
+        //player vs enemies
+        if(Collision::PixelPerfectTest(playerShip->getSprite(), powerUpList->operator[](i)->getSprite())){
+
+            //collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
+            //collisionSound.play();
+            playerPowerUpsQueue->enqueue(powerUpList->operator[](i)->getPowerup());
+            deletePowerUp(powerUpList,i);
+
+
+            i--;
+        }
+        i++;
+    }
+
     return false;
 }
 MainSpaceShip *CollisionManager::getPlayerShip() const
@@ -172,6 +194,16 @@ void CollisionManager::setExplosionList(std::vector<Explosion *> *value)
     explosionList = value;
 }
 
+Queue<powerUp> *CollisionManager::getPlayerPowerUpsQueue() const
+{
+    return playerPowerUpsQueue;
+}
+
+void CollisionManager::setPlayerPowerUpsQueue(Queue<powerUp> *value)
+{
+    playerPowerUpsQueue = value;
+}
+
 void CollisionManager::deleteEnemy(std::vector<Enemy *> *list, int index)
 {
     delete (list->operator [](index));
@@ -183,4 +215,10 @@ void CollisionManager::deleteBullet(std::vector<Bullet *> *list, int index)
     delete (list->operator [](index));
     list->erase(list->begin()+index);
 
+}
+
+void CollisionManager::deletePowerUp(std::vector<FlyingPowerUp *> *list, int index)
+{
+    delete (list->operator [](index));
+    list->erase(list->begin()+index);
 }

@@ -68,6 +68,8 @@ public:
     void reset();
 
     void loseLife();
+    Queue<powerUp> *getPowerUpsQueueReference();
+
 
 private:
     bool missiles_On =false;
