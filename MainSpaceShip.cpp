@@ -120,6 +120,8 @@ void MainSpaceShip::reset() {
     blinkAnimationCounter = 0;
     frameCounter = 0;
     missileShootCounter = 0;
+
+    SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
 }
 
 
@@ -136,7 +138,9 @@ void MainSpaceShip::update(RenderWindow &window, float time) {
             }
             lifeLevel=100;
         }
+
     } else {
+
 
 
     checkShieldTimer();
@@ -432,36 +436,36 @@ void MainSpaceShip::loseLife() {
     exploding = true;
 
 }
-bool MainSpaceShip::attack(int damage) {
-    std::cout << "lifes:" << lifes << " level:" << lifeLevel << endl;
+bool MainSpaceShip::attack(int damage)
+{
+    std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
+
     bool result = false;
-    if (shieldActivated) {
-        shieldActivated = false;
+    if(shieldActivated){
+        shieldActivated=false;
         powerUpOn = false;
         updateEffect(0);
-    } else {
-
+    }
+    else{
         if (blinkAnimationCounter == 0) {
 
             setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
 
 
-
-            if (blinkAnimationCounter == 0) {
-                setLifeLevel(lifeLevel - damage * 2);
+            if (lifes > 0) {
                 doDamageAnimation();
-                if (lifeLevel <= 0) {
-                    loseLife();
-                    if (lifes <= 0) {
-                        result = true;
-                    }
-
+            }
+            if(lifeLevel<=0){
+                loseLife();
+                if(lifes<=0){
+                    blinkAnimationCounter = 0;
+                    result = true;
                 }
             }
         }
-        return result;
-
     }
+    return result;
+
 }
 
 int MainSpaceShip::getLifeLevel() const

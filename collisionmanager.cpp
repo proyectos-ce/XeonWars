@@ -32,7 +32,7 @@ bool CollisionManager::checkCollisions()
 
             playerShip->loseLife();
             i--;
-            if(playerShip->attack(1000)){
+            if(playerShip->attack(0)){
             return true;
             }
         }

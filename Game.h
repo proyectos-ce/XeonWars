@@ -20,6 +20,8 @@
 #include "Utils.h"
 #include "collisionmanager.h"
 #include "enemyReader.h"
+#include <fstream>
+
 
 
 enum Direction {LEFT, RIGHT, UP, DOWN, CENTER};
