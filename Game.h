@@ -33,7 +33,6 @@ public:
     void pauseGame();
     void setPhoneDirection(string direction);
 private:
-    int score = 0;
     Clock clock;
     Clock shootClock;
     Clock scoreClock;
@@ -42,6 +41,8 @@ private:
     MainSpaceShip ownSpaceShip;
     Background background;
     Music backgroundMusic;
+    Music bossMusic;
+    ScoreManager score;
     Direction phoneDirection = CENTER;
 
     bool running = true;
@@ -50,6 +51,7 @@ private:
     std::vector<Enemy *> enemyList;
     std::vector<Bullet *> enemyBulletList;
     std::vector<Bullet *> playerbulletList;
+    BossManager Boss;
     void eraseAll();
     EnemyReader enemyReader;
 

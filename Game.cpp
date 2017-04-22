@@ -159,6 +159,7 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
     stats.setColor(sf::Color::White);
     stats.setPosition(25, 55 );
 
+
     std::cout << running << std::endl;
 
     running = true;
@@ -243,25 +244,42 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
 
         clock.restart().asMilliseconds();
 
-        ownSpaceShip.score.BossTimeCheck();
+        score.BossTimeCheck();
 
-        if(ownSpaceShip.score.isBossTime()){
-            if(ownSpaceShip.score.getcreateBoss()){
+        if(score.isBossTime()){
+            if(score.getcreateBoss()){
+                backgroundMusic.stop();
+                bossMusic.openFromFile("Resources/BackgroundMusic.ogg");
+                bossMusic.setLoop(true);
+                bossMusic.play();
+
                 cout << "viene el boss" << endl;
-                ownSpaceShip.score.setBossOn();
-                ownSpaceShip.score.createbossOff();
+                Boss.BossInit(score.getLevel(),&enemyList,&enemyBulletList);
+                score.createbossOff();
             }
-            ownSpaceShip.score.Boss.lifeRender(window);
-            if(ownSpaceShip.score.Boss.isdead()){
-                ownSpaceShip.score.BossTime=false;
-                ownSpaceShip.score.nextlevelReached();
+            Boss.life_refresh();
+            Boss.lifeRender(window);
+            if(Boss.isdead()){
+                score.add_score(1000);
+                bossMusic.stop();
+                backgroundMusic.play();
+                score.BossTime=false;
+                cout << "boss ha muerto"<<endl;
+                score.nextlevelReached();
+                cout << "ahora esta en el nivel: "<< score.getLevel()<< endl;
+                cout << "proximo boss al score de: "<< score.nextBoss_score;
             }
         }
 
-        ownSpaceShip.score.scoreRender(window);
+        score.scoreRender(window);
         if(scoreClock.getElapsedTime().asMilliseconds()>500) {
-            ownSpaceShip.score.add_score(1);
+            score.add_score(1);
             scoreClock.restart().asMilliseconds();
+        }
+
+        if (score.checklifes %1000 >=1){
+            score.checklifes =0;
+            ownSpaceShip.addlife();
         }
 
         window.display();
