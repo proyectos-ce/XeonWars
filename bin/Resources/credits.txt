@@ -1,8 +1,24 @@
 Idea original:
-Joseph Vargas
+-Joseph Vargas
 
 Programacion:
-Joseph Vargas
+-Daniel Castro
+-Ignacio Mora
+-Gustavo Segura
+-Jimena Salas
+-Joseph Vargas
 
 Diseno:
-Joseph Vargas
+-Daniel Castro
+-Gustavo Segura
+
+Aplicacion Movil:
+-Ignacio Mora
+
+Instituto Tecnologico de 
+Costa Rica
+
+Algoritmos y Estructuras de 
+datos II
+
+I sem 2017

@@ -11,6 +11,7 @@
 #include "cannon.h"
 #include "motion.h"
 #include "ScoreManager.h"
+#include "options.h"
 
 using namespace sf;
 
@@ -90,6 +91,10 @@ private:
     int lifes;
     int lifeLevel=100;
     int blinkAnimationCounter = 0;
+public:
+    int getBlinkAnimationCounter() const;
+
+private:
     int frameCounter = 0;
     int globalScore;
     int scoreForLifes;
@@ -113,6 +118,7 @@ private:
     const float speed = 6;
     const float maxSpeed = speed*10;
     sf::Vector2f velocity;
+
 
 };
 

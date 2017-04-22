@@ -5,6 +5,7 @@
 #include "MainSpaceShip.h"
 #include "ScoreManager.h"
 
+
 MainSpaceShip::MainSpaceShip() {
     lifes = 3;
     scoreForLifes = 0;
@@ -288,7 +289,7 @@ bool MainSpaceShip::gameOver() {
 
 void MainSpaceShip::doDamageAnimation() {
     if (blinkAnimationCounter == 0)
-        blinkAnimationCounter = 6;
+        blinkAnimationCounter = 10;
 }
 
 int MainSpaceShip::getTexturesAmount() const
@@ -405,31 +406,35 @@ void MainSpaceShip::loseLife() {
     blinkAnimationCounter = 16;
     lifeLevel=100;
 }
-bool MainSpaceShip::attack(int damage)
-{
-    std::cout<<"lifes:"<<lifes<<" level:"<<lifeLevel<<endl;
+bool MainSpaceShip::attack(int damage) {
+    std::cout << "lifes:" << lifes << " level:" << lifeLevel << endl;
     bool result = false;
-    if(shieldActivated){
-        shieldActivated=false;
+    if (shieldActivated) {
+        shieldActivated = false;
         powerUpOn = false;
         updateEffect(0);
-    }
-    else{
+    } else {
 
         if (blinkAnimationCounter == 0) {
-            setLifeLevel(lifeLevel-damage*2);
-            doDamageAnimation();
-            if(lifeLevel<=0){
-                loseLife();
-                if(lifes<=0){
-                result = true;
-                }
+            setLifeLevel(lifeLevel - damage * getGameOptions()->difficulty);
+            std::cout << "LIFELEVEL: " << lifeLevel << std::endl;
 
+
+            if (blinkAnimationCounter == 0) {
+                setLifeLevel(lifeLevel - damage * 2);
+                doDamageAnimation();
+                if (lifeLevel <= 0) {
+                    loseLife();
+                    if (lifes <= 0) {
+                        result = true;
+                    }
+
+                }
             }
         }
-    }
-    return result;
+        return result;
 
+    }
 }
 
 int MainSpaceShip::getLifeLevel() const
@@ -495,5 +500,20 @@ void MainSpaceShip::setDirectionLeft(){
 void MainSpaceShip::setDirectionRight(){
     velocity.x += speed;
 }
+
+
+
+Options *MainSpaceShip::getGameOptions() const {
+    return gameOptions;
+}
+
+void MainSpaceShip::setGameOptions(Options *gameOptions) {
+    MainSpaceShip::gameOptions = gameOptions;
+}
+
+int MainSpaceShip::getBlinkAnimationCounter() const {
+    return blinkAnimationCounter;
+}
+
 
 

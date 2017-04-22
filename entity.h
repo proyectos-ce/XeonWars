@@ -36,6 +36,8 @@ public:
     sf::Texture *getTexture() const;
     void setTexture(sf::Texture *value);
 
+    void explode();
+
 protected:
     //bool *lifeFlag = NULL;
     float speed=10;
@@ -44,7 +46,9 @@ protected:
     sf::Sprite sprite;
     sf::Texture *texture;
     int currentTexture=0;
-
+    bool exploding = false;
+public:
+    bool isExploding() const;
 
 
 };
@@ -69,6 +73,7 @@ public:
     sf::Texture *getMissileTexture();
     sf::Texture *getEnemyBulletTexture();
 
+    sf::Texture *getExplosionTexture();
 
 
 
@@ -86,6 +91,7 @@ SpritesManager();
     sf::Texture followerBulletTexture;
     sf::Texture missileTexture;
     sf::Texture enemyBulletTexture;
+    sf::Texture explosionTexture;
 /*
     SpritesManager() {
 
