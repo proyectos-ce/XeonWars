@@ -47,7 +47,8 @@ void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector
     BossCannon->setBulletDamage(30);
     BossCannon->setBulletSpeed(3);
     Enemy *Boss;
-    Boss = new Enemy(BossTexture, enemyList, enemyBulletList);
+    //Boss = new Enemy(BossTexture, enemyList, enemyBulletList);
+    Boss = new Enemy(&BossTexture);
     BossPTR= Boss;
     Boss->setTexturesAmount(1);
     Boss->setLife(Bosslife);
@@ -59,7 +60,8 @@ void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector
     Boss->setTrigger(200);
     Boss->setCannon(BossCannon);
     Boss->setScale(0.2);
-
+    Boss->setBulletList(enemyBulletList);
+    enemyList->push_back(Boss);
 }
 
 void BossManager::life_refresh() {
