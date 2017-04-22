@@ -89,7 +89,7 @@ Enemy *EnemyReader::createEnemy(EnemyParameters enemyParameters)
     else{
         enemy = EnemyFactory::createJet(enemyParameters.getLevel(),enemyParameters.getMovement());
     }
-    enemy->setCenterPosition(sf::Vector2f(enemyParameters.getXPosition(),-enemyParameters.getYPosition()));
+    enemy->setCenterPosition(sf::Vector2f(enemyParameters.getXPosition(),-enemyParameters.getYPosition()-200));
     return enemy;
 }
 
