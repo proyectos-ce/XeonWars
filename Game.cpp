@@ -235,6 +235,8 @@ int Game::run(RenderWindow &window, Texture &tex, Options* gameOptions) {
             return 2;
         }
         //update score         collisionManager.getLastScore();
+        score.add_score(collisionManager.getLastScore());
+        score.add_score(5);
 
 
 

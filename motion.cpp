@@ -156,4 +156,32 @@ Motion *createFollowerMotion(sf::Sprite *owner, sf::Sprite *target)
 {
     return new FollowerMotion(owner, target);
 }
+
+Motion *createBossMotion(int scale, int yMovement)
+{
+    return new BossMotion(scale, yMovement);
 }
+
+}
+
+
+
+BossMotion::BossMotion(int scale, int yMovement)
+{
+    this->scale=scale;
+    this->yMovement=yMovement;
+}
+
+sf::Vector2f BossMotion::getNext(float speed)
+{
+    sf::Vector2f newPos(0,0);
+    float sin1 =sin((x+1)/15.0), sin2 = sin(x/15.0);
+    newPos.x = (sin1- sin2)*scale;
+    if(x<yMovement){
+    newPos.y = speed*direction;
+    }
+    x+=1;
+    return newPos;
+}
+
+

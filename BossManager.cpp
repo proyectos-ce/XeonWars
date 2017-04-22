@@ -37,12 +37,13 @@ void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector
     initialBosslife=Bosslife;
 
 
-    Motion *BossMotion = MotionFactory::createLinearMotion(45);
-    Cannon *BossCannon = CannonFactory::createSimpleCannon();
+    //Motion *BossMotion = MotionFactory::createLinearMotion(45);
+    Motion *BossMotion;
+    Cannon *BossCannon;
     BossTexture.loadFromFile("Resources/Boss1.png");
 
 
-    BossMotion = MotionFactory::createSimpleMotion();
+    BossMotion = MotionFactory::createBossMotion(250,100);
     BossCannon = CannonFactory::createSprayCannon(2,3);
     BossCannon->setBulletDamage(30);
     BossCannon->setBulletSpeed(3);
@@ -55,9 +56,9 @@ void BossManager::BossInit(int level,std::vector<Enemy*> *enemyList, std::vector
     cout<<"BOSS set life to : "<<Boss->getLife()<<endl;
 
     Boss->setMotion(BossMotion);
-    Boss->setSpeed(0.1);
+    Boss->setSpeed(1);
     Boss->setPosition(sf::Vector2f(600,-100));
-    Boss->setTrigger(200);
+    Boss->setTrigger(0);
     Boss->setCannon(BossCannon);
     Boss->setScale(0.2);
     Boss->setBulletList(enemyBulletList);
