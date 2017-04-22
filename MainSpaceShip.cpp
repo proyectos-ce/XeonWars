@@ -32,9 +32,9 @@ MainSpaceShip::MainSpaceShip() {
     shieldOnSound.loadFromFile("Resources/sfx_shieldUp.ogg");
     shieldOffSound.loadFromFile("Resources/sfx_shieldDown.ogg");
 
-    powerUp p1(missile);
-    powerUp p2(shieldd);
-    powerUp p3(missile);
+    powerUp p1(LASER);
+    powerUp p2(SHIELD);
+    powerUp p3(MISSILE);
     //powerUp p4(laser);
 
 
@@ -218,8 +218,7 @@ void MainSpaceShip::usePowerUp() {
                 //cout <<"Escudo"<<endl;
 
             } else if (powerToUse == 2) {
-                //cout <<"Laser"<<endl;
-                laser_On;
+                laser();
             }
         } else {
             cout << "No hay power ups" << endl;
@@ -245,6 +244,17 @@ void MainSpaceShip::shield() {
 
     }
     sound.play();
+}
+
+void MainSpaceShip::laser(){
+    if(laser_On ==false){
+        laser_On=true;
+        powerUpOn = true;
+        laserClock.restart();
+    }else{
+        laser_On=false;
+        powerUpOn= false;
+    }
 }
 
 bool MainSpaceShip::gameOver() {
@@ -352,6 +362,8 @@ void MainSpaceShip::playerShoot() {
             updateEffect(0);
         }
     } else if (laser_On){
+        missileCannon->shoot();
+        sound.setBuffer(missileShootBuffer);
     } else {
 
         shipCannon->shoot();
@@ -418,7 +430,10 @@ void MainSpaceShip::checkShieldTimer() {
     if(shieldClock.getElapsedTime().asMilliseconds()>10000 && shieldActivated==true) {
         shield();
     }
-    //else()
+}
+void MainSpaceShip::checkLaserTimer() {
+    if(laserClock.getElapsedTime().asMicroseconds()>5000 && laser_On == true)
+        laser();
 }
 
 int MainSpaceShip::getLifes() const {
