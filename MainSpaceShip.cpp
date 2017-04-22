@@ -118,6 +118,7 @@ void MainSpaceShip::reset() {
 
     TOwnSpaceShip.setSmooth(true);
     SOwnSpaceShip.setTexture(TOwnSpaceShip);
+    updateTexture(1);
     effectSprite.setTexture(TOwnSpaceShip);
 
     SOwnSpaceShip.setPosition(550,620);
