@@ -55,6 +55,8 @@ int main(){
     screens.push_back(&optionsScreen);
     CreditsScreen creditsScreen;
     screens.push_back(&creditsScreen);
+    RankingScreen rankingScreen;
+    screens.push_back(&rankingScreen);
 
     Texture pauseTexture;
 

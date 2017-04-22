@@ -66,6 +66,11 @@ MainSpaceShip::MainSpaceShip() {
     missileCannon->setBulletTexture(&missileCannonTexture);
     //missileCannon->setBulletTextureFilename("Resources/Missiles.png");
     //missileCannon->setBulletTextureFilename("Resources/Bullets.png");
+
+
+    explosionTexture = SpritesManager::getInstance()->getExplosionTexture();
+    rectX = (explosionTexture->getSize().x/explosionAmount), rectY = explosionTexture->getSize().y;
+
 }
 
 
@@ -97,6 +102,8 @@ void MainSpaceShip::reset() {
     laser_On= false;
     isWhite = false;
     shieldActivated = false;
+    exploding = false;
+    currentExplosionTexture = 0;
     powerUpOn = false;
     globalScore = 0;
 
@@ -118,110 +125,125 @@ void MainSpaceShip::reset() {
 
 void MainSpaceShip::update(RenderWindow &window, float time) {
 
+    if (exploding) {
+        currentExplosionTexture++;
+        SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
+
+        if (currentExplosionTexture == 19) {
+            reset();
+            if (lifes > 0) {
+                blinkAnimationCounter = 16;
+            }
+            lifeLevel=100;
+        }
+    } else {
+
 
     checkShieldTimer();
     checkLaserTimer();
 
-    frameCounter++;
 
-    if (frameCounter == 4) {
-        if (blinkAnimationCounter > 0) {
-            if (isWhite) {
-                SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
-                isWhite = false;
-            } else {
-                SOwnSpaceShip.setColor(sf::Color(200,50,0,255));
-                isWhite = true;
+        frameCounter++;
+
+        if (frameCounter == 4) {
+            if (blinkAnimationCounter > 0) {
+                if (isWhite) {
+                    SOwnSpaceShip.setColor(sf::Color(255,255,255,255));
+                    isWhite = false;
+                } else {
+                    SOwnSpaceShip.setColor(sf::Color(200,50,0,255));
+                    isWhite = true;
+                }
+                blinkAnimationCounter--;
             }
-            blinkAnimationCounter--;
+            frameCounter = 0;
+
         }
-        frameCounter = 0;
-
-    }
 
 
 
-    bool anyKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+        bool anyKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
 
-    // Si no hay ninguna tecla presionada la velocidad se pone en 0 si es muy pequeña
-    if (!anyKeyPressed) {
-        if (fabs(velocity.y) <= speed/2)
-            velocity.y = 0;
+        // Si no hay ninguna tecla presionada la velocidad se pone en 0 si es muy pequeña
+        if (!anyKeyPressed) {
+            if (fabs(velocity.y) <= speed/2)
+                velocity.y = 0;
 
-        if (fabs(velocity.x) <= speed/2)
-            velocity.x = 0;
-    }
+            if (fabs(velocity.x) <= speed/2)
+                velocity.x = 0;
+        }
 
 
-    // Air friction
-    if (velocity.y > 0)
-        velocity.y -= speed/2;
-    else if (velocity.y < 0)
-        velocity.y += speed/2;
-
-    if (velocity.x > 0) {
-        //SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
-        updateTexture(2);
-
-        velocity.x -= speed/2;
-    } else if (velocity.x < 0) {
-        //SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
-        updateTexture(0);
-
-        velocity.x += speed/2;
-    } else {
-        //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
-        updateTexture(defaultTexture);
-    }
-
-    // Maximum speed
-
-    if (fabs(velocity.x) > maxSpeed)
-    {
-        if (velocity.x > 0)
-            velocity.x = maxSpeed;
-        else
-            velocity.x = -maxSpeed;
-    }
-    if (fabs(velocity.y) > maxSpeed)
-    {
+        // Air friction
         if (velocity.y > 0)
-            velocity.y = maxSpeed;
-        else
-            velocity.y = -maxSpeed;
+            velocity.y -= speed/2;
+        else if (velocity.y < 0)
+            velocity.y += speed/2;
+
+        if (velocity.x > 0) {
+            //SOwnSpaceShip.setTextureRect(IntRect(200, 0, 95, 80));
+            updateTexture(2);
+
+            velocity.x -= speed/2;
+        } else if (velocity.x < 0) {
+            //SOwnSpaceShip.setTextureRect(IntRect(0, 0, 95, 80));
+            updateTexture(0);
+
+            velocity.x += speed/2;
+        } else {
+            //SOwnSpaceShip.setTextureRect(IntRect(100, 0, 100, 80));
+            updateTexture(defaultTexture);
+        }
+
+        // Maximum speed
+
+        if (fabs(velocity.x) > maxSpeed)
+        {
+            if (velocity.x > 0)
+                velocity.x = maxSpeed;
+            else
+                velocity.x = -maxSpeed;
+        }
+        if (fabs(velocity.y) > maxSpeed)
+        {
+            if (velocity.y > 0)
+                velocity.y = maxSpeed;
+            else
+                velocity.y = -maxSpeed;
+        }
+
+
+        // Limites de la pantalla
+
+        if(SOwnSpaceShip.getPosition().x < 0) {
+            velocity.x = 0;
+            SOwnSpaceShip.setPosition(0, SOwnSpaceShip.getPosition().y);
+        }
+
+        if(SOwnSpaceShip.getPosition().y < 0) {
+            velocity.y = 0;
+            SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, 0);
+        }
+
+        if (SOwnSpaceShip.getPosition().x > window.getSize().x - SOwnSpaceShip.getGlobalBounds().width) {
+            velocity.x = 0;
+            SOwnSpaceShip.setPosition(window.getSize().x - SOwnSpaceShip.getGlobalBounds().width,  SOwnSpaceShip.getPosition().y);
+        }
+
+        if (SOwnSpaceShip.getPosition().y > window.getSize().y - SOwnSpaceShip.getGlobalBounds().height) {
+            velocity.y = 0;
+            SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, window.getSize().y - SOwnSpaceShip.getGlobalBounds().height);
+        }
+
+        SOwnSpaceShip.move(velocity * (time/30));
+
+        //update effect sprite
+        effectSprite.setPosition(SOwnSpaceShip.getPosition());
+
     }
-
-    
-    // Limites de la pantalla
-
-    if(SOwnSpaceShip.getPosition().x < 0) {
-        velocity.x = 0;
-        SOwnSpaceShip.setPosition(0, SOwnSpaceShip.getPosition().y);
-    }
-
-    if(SOwnSpaceShip.getPosition().y < 0) {
-        velocity.y = 0;
-        SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, 0);
-    }
-
-    if (SOwnSpaceShip.getPosition().x > window.getSize().x - SOwnSpaceShip.getGlobalBounds().width) {
-        velocity.x = 0;
-        SOwnSpaceShip.setPosition(window.getSize().x - SOwnSpaceShip.getGlobalBounds().width,  SOwnSpaceShip.getPosition().y);
-    }
-
-    if (SOwnSpaceShip.getPosition().y > window.getSize().y - SOwnSpaceShip.getGlobalBounds().height) {
-        velocity.y = 0;
-        SOwnSpaceShip.setPosition(SOwnSpaceShip.getPosition().x, window.getSize().y - SOwnSpaceShip.getGlobalBounds().height);
-    }
-
-    SOwnSpaceShip.move(velocity * (time/30));
-
-    //update effect sprite
-    effectSprite.setPosition(SOwnSpaceShip.getPosition());
-
 }
 
 void MainSpaceShip::render(RenderWindow &window) {
@@ -403,9 +425,12 @@ void MainSpaceShip::playerShoot() {
 
 void MainSpaceShip::loseLife() {
     lifes-=1;
-    reset();
-    blinkAnimationCounter = 16;
-    lifeLevel=100;
+
+    SOwnSpaceShip.setTexture(*explosionTexture);
+    SOwnSpaceShip.setScale(0.7, 0.7);
+    SOwnSpaceShip.setTextureRect(sf::IntRect(rectX*currentExplosionTexture,0 , rectX, rectY ));
+    exploding = true;
+
 }
 bool MainSpaceShip::attack(int damage) {
     std::cout << "lifes:" << lifes << " level:" << lifeLevel << endl;
@@ -417,8 +442,9 @@ bool MainSpaceShip::attack(int damage) {
     } else {
 
         if (blinkAnimationCounter == 0) {
-            setLifeLevel(lifeLevel - damage * getGameOptions()->difficulty);
-            std::cout << "LIFELEVEL: " << lifeLevel << std::endl;
+
+            setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
+
 
 
             if (blinkAnimationCounter == 0) {

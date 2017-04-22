@@ -1,6 +1,3 @@
-Idea original:
--Joseph Vargas
-
 Programacion:
 -Daniel Castro
 -Ignacio Mora
@@ -15,10 +12,18 @@ Diseno:
 Aplicacion Movil:
 -Ignacio Mora
 
+Diseno de menus y GUI:
+- Joseph Vargas
+
+Librerias usadas:
+- SFML
+- Mosquitto
+- MQTT
+
 Instituto Tecnologico de 
 Costa Rica
 
 Algoritmos y Estructuras de 
 datos II
 
-I sem 2017
+I Semestre 2017

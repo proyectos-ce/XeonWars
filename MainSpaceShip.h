@@ -114,6 +114,14 @@ private:
     void updateEffect(int value);
 
     Options* gameOptions;
+
+    bool exploding = false;
+
+    int currentExplosionTexture = 0;
+    int explosionAmount = 19;
+    sf::Texture* explosionTexture;
+
+    int rectX, rectY;
 public:
     Options* getGameOptions() const;
     void setGameOptions(Options *gameOptions);
