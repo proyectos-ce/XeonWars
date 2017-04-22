@@ -89,6 +89,10 @@ private:
     int lifes;
     int lifeLevel=100;
     int blinkAnimationCounter = 0;
+public:
+    int getBlinkAnimationCounter() const;
+
+private:
     int frameCounter = 0;
     int globalScore;
     int scoreForLifes;

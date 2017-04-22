@@ -279,7 +279,7 @@ bool MainSpaceShip::gameOver() {
 
 void MainSpaceShip::doDamageAnimation() {
     if (blinkAnimationCounter == 0)
-        blinkAnimationCounter = 6;
+        blinkAnimationCounter = 10;
 }
 
 int MainSpaceShip::getTexturesAmount() const
@@ -408,6 +408,7 @@ bool MainSpaceShip::attack(int damage)
     else{
         if (blinkAnimationCounter == 0) {
             setLifeLevel(lifeLevel-damage*getGameOptions()->difficulty);
+            std::cout << "LIFELEVEL: " << lifeLevel << std::endl;
 
             if (lifes > 0) {
                 doDamageAnimation();
@@ -493,6 +494,10 @@ Options *MainSpaceShip::getGameOptions() const {
 
 void MainSpaceShip::setGameOptions(Options *gameOptions) {
     MainSpaceShip::gameOptions = gameOptions;
+}
+
+int MainSpaceShip::getBlinkAnimationCounter() const {
+    return blinkAnimationCounter;
 }
 
 

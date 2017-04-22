@@ -19,13 +19,14 @@ bool CollisionManager::checkCollisions()
     int i = 0, j=0;
     while(i<enemyList->size()){
         //player vs enemies
-        if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())) {
+        if(playerShip->getBlinkAnimationCounter() == 0 && !enemyList->operator[](i)->isExploding() && Collision::PixelPerfectTest(playerShip->getSprite(), enemyList->operator[](i)->getSprite())) {
             //kill player
             collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
             collisionSound.play();
 
             if (!enemyList->operator[](i)->isBoss()) {
-                deleteEnemy(enemyList, i);
+                //deleteEnemy(enemyList, i);
+                enemyList->operator[](i)->explode();
             }
 
             playerShip->loseLife();
@@ -47,7 +48,8 @@ bool CollisionManager::checkCollisions()
                     //std::cout<<"bala vs enemigo\n";
                     if(enemyList->operator[](i)->attack(playerBulletList->operator[](j)->getDamage())){
                         addLastScore(enemyList->operator[](i)->getEnemy_score());
-                        deleteEnemy(enemyList,i);
+                        //deleteEnemy(enemyList,i);
+                        enemyList->operator[](i)->explode();
                         deleteBullet(playerBulletList, j);
                         i--;
                         break;
@@ -65,7 +67,7 @@ bool CollisionManager::checkCollisions()
     i=0;
     while(i<enemyBulletList->size()){
         //player vs enemies
-        if(Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
+        if(playerShip->getBlinkAnimationCounter() == 0 && Collision::PixelPerfectTest(playerShip->getSprite(), enemyBulletList->operator[](i)->getSprite())){
 
             collisionSound.setBuffer(collisionSpaceEnemySoundBuffer);
             collisionSound.play();
