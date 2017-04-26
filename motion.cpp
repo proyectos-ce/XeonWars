@@ -70,7 +70,6 @@ sf::Vector2f SinMotion::getNext(float speed)
     newPos.y = 2*direction;
     x+=1;
     return newPos;
-
 }
 
 SimpleMotion::SimpleMotion()

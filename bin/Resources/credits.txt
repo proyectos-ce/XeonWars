@@ -8,7 +8,6 @@ Programacion:
 Project Manager:
 -Jimena Salas
 
-
 Diseno:
 -Daniel Castro
 -Gustavo Segura
@@ -22,7 +21,6 @@ Diseno de menus y GUI:
 Librerias usadas:
 - SFML
 - Mosquitto
-- MQTT
 
 Instituto Tecnologico de 
 Costa Rica

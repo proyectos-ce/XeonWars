@@ -27,7 +27,7 @@ BossManager::BossManager(){
     text2.setColor(sf::Color::White);
     text2.setStyle(sf::Text::Bold );
 
-    texture.loadFromFile("Resources/index.jpeg");
+    texture.loadFromFile("Resources/BossLogo.png");
     texture.setSmooth(true);
     sprite.setTexture(texture);
     sprite.setScale(0.125,0.125);

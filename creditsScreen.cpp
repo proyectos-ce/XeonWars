@@ -51,17 +51,6 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
     creditText.setPosition( ( SCREEN_WIDTH * invScale - creditText.getGlobalBounds().width) / 2, SCREEN_HEIGHT);
     creditText.setColor(sf::Color::White);
 
-    ///Such as this one
-    sf::Text creditText2("Dedicado a Isaac Ramirez", classicFont, SCREEN_WIDTH / 16);
-    creditText2.setPosition( ( SCREEN_WIDTH * invScale - creditText2.getGlobalBounds().width) / 2, creditText.getGlobalBounds().top + creditText.getGlobalBounds().height + 50);
-    creditText2.setColor(sf::Color::Red);
-
-    sf::Sprite isaacPhoto;
-    sf::Texture isaacTexture;
-    isaacTexture.loadFromFile("Resources/isaac.jpg");
-    isaacPhoto.setTexture(isaacTexture);
-    isaacPhoto.setPosition( ( SCREEN_WIDTH * invScale - isaacPhoto.getGlobalBounds().width) / 2, creditText2.getGlobalBounds().top + creditText2.getGlobalBounds().height + 35);
-
 
     while (running) {
         while (window.pollEvent(event)){
@@ -89,8 +78,6 @@ int CreditsScreen::run(sf::RenderWindow &window, sf::Texture &pauseScreen, Optio
         ///set the view for the credits, and then show them
         window.setView(creditsView);
         window.draw(creditText);
-        window.draw(creditText2);
-        window.draw(isaacPhoto);
         ///set the default view, so that the title doesn't get moved and then show the title
         window.setView(window.getDefaultView());
         window.draw(titleCredit);
